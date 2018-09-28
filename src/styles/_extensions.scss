@@ -9,3 +9,9 @@
 %standard-border {
   border: 1px solid transparent;
 }
+
+%center-contents {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

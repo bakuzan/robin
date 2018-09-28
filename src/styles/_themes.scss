@@ -1,0 +1,33 @@
+@import './_variables';
+
+@each $theme, $values in $theme-maps {
+  $base-background: map-get($values, base-background);
+  $base-colour: map-get($values, base-colour);
+  $primary-background: map-get($values, primary-background);
+  $primary-colour: map-get($values, primary-colour);
+  $active-background: map-get($values, active-background);
+  $active-colour: map-get($values, active-colour);
+  $faded-out: map-get($values, faded-out);
+
+  .theme--#{$theme} {
+    background-color: $base-background;
+    color: $base-colour;
+
+    // Primary
+    .themed-background {
+      background-color: $primary-background;
+      color: $primary-colour;
+      &--reversed {
+        color: $primary-background;
+        background-color: $primary-colour;
+      }
+    }
+    .has-float-label input,
+    .has-float-label select,
+    .suggestion--active {
+      border-color: $primary-background;
+    }
+
+    // THEMING HERE
+  }
+}

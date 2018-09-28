@@ -1,3 +1,5 @@
+@import './_colours';
+
 // Screen Variables
 $screen-xs: 480px;
 $screen-sm: 768px;
@@ -9,15 +11,36 @@ $screen-xs-max: ($screen-sm - 1);
 $screen-sm-max: ($screen-md - 1);
 $screen-md-max: ($screen-lg - 1);
 
+//z-index
+$z-index: (
+  wafer: 1,
+  above-siblings: 10,
+  header: 50,
+  sidebar: 50,
+  popover: 100,
+  menu: 250,
+  alert: 1000
+);
+
 // App Variables
 $app--darken-amount: 5%;
 $app--font-size: 16px;
 $app--margin: 0.5em;
 $app--placeholder-border: 1px solid transparent;
 $app--padding: 0.33em;
-
 // Component Variables
-
 $header--height: 50px;
-
 $sidebar--width: 50px;
+// TODO
+// Themes
+$theme-maps: (
+  one: (
+    base-background: #000,
+    base-colour: #000,
+    primary-background: #000,
+    primary-colour: #000,
+    active-background: #000,
+    active-colour: #000,
+    faded-out: $grey80
+  )
+);

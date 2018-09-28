@@ -27,6 +27,10 @@ main {
 
 // Helpers
 
+.flex-spacer {
+  flex: 1;
+}
+
 .padding {
   padding: $app--padding;
 }
