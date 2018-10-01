@@ -4,6 +4,7 @@ export class RobinUrls {
   base: string;
   dashboard: string;
   seriesList: string;
+  seriesCreate: string;
 }
 export class ImageUrls {
   deadImage: string;

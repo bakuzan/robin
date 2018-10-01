@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import classNames from 'classnames';
 
 @Component({
@@ -21,6 +21,8 @@ export class RbnButtonComponent implements OnInit {
   disabled: boolean;
   @Input()
   icon: string;
+  @Output()
+  click: EventEmitter<any> = new EventEmitter();
 
   constructor() {}
 
@@ -29,19 +31,20 @@ export class RbnButtonComponent implements OnInit {
   }
 
   classes() {
+    const size = this.size || (this.icon && 'small');
     return classNames({
       button: true,
       'themed-background': this.theme !== 'default',
       'themed-background--reversed': this.theme === 'secondary',
       'button--icon': !!this.icon,
-      [`button--size_${this.size}`]: !!this.size,
+      [`button--size_${size}`]: !!this.size || !!this.icon,
       'button--rounded': this.rounded,
       'button--depress': this.depress,
       ripple: true
     });
   }
 
-  onClick() {
-    console.log('unhandled click');
+  onClick(e) {
+    this.click.emit(e);
   }
 }

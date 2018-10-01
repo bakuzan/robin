@@ -14,7 +14,8 @@ const Urls: RobinUrls = Object.freeze({
   },
   base: 'robin',
   dashboard: 'dashboard',
-  seriesList: 'series'
+  seriesList: 'series',
+  seriesCreate: 'series/create'
 });
 
 export default Urls;

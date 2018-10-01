@@ -7,13 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FilterBarComponent implements OnInit {
   search = '';
+  addUrl = 'create';
 
   constructor() {}
 
   ngOnInit() {}
 
   onInput({ name, value }) {
-    console.log(name, value);
+    console.log('filter bar', name, value);
     this[name] = value;
   }
 }

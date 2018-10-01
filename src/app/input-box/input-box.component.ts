@@ -1,7 +1,14 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild
+} from '@angular/core';
 import classNames from 'classnames';
 
-import { getEventValue } from 'src/app/common/utils';
+import { Icons } from 'src/app/common/constants';
 
 @Component({
   selector: 'app-input-box',
@@ -9,6 +16,12 @@ import { getEventValue } from 'src/app/common/utils';
   styleUrls: ['./input-box.component.scss']
 })
 export class InputBoxComponent implements OnInit {
+  private clearTimer: any = null;
+  icon: string = Icons.cross;
+  isTextInput: boolean;
+  hasMaxNumber: boolean;
+  @ViewChild('input')
+  input;
   @Input()
   id: string;
   @Input()
@@ -36,6 +49,8 @@ export class InputBoxComponent implements OnInit {
 
   ngOnInit() {
     console.log('input', this);
+    this.isTextInput = this.type === 'text';
+    this.hasMaxNumber = this.type === 'number' && !isNaN(this.max);
   }
 
   onChange(value) {
@@ -53,16 +68,8 @@ export class InputBoxComponent implements OnInit {
     this.keydown.emit(e);
   }
 
-  showClearButton() {
-    return !!this.value && this.isTextInput;
-  }
-
-  isTextInput() {
-    return this.type === 'text';
-  }
-
   classes() {
-    const notClearable = !!this.isTextInput;
+    const notClearable = this.isTextInput;
     return classNames([
       'input-box',
       'input-container',
@@ -78,15 +85,11 @@ export class InputBoxComponent implements OnInit {
     return classNames(['input-box__clear']);
   }
 
-  hasMaxNumber() {
-    return this.type === 'number' && !isNaN(this.max);
-  }
-
-  showCount() {
+  showCount(): boolean {
     return !!this.maxLength || this.hasMaxNumber;
   }
 
-  countText() {
+  countText(): string {
     if (this.maxLength) {
       return `${this.value.length}/${this.maxLength}`;
     }
@@ -94,5 +97,14 @@ export class InputBoxComponent implements OnInit {
       return `out of ${this.max || '?'}`;
     }
     return '';
+  }
+
+  clearAndFocusInput(): void {
+    this.value = '';
+    clearTimeout(this.clearTimer);
+    this.clearTimer = window.setTimeout(
+      () => this.input && this.input.focus(),
+      100
+    );
   }
 }

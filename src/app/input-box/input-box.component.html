@@ -1,9 +1,9 @@
 <div [class]="classes()">
-  <input #filter type="{{type}}" id="{{id}}" name="{{name}}" value="{{value}}" placeholder=" " autoComplete="off"
-    maxLength="{{maxLength}}" disabled="{{disabled}}" (keyup)="onChange(filter.value)" (focus)="onFocus" (blur)="onBlur"
+  <input #input [attr.type]="type" [attr.id]="id" [attr.name]="name" [(ngModel)]="value" (ngModelChange)="onChange($event)"
+    placeholder=" " autoComplete="off" [attr.maxLength]="maxLength" [attr.disabled]="disabled" (focus)="onFocus" (blur)="onBlur"
     (keydown)="onKeyDown" />
   <label for="{{name}}">{{label}}</label>
-  <app-rbn-button *ngIf="showClearButton" [class]="clearClasses" [size]="small" [icon]="icon" (click)="clearAndFocusInput"></app-rbn-button>
+  <app-rbn-button *ngIf="value && isTextInput" [class]="clearClasses()" [size]="small" [icon]="icon" (click)="clearAndFocusInput($event)"></app-rbn-button>
   <span *ngIf="showCount" class="input-box__count">
     {{countText()}}
   </span>
