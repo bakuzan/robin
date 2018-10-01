@@ -1,4 +1,7 @@
-<div class="header">
+<div class="header" [ngClass]="{ 'header--page-scrolled': windowScrollPosition > 0 }">
+    <div class="rbn-logo">
+        <app-logo></app-logo>
+    </div>
     <div class="flex-spacer"></div>
     <h1 class="header__inner header__title">Robin</h1>
     <div class="flex-spacer"></div>

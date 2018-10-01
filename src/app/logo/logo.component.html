@@ -1,0 +1,10 @@
+<div id="rbn" class="logo center-contents">
+  <svg class="logo__svg themed-background" xmlns="http://www.w3.org/2000/svg">
+    <text *ngFor="let item of letters" [ngClass]="item.classes" x="50%" y="50%" dy="0.3em">
+      {{item.text}}
+    </text>
+    <text class="word diagonal" x="50%" y="50%" dy="0.3em" textLength="50" lengthAdjust="spacingAndGlyphs">
+      {{text | uppercase}}
+    </text>
+  </svg>
+</div>

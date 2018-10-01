@@ -1,1 +1,5 @@
-<nav class="sidebar">sidebar</nav>
+<nav class="sidebar">
+    <app-nav-link *ngFor="let item of links" [to]="item.to">
+        {{item.icon}}
+    </app-nav-link>
+</nav>
