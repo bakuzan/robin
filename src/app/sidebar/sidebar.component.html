@@ -1,1 +1,5 @@
-<nav class="sidebar themed-background">sidebar</nav>
+<nav class="sidebar themed-background">
+    <app-nav-link *ngFor="let item of links" [to]="item.to">
+        {{item.icon}}
+    </app-nav-link>
+</nav>

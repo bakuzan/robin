@@ -1,0 +1,53 @@
+input {
+  background-color: inherit;
+}
+.input-container {
+  flex: 1;
+  padding: 5px;
+  min-height: 35px;
+  box-sizing: content-box;
+  input[type='text'],
+  input[type='number'],
+  input[type='date'],
+  input[type='url'] {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  > button {
+    max-height: 32px;
+    margin: {
+      top: auto;
+      bottom: auto;
+    }
+  }
+}
+
+// local
+.input-box {
+  > input {
+    display: flex;
+    flex: 1 0 100%;
+  }
+  &:not(.input-box--not-clearable) > input {
+    padding-right: 1.5em !important;
+  }
+  &__clear {
+    position: relative;
+    right: 30px;
+  }
+  &__count {
+    position: absolute;
+    right: 10px;
+    bottom: -5px;
+    top: auto;
+    left: auto;
+    font-size: 0.5rem;
+  }
+  input[type='date'] {
+    &::-webkit-calendar-picker-indicator,
+    &::-webkit-inner-spin-button {
+      appearance: none;
+      display: none;
+    }
+  }
+}
