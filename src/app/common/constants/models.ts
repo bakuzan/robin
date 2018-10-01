@@ -3,6 +3,7 @@ export class RobinUrls {
   images: ImageUrls;
   base: string;
   dashboard: string;
+  seriesList: string;
 }
 export class ImageUrls {
   deadImage: string;

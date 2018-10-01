@@ -1,0 +1,10 @@
+<div [class]="classes()">
+  <input #filter type="{{type}}" id="{{id}}" name="{{name}}" value="{{value}}" placeholder=" " autoComplete="off"
+    maxLength="{{maxLength}}" disabled="{{disabled}}" (keyup)="onChange(filter.value)" (focus)="onFocus" (blur)="onBlur"
+    (keydown)="onKeyDown" />
+  <label for="{{name}}">{{label}}</label>
+  <app-rbn-button *ngIf="showClearButton" [class]="clearClasses" [size]="small" [icon]="icon" (click)="clearAndFocusInput"></app-rbn-button>
+  <span *ngIf="showCount" class="input-box__count">
+    {{countText()}}
+  </span>
+</div>

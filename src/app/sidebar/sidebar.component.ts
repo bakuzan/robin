@@ -9,7 +9,10 @@ import { Urls } from 'src/app/common/constants';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent implements OnInit {
-  links: SidebarLink[] = [{ to: Urls.dashboard, text: 'Dashboard', icon: 'D' }];
+  links: SidebarLink[] = [
+    { to: Urls.dashboard, text: 'Dashboard', icon: 'D' },
+    { to: Urls.seriesList, text: 'Series', icon: 'S' }
+  ];
 
   constructor() {}
 

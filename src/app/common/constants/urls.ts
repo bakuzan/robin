@@ -13,7 +13,8 @@ const Urls: RobinUrls = Object.freeze({
     deadImage: 'https://i.imgur.com/gKr1YhF.png'
   },
   base: 'robin',
-  dashboard: 'dashboard'
+  dashboard: 'dashboard',
+  seriesList: 'series'
 });
 
 export default Urls;
