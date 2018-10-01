@@ -31,6 +31,8 @@ export class InputBoxComponent implements OnInit {
   @Input()
   type = 'text';
   @Input()
+  label = 'search';
+  @Input()
   value;
   @Input()
   max: number;

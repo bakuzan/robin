@@ -39,12 +39,12 @@ $sidebar--width: 50px;
 // Themes
 $theme-maps: (
   one: (
-    base-background: #000,
+    base-background: $robin--timeskip-skirt,
     base-colour: #000,
-    primary-background: #000,
-    primary-colour: #000,
-    active-background: #000,
-    active-colour: #000,
+    primary-background: $robin--timeskip-top,
+    primary-colour: $robin--timeskip-skirt,
+    active-background: $robin--timeskip-skirt,
+    active-colour: $robin--timeskip-pattern,
     faded-out: $grey80
   )
 );

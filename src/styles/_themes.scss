@@ -13,6 +13,16 @@
     background-color: $base-background;
     color: $base-colour;
 
+    // Navigation
+    .nav-link {
+      color: $base-colour;
+
+      &:hover,
+      &--active {
+        color: $active-colour;
+      }
+    }
+
     // Primary
     .themed-background {
       background-color: $primary-background;
@@ -27,7 +37,19 @@
     .suggestion--active {
       border-color: $primary-background;
     }
+    svg.themed-background text {
+      fill: $primary-colour;
+    }
 
+    .sidebar__link {
+      color: $primary-colour;
+
+      &:hover,
+      &.nav-link--active {
+        background-color: $active-background;
+        color: $active-colour;
+      }
+    }
     // THEMING HERE
   }
 }

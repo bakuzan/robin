@@ -1,2 +1,6 @@
 <app-filter-bar></app-filter-bar>
-<p>series list wip</p>
+<ul class="list four">
+  <li *ngFor="let item of series" class="list__item">
+    {{item.name}}
+  </li>
+</ul>

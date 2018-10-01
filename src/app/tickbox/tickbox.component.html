@@ -1,0 +1,14 @@
+<div class="input-container">
+  <label [class]="tickboxClasses" [attr.for]="name">
+    <input
+      type="checkbox"
+      class="tickbox__input"
+      [attr.id]="name"
+      [attr.name]="name"
+      [attr.checked]="checked"
+      [attr.disabled]="disabled"
+      (change)="onChange($event)"
+    />
+    <ng-content></ng-content>
+  </label>
+</div>

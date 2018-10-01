@@ -14,6 +14,8 @@ import { SeriesCreateComponent } from './series-create/series-create.component';
 import { FilterBarComponent } from './filter-bar/filter-bar.component';
 import { InputBoxComponent } from './input-box/input-box.component';
 import { RbnButtonComponent } from './rbn-button/rbn-button.component';
+import { MultiSelectComponent } from './multi-select/multi-select.component';
+import { TickboxComponent } from './tickbox/tickbox.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { RbnButtonComponent } from './rbn-button/rbn-button.component';
     FilterBarComponent,
     InputBoxComponent,
     RbnButtonComponent,
-    SeriesCreateComponent
+    SeriesCreateComponent,
+    MultiSelectComponent,
+    TickboxComponent
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],

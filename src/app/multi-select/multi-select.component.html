@@ -1,0 +1,42 @@
+<div class="multi-select">
+  <div class="multi-select__display display has-float-label">
+    <input
+      type="text"
+      autoComplete="off"
+      class="display__input"
+      [attr.id]="id"
+      [attr.name]="name"
+      [attr.placeholder]="placeholder"
+      [attr.value]="displayValue"
+      tabIndex="0"
+      readOnly
+      (click)="handleToggleOpen($event)"
+      (keydown)="handleToggleOpen($event)"
+    />
+    <label [attr.for]="id">{{label}}</label>
+  </div>
+  <div [class]="dropdownClasses" [ngClass]="{ 'multi-select__dropdown-container--is-open': this.isOpen }">
+    <ul class="multi-select__list">
+      <li>
+        <app-tickbox
+          [name]="selectAllName"
+          [checked]="hasAllSelected"
+          (change)="handleSelectAll($event)"
+        >
+          Select All
+        </app-tickbox>
+      </li>
+      <li
+        class="multi-select__separator"
+      />
+      <li *ngFor="let (op, i) of options">
+        <app-tickbox
+          [name]="getName(i)"
+          [checked]="values.includes(op.value)"
+          (change)="handleOptionChange($event)"
+        >{{op.text}}</app-tickbox>
+      </li>
+    </ul>
+    <app-backdrop [attr.id]="id" (close)="handleToggleClose"></app-backdrop>
+  </div>
+</div>
