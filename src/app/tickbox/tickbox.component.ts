@@ -17,7 +17,7 @@ export class TickboxComponent implements OnInit {
   @Input()
   customTickbox: string;
   @Output()
-  change: EventEmitter<any> = new EventEmitter();
+  toggle: EventEmitter<any> = new EventEmitter();
 
   constructor() {}
 
@@ -31,6 +31,13 @@ export class TickboxComponent implements OnInit {
 
   onChange(event) {
     const value = event.target.checked;
-    this.change.emit({ value, name: this.name });
+    console.log(
+      '%c TICKBOX CHANGED',
+      'color: firebrick',
+      value,
+      this.name,
+      event
+    );
+    this.toggle.emit({ value, name: this.name, event });
   }
 }

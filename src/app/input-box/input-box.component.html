@@ -1,10 +1,31 @@
 <div [class]="classes()">
-  <input #input [attr.type]="type" [attr.id]="id" [attr.name]="name" [(ngModel)]="value" (ngModelChange)="onChange($event)"
-    placeholder=" " autoComplete="off" [attr.maxLength]="maxLength" [attr.disabled]="disabled" (focus)="onFocus" (blur)="onBlur"
-    (keydown)="onKeyDown" />
+  <input
+    #input
+    [attr.type]="type"
+    [attr.id]="id"
+    [attr.name]="name"
+    [(ngModel)]="value"
+    (ngModelChange)="onChange($event)"
+    placeholder=" "
+    autoComplete="off"
+    [attr.maxLength]="maxLength"
+    [attr.disabled]="disabled"
+    (focus)="onFocus"
+    (blur)="onBlur"
+    (keydown)="onKeyDown"
+  />
   <label for="{{name}}">{{label}}</label>
-  <app-rbn-button *ngIf="value && isTextInput" [class]="clearClasses()" [size]="small" [icon]="icon" (click)="clearAndFocusInput($event)"></app-rbn-button>
-  <span *ngIf="showCount" class="input-box__count">
+  <app-rbn-button
+    *ngIf="value && isTextInput"
+    [class]="clearClasses()"
+    [size]="small"
+    [icon]="icon"
+    (click)="clearAndFocusInput($event)"
+  ></app-rbn-button>
+  <span
+    *ngIf="showCount"
+    class="input-box__count"
+  >
     {{countText()}}
   </span>
 </div>

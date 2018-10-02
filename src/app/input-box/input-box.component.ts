@@ -104,8 +104,9 @@ export class InputBoxComponent implements OnInit {
   clearAndFocusInput(): void {
     this.value = '';
     clearTimeout(this.clearTimer);
+
     this.clearTimer = window.setTimeout(
-      () => this.input && this.input.focus(),
+      () => this.input && this.input.nativeElement.focus(),
       100
     );
   }

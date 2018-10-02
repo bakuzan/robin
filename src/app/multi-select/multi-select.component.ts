@@ -51,20 +51,21 @@ export class MultiSelectComponent implements OnInit {
     return `${this.id}--${OPTION_PREFIX}${i}`;
   }
 
-  getDisplayValue(): string {
-    const length = this.values.length;
+  getDisplayValue(values = this.values): string {
+    const length = values.length;
     if (!length) {
       return '';
     } else if (length === this.options.length) {
       return ALL_SELECTED_TEXT;
     } else if (length === 1) {
-      return this.options.find((x) => this.values.includes(x.value)).text;
+      return this.options.find((x) => values.includes(x.value)).text;
     }
     return `${length} selected`;
   }
 
-  checkIfAllSelected(): boolean {
-    return this.values.length === this.options.length;
+  checkIfAllSelected(values = this.values): boolean {
+    console.log('ALL SELECTED??', values, this.options);
+    return values.length === this.options.length;
   }
 
   handleToggleOpen(e) {
@@ -79,33 +80,47 @@ export class MultiSelectComponent implements OnInit {
     this.isOpen = false;
   }
 
-  handleOptionChange(_, name) {
+  handleOptionChange({ name, ...other }) {
+    console.log(
+      '%c MUTLISELECT CHANGE OPTION',
+      'color: forestgreen',
+      name,
+      other
+    );
     const index = Number(name.replace(EXTRACT_OPTION_INDEX, ''));
     const option = this.options.find((x, i) => i === index);
-    const valuesSet = new Set([...this.values]);
-    const hasValue = valuesSet.has(option.value);
-    const value = Array.from(valuesSet.values());
+    let valuesSet = new Set([...this.values]);
 
-    if (hasValue) {
+    if (valuesSet.has(option.value)) {
       valuesSet.delete(option.value);
-      this.update.emit({ value, name: this.name });
     } else {
-      valuesSet.add(option.value);
-      this.update.emit({ value, name: this.name });
+      valuesSet = valuesSet.add(option.value);
     }
 
-    this.displayValue = this.getDisplayValue();
-    this.hasAllSelected = this.checkIfAllSelected();
+    const value = Array.from(valuesSet.values());
+    this.update.emit({
+      value,
+      name: this.name
+    });
+
+    this.displayValue = this.getDisplayValue(value);
+    this.hasAllSelected = this.checkIfAllSelected(value);
   }
 
-  handleSelectAll() {
-    const values = new Set([...this.values]);
-    const options = new Set([...this.options.map((op) => op.value)]);
-    const hasAllSelected = values.size === options.size;
-    const newValues = hasAllSelected ? [] : Array.from(options.values());
+  handleSelectAll({ value }) {
+    // const values = new Set([...this.values]);
+    // const options = new Set([...this.options.map((op) => op.value)]);
+    // const hasAllSelected = values.size === options.size;
+    const newValues = value ? this.options.map((op) => op.value) : [];
 
+    console.log(
+      '%c MUTLISELECT TOGGLE ALL',
+      'color: royalblue',
+      newValues,
+      this.name
+    );
     this.update.emit({ value: newValues, name: this.name });
-    this.displayValue = this.getDisplayValue();
-    this.hasAllSelected = this.checkIfAllSelected();
+    this.displayValue = this.getDisplayValue(newValues);
+    this.hasAllSelected = this.checkIfAllSelected(newValues);
   }
 }

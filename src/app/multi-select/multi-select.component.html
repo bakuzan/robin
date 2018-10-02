@@ -24,7 +24,7 @@
         <app-tickbox
           [name]="selectAllName"
           [checked]="hasAllSelected"
-          (change)="handleSelectAll($event)"
+          (toggle)="handleSelectAll($event)"
         >
           Select All
         </app-tickbox>
@@ -34,7 +34,7 @@
         <app-tickbox
           [name]="getName(i)"
           [checked]="values.includes(op.value)"
-          (change)="handleOptionChange($event)"
+          (toggle)="handleOptionChange($event)"
         >{{op.text}}</app-tickbox>
       </li>
     </ul>
