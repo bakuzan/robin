@@ -1,3 +1,30 @@
-<p>
-  series-create works!
-</p>
+<div class="page">
+  <form class="form">
+    <div class="button-group button-group--right">
+      <app-nav-link [to]="cancelUrl">Cancel</app-nav-link>
+      <app-rbn-button
+        type="submit"
+        [theme]="primary"
+      >Save</app-rbn-button>
+    </div>
+    <div class="form__content">
+      <app-input-box
+        class="form__input"
+        label="Name"
+        name="name"
+        [value]="name"
+        (change)="onInput($event)"
+      ></app-input-box>
+
+      <app-input-box
+        class="form__input"
+        type="number"
+        label="Ending Volume"
+        name="volumeCount"
+        min="0"
+        [value]="volumeCount"
+        (change)="onInput($event)"
+      ></app-input-box>
+    </div>
+  </form>
+</div>

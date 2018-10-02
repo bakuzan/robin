@@ -8,9 +8,9 @@
       class="tickbox__input"
       [attr.id]="name"
       [attr.name]="name"
-      [attr.checked]="checked"
+      [(ngModel)]="checked"
       [attr.disabled]="disabled"
-      (change)="onChange($event)"
+      (ngModelChange)="onChange($event)"
     />
     <ng-content></ng-content>
   </label>

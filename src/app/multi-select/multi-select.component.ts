@@ -26,6 +26,8 @@ export class MultiSelectComponent implements OnInit {
   @Input()
   name: string;
   @Input()
+  label: string;
+  @Input()
   values: MultiSelectOptionValue[];
   @Input()
   options: MultiSelectOption[];
@@ -64,7 +66,6 @@ export class MultiSelectComponent implements OnInit {
   }
 
   checkIfAllSelected(values = this.values): boolean {
-    console.log('ALL SELECTED??', values, this.options);
     return values.length === this.options.length;
   }
 
@@ -80,13 +81,7 @@ export class MultiSelectComponent implements OnInit {
     this.isOpen = false;
   }
 
-  handleOptionChange({ name, ...other }) {
-    console.log(
-      '%c MUTLISELECT CHANGE OPTION',
-      'color: forestgreen',
-      name,
-      other
-    );
+  handleOptionChange({ name }) {
     const index = Number(name.replace(EXTRACT_OPTION_INDEX, ''));
     const option = this.options.find((x, i) => i === index);
     let valuesSet = new Set([...this.values]);
@@ -108,17 +103,8 @@ export class MultiSelectComponent implements OnInit {
   }
 
   handleSelectAll({ value }) {
-    // const values = new Set([...this.values]);
-    // const options = new Set([...this.options.map((op) => op.value)]);
-    // const hasAllSelected = values.size === options.size;
     const newValues = value ? this.options.map((op) => op.value) : [];
 
-    console.log(
-      '%c MUTLISELECT TOGGLE ALL',
-      'color: royalblue',
-      newValues,
-      this.name
-    );
     this.update.emit({ value: newValues, name: this.name });
     this.displayValue = this.getDisplayValue(newValues);
     this.hasAllSelected = this.checkIfAllSelected(newValues);

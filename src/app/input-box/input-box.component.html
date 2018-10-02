@@ -8,6 +8,8 @@
     (ngModelChange)="onChange($event)"
     placeholder=" "
     autoComplete="off"
+    [attr.min]="min"
+    [attr.max]="max"
     [attr.maxLength]="maxLength"
     [attr.disabled]="disabled"
     (focus)="onFocus"

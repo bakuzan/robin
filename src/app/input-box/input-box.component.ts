@@ -35,6 +35,8 @@ export class InputBoxComponent implements OnInit {
   @Input()
   value;
   @Input()
+  min: number;
+  @Input()
   max: number;
   @Input()
   maxLength: number;
@@ -50,13 +52,11 @@ export class InputBoxComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    console.log('input', this);
     this.isTextInput = this.type === 'text';
     this.hasMaxNumber = this.type === 'number' && !isNaN(this.max);
   }
 
   onChange(value) {
-    console.log('changed', this.name, value);
     this.change.emit({ value, name: this.name });
   }
 

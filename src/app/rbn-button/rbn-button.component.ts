@@ -26,9 +26,7 @@ export class RbnButtonComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
-    console.log(this);
-  }
+  ngOnInit() {}
 
   classes() {
     const size = this.size || (this.icon && 'small');

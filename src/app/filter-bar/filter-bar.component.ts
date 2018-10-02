@@ -19,7 +19,6 @@ export class FilterBarComponent implements OnInit {
   ngOnInit() {}
 
   onInput({ name, value }) {
-    console.log('%c FILTER BAR INPUT', 'color: rebeccapurple', name, value);
     this[name] = value;
   }
 }

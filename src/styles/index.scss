@@ -37,3 +37,12 @@ main {
 .padding {
   padding: $app--padding;
 }
+
+.button-group {
+  display: flex;
+  align-items: center;
+
+  &--right {
+    justify-content: flex-end;
+  }
+}

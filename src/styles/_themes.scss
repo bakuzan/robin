@@ -23,8 +23,19 @@
       }
     }
 
+    .multi-select__dropdown-container,
+    .select-box__input,
+    .dropdown__menu,
+    .autocomplete__menu {
+      background-color: $base-background;
+    }
+    .dropdown__arrow {
+      border-bottom-color: $base-background;
+    }
+
     // Primary
-    .themed-background {
+    .themed-background,
+    .button.themed-background {
       background-color: $primary-background;
       color: $primary-colour;
       &--reversed {

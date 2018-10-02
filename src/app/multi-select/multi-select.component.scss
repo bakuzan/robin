@@ -1,7 +1,7 @@
 @import '_variables';
 @import '_extensions';
 
-$full-size-minus-padding: calc(100% - 10px);
+$full-size-minus-padding: calc(100% - 5px);
 
 .multi-select {
   position: relative;
@@ -33,10 +33,12 @@ $full-size-minus-padding: calc(100% - 10px);
   &__dropdown-container {
     position: absolute;
     top: $full-size-minus-padding;
+    left: 5px;
     display: none;
     width: $full-size-minus-padding;
     @extend %standard-shadow;
     z-index: map-get($z-index, above-siblings);
+
     &--is-open {
       display: flex;
     }
@@ -45,6 +47,7 @@ $full-size-minus-padding: calc(100% - 10px);
 .display__input {
   display: flex;
   flex: 1 0 100%;
+  background: inherit;
   box-sizing: border-box;
   cursor: pointer;
 }
