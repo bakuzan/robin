@@ -1,6 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import classNames from 'classnames';
 
+import MultiSelectOption, {
+  MultiSelectOptionValue
+} from 'src/app/common/models/multi-select-option.model';
 import { Strings, OPEN_KEYS } from 'src/app/common/constants';
 
 const EXTRACT_OPTION_INDEX = /^.*-/g;
@@ -16,16 +19,28 @@ export class MultiSelectComponent implements OnInit {
   selectAllName: string;
   dropdownClasses: string;
   isOpen = false;
+  displayValue: string;
+  hasAllSelected: boolean;
   @Input()
   id: string;
   @Input()
+  name: string;
+  @Input()
+  values: MultiSelectOptionValue[];
+  @Input()
+  options: MultiSelectOption[];
+  @Input()
   listClassName: string;
+  @Output()
+  update: EventEmitter<any> = new EventEmitter();
 
   constructor() {}
 
   ngOnInit() {
     this.selectAllName = `${this.id}--selectAll`;
     this.dropdownClasses = this.getDropdownClasses();
+    this.displayValue = this.getDisplayValue();
+    this.hasAllSelected = this.checkIfAllSelected();
   }
 
   getDropdownClasses(): string {
@@ -34,6 +49,22 @@ export class MultiSelectComponent implements OnInit {
 
   getName(i) {
     return `${this.id}--${OPTION_PREFIX}${i}`;
+  }
+
+  getDisplayValue(): string {
+    const length = this.values.length;
+    if (!length) {
+      return '';
+    } else if (length === this.options.length) {
+      return ALL_SELECTED_TEXT;
+    } else if (length === 1) {
+      return this.options.find((x) => this.values.includes(x.value)).text;
+    }
+    return `${length} selected`;
+  }
+
+  checkIfAllSelected(): boolean {
+    return this.values.length === this.options.length;
   }
 
   handleToggleOpen(e) {
@@ -53,20 +84,28 @@ export class MultiSelectComponent implements OnInit {
     const option = this.options.find((x, i) => i === index);
     const valuesSet = new Set([...this.values]);
     const hasValue = valuesSet.has(option.value);
+    const value = Array.from(valuesSet.values());
+
     if (hasValue) {
       valuesSet.delete(option.value);
-      this.$emit('update', [...valuesSet.values()], this.name);
+      this.update.emit({ value, name: this.name });
     } else {
       valuesSet.add(option.value);
-      this.$emit('update', [...valuesSet.values()], this.name);
+      this.update.emit({ value, name: this.name });
     }
+
+    this.displayValue = this.getDisplayValue();
+    this.hasAllSelected = this.checkIfAllSelected();
   }
 
   handleSelectAll() {
     const values = new Set([...this.values]);
     const options = new Set([...this.options.map((op) => op.value)]);
     const hasAllSelected = values.size === options.size;
-    const newValues = hasAllSelected ? [] : [...options.values()];
-    this.$emit('update', newValues, this.name);
+    const newValues = hasAllSelected ? [] : Array.from(options.values());
+
+    this.update.emit({ value: newValues, name: this.name });
+    this.displayValue = this.getDisplayValue();
+    this.hasAllSelected = this.checkIfAllSelected();
   }
 }

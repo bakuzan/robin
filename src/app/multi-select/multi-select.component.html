@@ -15,7 +15,10 @@
     />
     <label [attr.for]="id">{{label}}</label>
   </div>
-  <div [class]="dropdownClasses" [ngClass]="{ 'multi-select__dropdown-container--is-open': this.isOpen }">
+  <div
+    [class]="dropdownClasses"
+    [ngClass]="{ 'multi-select__dropdown-container--is-open': this.isOpen }"
+  >
     <ul class="multi-select__list">
       <li>
         <app-tickbox
@@ -26,10 +29,8 @@
           Select All
         </app-tickbox>
       </li>
-      <li
-        class="multi-select__separator"
-      />
-      <li *ngFor="let (op, i) of options">
+      <li class="multi-select__separator"></li>
+      <li *ngFor="let op of options; let i = index;">
         <app-tickbox
           [name]="getName(i)"
           [checked]="values.includes(op.value)"
@@ -37,6 +38,9 @@
         >{{op.text}}</app-tickbox>
       </li>
     </ul>
-    <app-backdrop [attr.id]="id" (close)="handleToggleClose"></app-backdrop>
+    <app-backdrop
+      [attr.id]="id"
+      (close)="handleToggleClose($event)"
+    ></app-backdrop>
   </div>
 </div>

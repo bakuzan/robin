@@ -16,6 +16,7 @@ import { InputBoxComponent } from './input-box/input-box.component';
 import { RbnButtonComponent } from './rbn-button/rbn-button.component';
 import { MultiSelectComponent } from './multi-select/multi-select.component';
 import { TickboxComponent } from './tickbox/tickbox.component';
+import { BackdropComponent } from './backdrop/backdrop.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { TickboxComponent } from './tickbox/tickbox.component';
     RbnButtonComponent,
     SeriesCreateComponent,
     MultiSelectComponent,
-    TickboxComponent
+    TickboxComponent,
+    BackdropComponent
   ],
   imports: [BrowserModule, AppRoutingModule, FormsModule],
   providers: [],

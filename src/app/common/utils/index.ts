@@ -1,3 +1,5 @@
+/*tslint:disable:no-bitwise*/
+
 import Listeners from './listeners.model';
 import { Strings } from 'src/app/common/constants';
 
@@ -29,3 +31,12 @@ export const getEventValue = ({ type, checked, value }) =>
     : type === Strings.date || type === Strings.text
       ? value
       : parseIfInt(value);
+
+export const generateUniqueId = (): string =>
+  (`${1e7}` + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (s) => {
+    const c: number = Number(s);
+    return (
+      c ^
+      (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+    ).toString(16);
+  });
