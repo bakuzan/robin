@@ -14,7 +14,7 @@ export class SeriesService {
     return null;
   }
 
-  getSeriesById(id: string): Observable<Series> {
+  getSeriesById(id: number): Observable<Series> {
     console.log('%c getSeriesById', 'color: royalblue', id);
     return null;
   }

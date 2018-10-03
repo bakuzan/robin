@@ -28,11 +28,10 @@ export class SelectBoxComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    console.log('select box', this);
     this.selectClasses = classNames('select-box', 'has-float-label');
   }
 
-  handleChange(event) {
-    this.change.emit({ value: event.target.value, name: this.name });
+  handleChange(value) {
+    this.change.emit({ value, name: this.name });
   }
 }

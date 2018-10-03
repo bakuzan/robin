@@ -1,7 +1,7 @@
 import SeriesType from './series-types.enum';
 
 export default class Series {
-  name: string;
+  name = '';
   type: SeriesType;
-  endsAt: number;
+  volumeCount: number = null;
 }

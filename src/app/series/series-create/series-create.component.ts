@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NgForm } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 
 import { SeriesService } from '../shared/series.service';
@@ -13,22 +14,41 @@ import { mapEnumToSelectOption } from 'src/app/common/utils/mappers';
   styleUrls: ['./series-create.component.scss']
 })
 export class SeriesCreateComponent implements OnInit {
-  private seriesId: string;
+  private seriesId: number;
   cancelUrl = `/${Urls.seriesList}`;
+  seriesForm: NgForm;
   types = mapEnumToSelectOption(SeriesTypes);
-  series$: Observable<Series>;
+  series: Series;
 
   constructor(private route: ActivatedRoute, private service: SeriesService) {}
 
   ngOnInit() {
-    this.route.params.subscribe((params) => {
-      this.seriesId = params['id'];
-      console.log(this, this.seriesId);
-      if (this.seriesId) {
-        this.series$ = this.service.getSeriesById(this.seriesId);
-      } else {
-        this.series$ = of(new Series());
-      }
-    });
+    this.seriesId = +this.route.snapshot.paramMap.get('id');
+
+    if (this.seriesId) {
+      this.getSeries();
+    } else {
+      this.series = new Series();
+    }
+  }
+
+  getSeries() {
+    this.service
+      .getSeriesById(this.seriesId)
+      .subscribe((series) => (this.series = series));
+  }
+
+  onInput({ value, name }) {
+    this.series[name] = value;
+  }
+
+  onSubmit(event) {
+    console.log(
+      '%c submitted series form',
+      'color: brickred',
+      event,
+      this.seriesId,
+      this.series
+    );
   }
 }
