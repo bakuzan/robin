@@ -15,7 +15,15 @@
         [value]="name"
         (change)="onInput($event)"
       ></app-input-box>
-
+      <app-select-box
+        class="form__input"
+        label="Type"
+        name="type"
+        [value]="type"
+        [options]="types"
+        [required]="true"
+        (change)="onInput($event)"
+      ></app-select-box>
       <app-input-box
         class="form__input"
         type="number"

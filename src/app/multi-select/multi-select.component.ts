@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import classNames from 'classnames';
 
-import MultiSelectOption, {
-  MultiSelectOptionValue
-} from 'src/app/common/models/multi-select-option.model';
+import SelectOption, {
+  SelectOptionValue
+} from '../common/models/select-option.model';
 import { Strings, OPEN_KEYS } from 'src/app/common/constants';
 
 const EXTRACT_OPTION_INDEX = /^.*-/g;
@@ -28,9 +28,9 @@ export class MultiSelectComponent implements OnInit {
   @Input()
   label: string;
   @Input()
-  values: MultiSelectOptionValue[];
+  values: SelectOptionValue[];
   @Input()
-  options: MultiSelectOption[];
+  options: SelectOption[];
   @Input()
   listClassName: string;
   @Output()

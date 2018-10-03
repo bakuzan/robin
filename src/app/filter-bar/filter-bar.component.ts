@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import SeriesType from 'src/app/common/constants/series-types';
-import { mapEnumToMultiSelectOption } from 'src/app/common/utils/mappers';
+import { SeriesTypes } from 'src/app/common/constants/series-types';
+import { mapEnumToSelectOption } from 'src/app/common/utils/mappers';
 
 @Component({
   selector: 'app-filter-bar',
@@ -10,9 +10,9 @@ import { mapEnumToMultiSelectOption } from 'src/app/common/utils/mappers';
 })
 export class FilterBarComponent implements OnInit {
   addUrl = 'create';
-  seriesTypeOptions = mapEnumToMultiSelectOption(SeriesType);
+  seriesTypeOptions = mapEnumToSelectOption(SeriesTypes);
   search = '';
-  types = Array.from(SeriesType);
+  types = Array.from(SeriesTypes);
 
   constructor() {}
 

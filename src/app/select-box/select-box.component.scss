@@ -1,0 +1,24 @@
+.select-box {
+  flex: 1;
+  padding: 5px;
+  min-height: 35px;
+  box-sizing: content-box;
+  &::after {
+    content: '\2335';
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    font-weight: bold;
+    pointer-events: none;
+  }
+  &__input {
+    width: 100%;
+    background-color: inherit;
+    color: inherit;
+  }
+  &__option {
+    background-color: inherit;
+    color: inherit;
+  }
+}

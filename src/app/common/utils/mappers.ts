@@ -1,10 +1,10 @@
-import MultiSelectOption from '../models/multi-select-option.model';
+import SelectOption from '../models/select-option.model';
 
 export function mapEnumsToObject<T>(arr: ReadonlyArray<string>): T {
   return arr.reduce((p, k) => Object.assign(p, { [k]: k }), {} as T);
 }
 
-export const mapEnumToMultiSelectOption = (
+export const mapEnumToSelectOption = (
   arr: ReadonlyArray<string>
-): MultiSelectOption[] =>
-  arr.map((x) => ({ value: x, text: x } as MultiSelectOption));
+): SelectOption[] =>
+  arr.map((x, i) => ({ value: i + 1, text: x } as SelectOption));
