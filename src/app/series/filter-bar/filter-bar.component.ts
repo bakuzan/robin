@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
-import { SeriesTypes } from 'src/app/common/constants/series-types';
+import SeriesType, { SeriesTypes } from '../shared/series-types.enum';
 import { mapEnumToSelectOption } from 'src/app/common/utils/mappers';
 
 @Component({
@@ -12,7 +12,9 @@ export class FilterBarComponent implements OnInit {
   addUrl = 'create';
   seriesTypeOptions = mapEnumToSelectOption(SeriesTypes);
   search = '';
-  types = Array.from(SeriesTypes);
+  types: SeriesType[] = Array.from(SeriesTypes.map((_, i) => i + 1));
+  @Output()
+  update: EventEmitter<any> = new EventEmitter();
 
   constructor() {}
 
@@ -20,5 +22,6 @@ export class FilterBarComponent implements OnInit {
 
   onInput({ name, value }) {
     this[name] = value;
+    this.update.emit({ search: this.search, types: this.types });
   }
 }

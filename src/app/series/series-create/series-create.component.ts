@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 
 import { SeriesService } from '../shared/series.service';
 import { Urls, SeriesTypes } from 'src/app/common/constants';
@@ -14,28 +13,22 @@ import { mapEnumToSelectOption } from 'src/app/common/utils/mappers';
   styleUrls: ['./series-create.component.scss']
 })
 export class SeriesCreateComponent implements OnInit {
-  private isCreate: boolean;
+  private seriesId: string;
   cancelUrl = `/${Urls.seriesList}`;
   types = mapEnumToSelectOption(SeriesTypes);
   series$: Observable<Series>;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private service: SeriesService
-  ) {}
+  constructor(private route: ActivatedRoute, private service: SeriesService) {}
 
   ngOnInit() {
-    console.log(this);
-    this.isCreate = true;
-    if (this.isCreate) {
-      this.series$ = of(new Series());
-    } else {
-      this.series$ = this.route.paramMap.pipe(
-        switchMap((params: ParamMap) =>
-          this.service.getSeries(params.get('id'))
-        )
-      );
-    }
+    this.route.params.subscribe((params) => {
+      this.seriesId = params['id'];
+      console.log(this, this.seriesId);
+      if (this.seriesId) {
+        this.series$ = this.service.getSeriesById(this.seriesId);
+      } else {
+        this.series$ = of(new Series());
+      }
+    });
   }
 }

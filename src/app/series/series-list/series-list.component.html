@@ -1,4 +1,4 @@
-<app-filter-bar></app-filter-bar>
+<app-filter-bar (onFilter)="search($event)"></app-filter-bar>
 <ul class="list four">
   <li
     *ngFor="let item of series"
