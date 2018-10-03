@@ -6,5 +6,4 @@ export function mapEnumsToObject<T>(arr: ReadonlyArray<string>): T {
 
 export const mapEnumToSelectOption = (
   arr: ReadonlyArray<string>
-): SelectOption[] =>
-  arr.map((x, i) => ({ value: i + 1, text: x } as SelectOption));
+): SelectOption[] => arr.map((x) => ({ value: x, text: x } as SelectOption));

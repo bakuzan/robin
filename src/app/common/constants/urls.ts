@@ -1,4 +1,15 @@
-import { RobinUrls } from './models';
+class RobinUrls {
+  build: Function;
+  images: ImageUrls;
+  graphqlEndpoint: string;
+  base: string;
+  dashboard: string;
+  seriesList: string;
+  seriesCreate: string;
+}
+class ImageUrls {
+  deadImage: string;
+}
 
 const Urls: RobinUrls = Object.freeze({
   build: (path, params) => {
@@ -12,6 +23,7 @@ const Urls: RobinUrls = Object.freeze({
   images: {
     deadImage: 'https://i.imgur.com/gKr1YhF.png'
   },
+  graphqlEndpoint: '/graphql',
   base: 'robin',
   dashboard: 'dashboard',
   seriesList: 'series',

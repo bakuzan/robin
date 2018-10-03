@@ -12,7 +12,7 @@ export class FilterBarComponent implements OnInit {
   addUrl = 'create';
   seriesTypeOptions = mapEnumToSelectOption(SeriesTypes);
   search = '';
-  types: SeriesType[] = Array.from(SeriesTypes.map((_, i) => i + 1));
+  types: SeriesType[] = Array.from(SeriesTypes);
   @Output()
   update: EventEmitter<any> = new EventEmitter();
 

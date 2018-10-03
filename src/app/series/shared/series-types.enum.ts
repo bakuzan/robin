@@ -1,7 +1,9 @@
 enum SeriesType {
-  Manga = 1,
-  Comic
+  Manga = 'Manga',
+  Comic = 'Comic'
 }
 export default SeriesType;
 
-export const SeriesTypes = Object.freeze(['Manga', 'Comic']);
+export const SeriesTypes = Object.freeze(
+  Object.keys(SeriesType).map((k) => SeriesType[k] as SeriesType)
+);
