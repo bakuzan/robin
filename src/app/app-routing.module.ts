@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { DashboardComponent } from 'src/app/dashboard/dashboard.component';
-import { SeriesListComponent } from 'src/app/series-list/series-list.component';
-import { SeriesCreateComponent } from 'src/app/series-create/series-create.component';
+import { SeriesListComponent } from 'src/app/series/series-list/series-list.component';
+import { SeriesCreateComponent } from 'src/app/series/series-create/series-create.component';
 import { Urls } from 'src/app/common/constants';
 
 const routes: Routes = [

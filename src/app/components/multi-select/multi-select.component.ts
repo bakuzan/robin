@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import SelectOption, {
   SelectOptionValue
-} from '../common/models/select-option.model';
+} from 'src/app/common/models/select-option.model';
 import { Strings, OPEN_KEYS } from 'src/app/common/constants';
 
 const EXTRACT_OPTION_INDEX = /^.*-/g;
