@@ -2,7 +2,7 @@ const gql = require('graphql-tag');
 
 const Query = gql`
   type Query {
-    series(search: String, types: [SeriesType]): [Series]
+    series(filters: SeriesFilter): [Series]
     seriesById(id: Int!): Series
   }
 `;

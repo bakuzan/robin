@@ -1,7 +1,7 @@
-<app-filter-bar (onFilter)="search($event)"></app-filter-bar>
+<app-filter-bar (update)="search($event)"></app-filter-bar>
 <ul class="list four">
   <li
-    *ngFor="let item of series"
+    *ngFor="let item of series$ | async"
     class="list__item"
   >
     {{item.name}}

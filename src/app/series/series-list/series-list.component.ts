@@ -26,6 +26,7 @@ export class SeriesListComponent implements OnInit {
   }
 
   search(params: SeriesFilter): void {
+    console.log('search!', params);
     this.filterParams.next(params);
   }
 }

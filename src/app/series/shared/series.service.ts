@@ -4,8 +4,10 @@ import { catchError, tap } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Urls } from 'src/app/common/constants';
+import { createApolloServerPayload } from 'src/app/common/utils/query-builder';
 import Series from './series.model';
 import SeriesFilter from './series-filter.model';
+import SeriesGQL from './queries';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -19,9 +21,13 @@ export class SeriesService {
 
   constructor(private http: HttpClient) {}
 
-  getSeries(filter: SeriesFilter): Observable<Series[]> {
-    return this.http.post<Series[]>(this.seriesUrl, filter, httpOptions).pipe(
-      tap((_) => console.log(`found series matching`, filter)),
+  getSeries(filters: SeriesFilter): Observable<Series[]> {
+    const payload = createApolloServerPayload(SeriesGQL.Query.getSeries, {
+      filters
+    });
+
+    return this.http.post<Series[]>(this.seriesUrl, payload, httpOptions).pipe(
+      tap((_) => console.log(`found series matching`, filters)),
       catchError(this.handleError<Series[]>('searchSeries', []))
     );
   }
