@@ -11,6 +11,7 @@ import { MultiSelectComponent } from './multi-select/multi-select.component';
 import { TickboxComponent } from './tickbox/tickbox.component';
 import { BackdropComponent } from './backdrop/backdrop.component';
 import { SelectBoxComponent } from './select-box/select-box.component';
+import { ListComponent } from './list/list.component';
 
 @NgModule({
   imports: [AppRoutingModule, CommonModule, FormsModule],
@@ -22,7 +23,8 @@ import { SelectBoxComponent } from './select-box/select-box.component';
     MultiSelectComponent,
     TickboxComponent,
     BackdropComponent,
-    SelectBoxComponent
+    SelectBoxComponent,
+    ListComponent
   ],
   exports: [
     LogoComponent,
@@ -32,7 +34,8 @@ import { SelectBoxComponent } from './select-box/select-box.component';
     MultiSelectComponent,
     TickboxComponent,
     BackdropComponent,
-    SelectBoxComponent
+    SelectBoxComponent,
+    ListComponent
   ]
 })
 export class ComponentsModule {}

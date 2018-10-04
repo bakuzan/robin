@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, tap, map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Urls } from 'src/app/common/constants';
@@ -28,7 +28,10 @@ export class SeriesService {
 
     return this.http.post<Series[]>(this.seriesUrl, payload, httpOptions).pipe(
       tap((_) => console.log(`found series matching`, filters)),
-      catchError(this.handleError<Series[]>('searchSeries', []))
+      catchError(this.handleError<Series[]>('searchSeries', [])),
+      map(
+        (response: any) => response.data && (response.data.series as Series[])
+      )
     );
   }
 
@@ -36,7 +39,8 @@ export class SeriesService {
     const url = `${this.seriesUrl}/${id}`;
     return this.http.get<Series>(url).pipe(
       tap((_) => this.log(`fetched series id=${id}`)),
-      catchError(this.handleError<Series>(`getSeries id=${id}`))
+      catchError(this.handleError<Series>(`getSeries id=${id}`)),
+      map((response: any) => response.seriesById as Series)
     );
   }
 

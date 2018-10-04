@@ -1,9 +1,12 @@
 <app-filter-bar (update)="search($event)"></app-filter-bar>
-<ul class="list four">
-  <li
-    *ngFor="let item of series$ | async"
-    class="list__item"
-  >
-    {{item.name}}
-  </li>
-</ul>
+<app-list
+  columns="five"
+  [fixedWidth]="true"
+  [items]="series$"
+>
+  <ng-template let-item="item">
+    <app-nav-link to="view/{{item.id}}">
+      {{item.name}}
+    </app-nav-link>
+  </ng-template>
+</app-list>

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 import { SeriesService } from '../shared/series.service';
 import Series from '../shared/series.model';
 import SeriesFilter from '../shared/series-filter.model';
+import { SeriesTypes } from '../shared/series-types.enum';
 
 @Component({
   selector: 'app-series-list',
@@ -12,7 +13,10 @@ import SeriesFilter from '../shared/series-filter.model';
   styleUrls: ['./series-list.component.scss']
 })
 export class SeriesListComponent implements OnInit {
-  private filterParams = new Subject<SeriesFilter>();
+  private filterParams = new BehaviorSubject<SeriesFilter>({
+    search: '',
+    types: Array.from(SeriesTypes)
+  });
   series$: Observable<Series[]>;
 
   constructor(private service: SeriesService) {}
@@ -26,7 +30,7 @@ export class SeriesListComponent implements OnInit {
   }
 
   search(params: SeriesFilter): void {
-    console.log('search!', params);
+    console.log('search!', params, this.series$);
     this.filterParams.next(params);
   }
 }

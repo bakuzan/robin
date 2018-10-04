@@ -23,7 +23,7 @@ export class SelectBoxComponent implements OnInit {
   @Input()
   options: number[];
   @Output()
-  change: EventEmitter<any> = new EventEmitter();
+  update: EventEmitter<any> = new EventEmitter();
 
   constructor() {}
 
@@ -32,6 +32,6 @@ export class SelectBoxComponent implements OnInit {
   }
 
   handleChange(value) {
-    this.change.emit({ value, name: this.name });
+    this.update.emit({ value, name: this.name });
   }
 }

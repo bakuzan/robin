@@ -3,21 +3,16 @@ const Op = require('sequelize').Op;
 const { Series } = require('../../connectors');
 
 module.exports = {
-  series(_, { search = '', sources }) {
-    const resolvedArgs = sources
-      ? {
-          source: {
-            [Op.in]: sources
-          }
-        }
-      : {};
-
+  series(_, { filters }) {
+    const { search = '', types = [] } = filters;
     return Series.findAll({
       where: {
         name: {
           [Op.like]: `%${search}%`
         },
-        ...resolvedArgs
+        type: {
+          [Op.in]: types
+        }
       },
       order: [['name', 'ASC']]
     });

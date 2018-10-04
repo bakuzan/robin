@@ -1,12 +1,10 @@
 export const createApolloServerPayload = (gqlQuery, variables) => {
   const query = gqlQuery.loc.source.body;
-  const operationName = query
-    .replace(/.*?(?= )/, '')
-    .replace(/[({].*/, '')
-    .trim();
-  console.log('apollo query prep', query, variables);
+  const [_, withOpName] = query.split(' ');
+  const [operationName] = withOpName.split('(');
+
   return {
-    operationName,
+    operationName: operationName ? operationName.trim() : undefined,
     query,
     variables
   };

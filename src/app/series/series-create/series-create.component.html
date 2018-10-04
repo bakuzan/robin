@@ -21,7 +21,7 @@
         label="Name"
         name="name"
         [value]="series.name"
-        (change)="onInput($event)"
+        (update)="onInput($event)"
       ></app-input-box>
       <app-select-box
         class="form__input"
@@ -30,7 +30,7 @@
         [value]="series.type"
         [options]="types"
         [required]="true"
-        (change)="onInput($event)"
+        (update)="onInput($event)"
       ></app-select-box>
       <app-input-box
         class="form__input"
@@ -39,7 +39,7 @@
         name="volumeCount"
         min="0"
         [value]="series.volumeCount"
-        (change)="onInput($event)"
+        (update)="onInput($event)"
       ></app-input-box>
     </div>
   </form>

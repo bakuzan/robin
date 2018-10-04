@@ -1,0 +1,8 @@
+<ul [class]="listClasses">
+  <li
+    *ngFor="let item of items | async"
+    [class]="listItemClasses"
+  >
+    <ng-container *ngTemplateOutlet="itemTemplate; context: { item: item };"></ng-container>
+  </li>
+</ul>

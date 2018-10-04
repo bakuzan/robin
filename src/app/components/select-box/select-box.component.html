@@ -1,23 +1,23 @@
 <div [class]="selectClasses">
   <select
     class="select-box__input"
-    [id]="id"
-    [name]="name"
-    [ngModel]="value"
-    [disabled]="disabled"
-    [required]="required"
+    [attr.id]="id"
+    [attr.name]="name"
+    [(ngModel)]="value"
+    [attr.disabled]="disabled"
+    [attr.required]="required"
     (ngModelChange)="handleChange($event)"
   >
     <option
       *ngIf="!required"
-      [value]=""
+      [value]="null"
       class="select-box__option"
     >
       None
     </option>
     <option
       *ngIf="required && (value !== 0 && !value)"
-      [value]=""
+      [value]="null"
       class="select-box__option"
     >
       Please select a {{label}}

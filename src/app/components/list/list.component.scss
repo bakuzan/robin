@@ -1,0 +1,48 @@
+@import '_variables.scss';
+@import '_extensions.scss';
+
+$columns: (
+  one: 100%,
+  two: 50%,
+  three: 33%,
+  four: 25%,
+  five: 20%
+);
+
+.list {
+  display: flex;
+  flex-direction: row;
+  width: calc(100% - 10px);
+  padding: 5px;
+  margin: 5px 0;
+  list-style-type: none;
+  .formatting-container {
+    display: flex;
+    width: 100%;
+  }
+  &--column {
+    flex-direction: column;
+    &:not(.list--column_one) {
+      flex-flow: wrap;
+    }
+    @each $number, $percentage in $columns {
+      &_#{$number} .list__item:not(.list__item--fixed-width) {
+        flex: 1 1 $percentage;
+      }
+      &_#{$number} .list__item--fixed-width {
+        flex: 0 0 $percentage;
+      }
+    }
+  }
+  &--wrap {
+    flex-wrap: wrap;
+  }
+}
+.list__item {
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  padding: $app--padding;
+  @extend %standard-border;
+  box-sizing: border-box;
+}

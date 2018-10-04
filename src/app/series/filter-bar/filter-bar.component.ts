@@ -22,6 +22,7 @@ export class FilterBarComponent implements OnInit {
 
   onInput({ name, value }) {
     this[name] = value;
+    console.log('inputed!', name, value);
     this.update.emit({ search: this.search, types: this.types });
   }
 }

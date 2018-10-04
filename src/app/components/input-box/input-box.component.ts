@@ -41,13 +41,13 @@ export class InputBoxComponent implements OnInit {
   @Input()
   maxLength: number;
   @Output()
-  change: EventEmitter<any> = new EventEmitter();
+  update: EventEmitter<any> = new EventEmitter();
   @Output()
   blur: EventEmitter<any> = new EventEmitter();
   @Output()
   focus: EventEmitter<any> = new EventEmitter();
   @Output()
-  keydown: EventEmitter<any> = new EventEmitter();
+  keyDown: EventEmitter<any> = new EventEmitter();
 
   constructor() {}
 
@@ -57,17 +57,17 @@ export class InputBoxComponent implements OnInit {
   }
 
   onChange(value) {
-    this.change.emit({ value, name: this.name });
+    this.update.emit({ value, name: this.name });
   }
 
-  onFocus(e) {
+  handleFocus(e) {
     this.focus.emit(e);
   }
-  onBlur(e) {
+  handleBlur(e) {
     this.blur.emit(e);
   }
-  onKeyDown(e) {
-    this.keydown.emit(e);
+  handleKeyDown(e) {
+    this.keyDown.emit(e);
   }
 
   classes() {

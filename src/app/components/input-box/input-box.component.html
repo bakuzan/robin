@@ -12,9 +12,9 @@
     [attr.max]="max"
     [attr.maxLength]="maxLength"
     [attr.disabled]="disabled"
-    (focus)="onFocus"
-    (blur)="onBlur"
-    (keydown)="onKeyDown"
+    (focus)="handleFocus"
+    (blur)="handleBlur"
+    (keydown)="handleKeyDown"
   />
   <label for="{{name}}">{{label}}</label>
   <app-rbn-button
