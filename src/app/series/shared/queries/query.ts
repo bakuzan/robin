@@ -9,6 +9,18 @@ const getSeries = gql`
   }
 `;
 
+const getSeriesById = gql`
+  query GetSeriesById($id: Int!) {
+    seriesById(id: $id) {
+      id
+      name
+      type
+      volumeCount
+    }
+  }
+`;
+
 export default {
-  getSeries
+  getSeries,
+  getSeriesById
 };

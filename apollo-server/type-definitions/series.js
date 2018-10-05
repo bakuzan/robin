@@ -4,6 +4,7 @@ module.exports = gql`
   type Series {
     id: Int!
     name: String
+    type: SeriesType
     volumeCount: Int
   }
   input SeriesFilter {
@@ -13,6 +14,7 @@ module.exports = gql`
   input SeriesInput {
     id: Int
     name: String
+    type: SeriesType
     volumeCount: Int
   }
 `;

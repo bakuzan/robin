@@ -36,11 +36,15 @@ export class SeriesService {
   }
 
   getSeriesById(id: number): Observable<Series> {
-    const url = `${this.seriesUrl}/${id}`;
-    return this.http.get<Series>(url).pipe(
+    const payload = createApolloServerPayload(SeriesGQL.Query.getSeriesById, {
+      id
+    });
+    return this.http.post<Series>(this.seriesUrl, payload, httpOptions).pipe(
       tap((_) => this.log(`fetched series id=${id}`)),
       catchError(this.handleError<Series>(`getSeries id=${id}`)),
-      map((response: any) => response.seriesById as Series)
+      map(
+        (response: any) => response.data && (response.data.seriesById as Series)
+      )
     );
   }
 
