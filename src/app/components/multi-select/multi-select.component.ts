@@ -4,10 +4,7 @@ import {
   Input,
   Output,
   EventEmitter,
-  forwardRef,
-  Injector,
-  OnChanges,
-  SimpleChanges
+  forwardRef
 } from '@angular/core';
 import {
   ControlValueAccessor,
@@ -21,7 +18,6 @@ import SelectOption, {
 } from 'src/app/common/models/select-option.model';
 import { Strings, OPEN_KEYS } from 'src/app/common/constants';
 
-const EXTRACT_OPTION_INDEX = /^.*-/g;
 const OPTION_PREFIX = 'option-';
 const ALL_SELECTED_TEXT = 'All Selected';
 
@@ -37,8 +33,7 @@ const ALL_SELECTED_TEXT = 'All Selected';
     }
   ]
 })
-export class MultiSelectComponent
-  implements OnInit, OnChanges, ControlValueAccessor {
+export class MultiSelectComponent implements OnInit, ControlValueAccessor {
   selectAllName: string;
   dropdownClasses: string;
   isOpen = false;
@@ -63,25 +58,31 @@ export class MultiSelectComponent
   @Output()
   update: EventEmitter<any> = new EventEmitter();
 
-  constructor(private inj: Injector) {}
+  constructor() {}
 
   ngOnInit() {
-    this.ngControl = this.inj.get(NgControl);
-    const value = this.ngControl.value;
-    console.log(this.ngControl);
     this.selectAllName = `${this.id}--selectAll`;
     this.dropdownClasses = this.getDropdownClasses();
+    this.optionsSelected = this.options.map((x) => ({
+      ...x,
+      selected: false
+    }));
+  }
+
+  writeValue(obj: SelectOptionValue[]): void {
+    this.value = obj;
+    const value = this.value;
+
+    /* Set derived values 
+      - display text
+      - check all state
+      - selected options
+    */
     this.displayValue = this.getDisplayValue(value);
     this.hasAllSelected = this.checkIfAllSelected(value);
-    this.optionsSelected = this.setOptionsSelected(value);
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    console.log('changes', changes);
-  }
-
-  writeValue(obj: any): void {
-    this.value = obj;
+    this.optionsSelected.forEach(
+      (x) => (x.selected = value && value.includes(x.value))
+    );
   }
   registerOnChange(fn: any): void {
     this.onChange = fn;
@@ -91,14 +92,6 @@ export class MultiSelectComponent
   }
   setDisabledState?(isDisabled: boolean): void {
     throw new Error('Method not implemented.');
-  }
-
-  setOptionsSelected(value) {
-    console.log('set options', value, this.options);
-    return this.options.map((x) => ({
-      ...x,
-      selected: value && value.includes(x.value)
-    }));
   }
 
   getDropdownClasses(): string {
@@ -137,31 +130,23 @@ export class MultiSelectComponent
     this.isOpen = false;
   }
 
-  handleOptionChange({ name }) {
-    const index = Number(name.replace(EXTRACT_OPTION_INDEX, ''));
-    const option = this.options.find((x, i) => i === index);
-    let valuesSet = new Set([...this.value]);
-
-    if (valuesSet.has(option.value)) {
-      valuesSet.delete(option.value);
-    } else {
-      valuesSet = valuesSet.add(option.value);
-    }
-
-    const value = Array.from(valuesSet.values());
+  handleOptionChange() {
+    const value = this.optionsSelected
+      .filter((x) => x.selected)
+      .map((x) => x.value);
+    console.log('option change', value, this, this.optionsSelected);
     this.onChange(value);
 
     this.displayValue = this.getDisplayValue(value);
     this.hasAllSelected = this.checkIfAllSelected(value);
-    this.optionsSelected = this.setOptionsSelected(value);
   }
 
-  handleSelectAll({ value }) {
-    const newValues = value ? this.options.map((op) => op.value) : [];
+  handleSelectAll(value) {
+    const newValues = value ? this.options.map((x) => x.value) : [];
+    this.optionsSelected.forEach((x) => (x.selected = value));
 
-    this.onChange(value);
+    this.onChange(newValues);
     this.displayValue = this.getDisplayValue(newValues);
     this.hasAllSelected = this.checkIfAllSelected(newValues);
-    this.optionsSelected = this.setOptionsSelected(newValues);
   }
 }
