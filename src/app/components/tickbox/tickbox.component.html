@@ -4,13 +4,14 @@
     [attr.for]="name"
   >
     <input
+      #checkbox
       type="checkbox"
       class="tickbox__input"
       [attr.id]="name"
       [attr.name]="name"
       [(ngModel)]="checked"
       [attr.disabled]="disabled"
-      (ngModelChange)="onChange($event)"
+      (ngModelChange)="handleChange($event)"
     />
     <ng-content></ng-content>
   </label>

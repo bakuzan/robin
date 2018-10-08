@@ -23,18 +23,18 @@
       <li>
         <app-tickbox
           [name]="selectAllName"
-          [checked]="hasAllSelected"
-          (toggle)="handleSelectAll($event)"
+          [(ngModel)]="hasAllSelected"
+          (ngModelChange)="handleSelectAll($event)"
         >
           Select All
         </app-tickbox>
       </li>
       <li class="multi-select__separator"></li>
-      <li *ngFor="let op of options; let i = index;">
+      <li *ngFor="let op of optionsSelected; let i = index;">
         <app-tickbox
           [name]="getName(i)"
-          [checked]="values.includes(op.value)"
-          (toggle)="handleOptionChange($event)"
+          [(ngModel)]="op.selected"
+          (ngModelChange)="handleOptionChange($event)"
         >{{op.text}}</app-tickbox>
       </li>
     </ul>

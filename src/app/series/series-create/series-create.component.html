@@ -20,17 +20,15 @@
         class="form__input"
         label="Name"
         name="name"
-        [value]="series.name"
-        (update)="onInput($event)"
+        [(ngModel)]="series.name"
       ></app-input-box>
       <app-select-box
         class="form__input"
         label="Type"
         name="type"
-        [value]="series.type"
+        [(ngModel)]="series.type"
         [options]="types"
         [required]="true"
-        (update)="onInput($event)"
       ></app-select-box>
       <app-input-box
         class="form__input"
@@ -38,8 +36,7 @@
         label="Ending Volume"
         name="volumeCount"
         min="0"
-        [value]="series.volumeCount"
-        (update)="onInput($event)"
+        [(ngModel)]="series.volumeCount"
       ></app-input-box>
     </div>
   </form>

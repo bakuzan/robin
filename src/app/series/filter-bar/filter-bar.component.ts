@@ -20,9 +20,8 @@ export class FilterBarComponent implements OnInit {
 
   ngOnInit() {}
 
-  onInput({ name, value }) {
-    this[name] = value;
-    console.log('inputed!', name, value);
+  onInput() {
+    console.log('update!', this.search, this.types);
     this.update.emit({ search: this.search, types: this.types });
   }
 }

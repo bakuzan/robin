@@ -2,16 +2,16 @@
   <app-input-box
     class="filter-bar__input"
     name="search"
-    [value]="search"
-    (update)="onInput($event)"
+    [(ngModel)]="search"
+    (ngModelChange)="onInput($event)"
   ></app-input-box>
   <app-multi-select
     id="types"
     name="types"
     label="Types"
     [options]="seriesTypeOptions"
-    [values]="types"
-    (update)="onInput($event)"
+    [(ngModel)]="types"
+    (ngModelChange)="onInput($event)"
   ></app-multi-select>
   <app-nav-link
     class="button button--link themed-background"

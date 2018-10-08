@@ -1,13 +1,34 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  Renderer2,
+  ViewChild,
+  forwardRef
+} from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import classNames from 'classnames';
 
 @Component({
   selector: 'app-tickbox',
   templateUrl: './tickbox.component.html',
-  styleUrls: ['./tickbox.component.scss']
+  styleUrls: ['./tickbox.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => TickboxComponent),
+      multi: true
+    }
+  ]
 })
-export class TickboxComponent implements OnInit {
+export class TickboxComponent implements OnInit, ControlValueAccessor {
   tickboxClasses: string;
+  onTouched: () => void;
+  onChange: (_: any) => void;
+  @ViewChild('checkbox')
+  checkbox;
   @Input()
   name: string;
   @Input()
@@ -19,17 +40,30 @@ export class TickboxComponent implements OnInit {
   @Output()
   toggle: EventEmitter<any> = new EventEmitter();
 
-  constructor() {}
+  constructor(private _renderer: Renderer2) {}
 
   ngOnInit() {
-    this.tickboxClasses = this.getTickboxClasses();
+    this.tickboxClasses = classNames('tickbox', this.customTickbox);
   }
 
-  getTickboxClasses(): string {
-    return classNames('tickbox', this.customTickbox);
+  writeValue(value: boolean): void {
+    const checkbox = this.checkbox.nativeElement;
+    this._renderer.setProperty(checkbox, 'checked', value);
+  }
+  registerOnChange(fn: (_: any) => void): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+  setDisabledState?(isDisabled: boolean): void {
+    const checkbox = this.checkbox.nativeElement;
+    const action = isDisabled ? 'addClass' : 'removeClass';
+    this._renderer.setProperty(checkbox, 'disabled', isDisabled);
+    checkbox[action]('input-box--disabled');
   }
 
-  onChange(value) {
-    this.toggle.emit({ value, name: this.name });
+  handleChange(value) {
+    this.onChange(value);
   }
 }

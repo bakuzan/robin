@@ -1,11 +1,11 @@
-<div [class]="classes()">
+<div [class]="classes">
   <input
     #input
     [attr.type]="type"
     [attr.id]="id"
     [attr.name]="name"
     [(ngModel)]="value"
-    (ngModelChange)="onChange($event)"
+    (ngModelChange)="change($event)"
     placeholder=" "
     autoComplete="off"
     [attr.min]="min"
@@ -19,7 +19,7 @@
   <label for="{{name}}">{{label}}</label>
   <app-rbn-button
     *ngIf="value && isTextInput"
-    [class]="clearClasses()"
+    [class]="clearClasses"
     [size]="small"
     [icon]="icon"
     (click)="clearAndFocusInput($event)"

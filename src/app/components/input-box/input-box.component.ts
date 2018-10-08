@@ -4,8 +4,11 @@ import {
   Input,
   Output,
   EventEmitter,
-  ViewChild
+  ViewChild,
+  forwardRef,
+  Renderer2
 } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import classNames from 'classnames';
 
 import { Icons } from 'src/app/common/constants';
@@ -13,13 +16,24 @@ import { Icons } from 'src/app/common/constants';
 @Component({
   selector: 'app-input-box',
   templateUrl: './input-box.component.html',
-  styleUrls: ['./input-box.component.scss']
+  styleUrls: ['./input-box.component.scss'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InputBoxComponent),
+      multi: true
+    }
+  ]
 })
-export class InputBoxComponent implements OnInit {
+export class InputBoxComponent implements OnInit, ControlValueAccessor {
   private clearTimer: any = null;
   icon: string = Icons.cross;
   isTextInput: boolean;
   hasMaxNumber: boolean;
+  onChange: Function;
+  onTouched: Function;
+  classes: string;
+  clearClasses: string;
   @ViewChild('input')
   input;
   @Input()
@@ -49,42 +63,53 @@ export class InputBoxComponent implements OnInit {
   @Output()
   keyDown: EventEmitter<any> = new EventEmitter();
 
-  constructor() {}
+  constructor(private renderer: Renderer2) {}
 
   ngOnInit() {
     this.isTextInput = this.type === 'text';
     this.hasMaxNumber = this.type === 'number' && !isNaN(this.max);
+    this.clearClasses = classNames(['input-box__clear']);
+    this.classes = classNames([
+      'input-box',
+      'input-container',
+      'has-float-label',
+      {
+        'input-box--not-clearable': this.isTextInput
+      },
+      this.class
+    ]);
   }
 
-  onChange(value) {
-    this.update.emit({ value, name: this.name });
+  writeValue(value: string): void {
+    const input = this.input.nativeElement;
+    this.renderer.setProperty(input, 'value', value);
+  }
+  registerOnChange(fn: () => void): void {
+    this.onChange = fn;
+  }
+  registerOnTouched(fn: () => void): void {
+    this.onTouched = fn;
+  }
+  setDisabledState?(isDisabled: boolean): void {
+    const input = this.input.nativeElement;
+    const action = isDisabled ? 'addClass' : 'removeClass';
+    this.renderer.setProperty(input, 'disabled', isDisabled);
+    input[action]('input-box--disabled');
+  }
+
+  change(value) {
+    this.onChange(value);
   }
 
   handleFocus(e) {
     this.focus.emit(e);
   }
   handleBlur(e) {
+    this.onTouched(e);
     this.blur.emit(e);
   }
   handleKeyDown(e) {
     this.keyDown.emit(e);
-  }
-
-  classes() {
-    const notClearable = this.isTextInput;
-    return classNames([
-      'input-box',
-      'input-container',
-      'has-float-label',
-      {
-        'input-box--not-clearable': notClearable
-      },
-      this.class
-    ]);
-  }
-
-  clearClasses() {
-    return classNames(['input-box__clear']);
   }
 
   showCount(): boolean {
