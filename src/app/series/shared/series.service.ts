@@ -49,16 +49,30 @@ export class SeriesService {
   }
 
   addSeries(series: Series): Observable<Series> {
-    return this.http.post<Series>(this.seriesUrl, series, httpOptions).pipe(
+    const payload = createApolloServerPayload(SeriesGQL.Mutation.createSeries, {
+      series
+    });
+    return this.http.post<Series>(this.seriesUrl, payload, httpOptions).pipe(
       tap((s: Series) => this.log(`added hero w/ id=${s.id}`)),
-      catchError(this.handleError<Series>('addSeries'))
+      catchError(this.handleError<Series>('addSeries')),
+      map(
+        (response: any) =>
+          response.data && (response.data.seriesCreate as Series)
+      )
     );
   }
 
-  updateSeries(series: Series): Observable<any> {
-    return this.http.put(this.seriesUrl, series, httpOptions).pipe(
+  updateSeries(series: Series): Observable<Series> {
+    const payload = createApolloServerPayload(SeriesGQL.Mutation.updateSeries, {
+      series
+    });
+    return this.http.put(this.seriesUrl, payload, httpOptions).pipe(
       tap((_) => this.log(`updated series id=${series.id}`)),
-      catchError(this.handleError<any>('updateSeries'))
+      catchError(this.handleError<any>('updateSeries')),
+      map(
+        (response: any) =>
+          response.data && (response.data.seriesUpdate as Series)
+      )
     );
   }
 

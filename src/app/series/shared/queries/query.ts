@@ -1,23 +1,23 @@
 import gql from 'graphql-tag';
 
+import Fragments from './fragment';
+
 const getSeries = gql`
   query GetSeries($filters: SeriesFilter) {
     series(filters: $filters) {
-      id
-      name
+      ...SeriesKeyFields
     }
   }
+  ${Fragments.keyFields}
 `;
 
 const getSeriesById = gql`
   query GetSeriesById($id: Int!) {
     seriesById(id: $id) {
-      id
-      name
-      type
-      volumeCount
+      ...SeriesViewFields
     }
   }
+  ${Fragments.viewFields}
 `;
 
 export default {

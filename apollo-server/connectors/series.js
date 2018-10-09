@@ -6,6 +6,11 @@ module.exports = (db, Types) => {
     type: {
       type: Types.ENUM,
       values: [...SeriesType]
+    },
+    volumeCount: {
+      type: Types.INTEGER,
+      defaultValue: null,
+      allowNull: true
     }
   });
 };

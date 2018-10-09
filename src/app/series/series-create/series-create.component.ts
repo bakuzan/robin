@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { SeriesService } from '../shared/series.service';
 import { Urls, SeriesTypes } from 'src/app/common/constants';
@@ -18,16 +18,21 @@ export class SeriesCreateComponent implements OnInit {
   private seriesId: number;
   private data: RouteData;
   cancelUrl = `/${Urls.seriesList}`;
-  seriesForm: NgForm;
   types = mapEnumToSelectOption(SeriesTypes);
   series: Series = new Series();
+  seriesForm: NgForm;
 
-  constructor(private route: ActivatedRoute, private service: SeriesService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private service: SeriesService
+  ) {}
 
   ngOnInit() {
     this.route.data.subscribe((data: RouteData) => {
       this.data = data;
       if (!data.isCreate) {
+        console.log('init - is not create');
         this.seriesId = +this.route.snapshot.paramMap.get('id');
         this.getSeries();
       }
@@ -41,16 +46,27 @@ export class SeriesCreateComponent implements OnInit {
   }
 
   onSubmit(form) {
-    console.log(
-      '%c submitted series form',
-      'color: brickred',
-      form,
-      form.value
-    );
+    let mutation: Observable<Series>;
+    const formValues = form.value;
+    const series = {
+      ...formValues,
+      volumeCount: formValues.volumeCount
+        ? Number(formValues.volumeCount)
+        : null
+    };
+
     if (this.data.isCreate) {
-      // add
+      mutation = this.service.addSeries(series);
     } else {
-      // update
+      mutation = this.service.updateSeries(series);
     }
+
+    mutation.subscribe((response) => {
+      this.series = response;
+      if (this.data.isCreate) {
+        const targetUrl = Urls.build(Urls.seriesView, { id: response.id });
+        this.router.navigateByUrl(targetUrl);
+      }
+    });
   }
 }

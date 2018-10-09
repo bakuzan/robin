@@ -2,6 +2,7 @@
   <select
     #select
     class="select-box__input"
+    attr.aria-placeholder="Please select a {{label}}"
     [attr.id]="id"
     [attr.name]="name"
     [(ngModel)]="value"
@@ -15,13 +16,6 @@
       class="select-box__option"
     >
       None
-    </option>
-    <option
-      *ngIf="required && (value !== 0 && !value)"
-      [value]="null"
-      class="select-box__option"
-    >
-      Please select a {{label}}
     </option>
     <option
       *ngFor="let item of options"
