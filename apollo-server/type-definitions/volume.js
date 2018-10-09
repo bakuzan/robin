@@ -8,6 +8,7 @@ module.exports = gql`
     boughtDate: String
     rrp: Float
     paid: Float
+    retailerId: Int
     retailer: Retailer
   }
   input VolumeInput {
@@ -17,6 +18,7 @@ module.exports = gql`
     boughtDate: String
     rrp: Float
     paid: Float
+    retailerId: Int
     retailer: RetailerInput
   }
 `;

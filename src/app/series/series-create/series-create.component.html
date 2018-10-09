@@ -1,8 +1,8 @@
 <div class="page">
   <form
     class="form"
-    #seriesForm="ngForm"
-    (ngSubmit)="onSubmit(seriesForm)"
+    [formGroup]="seriesForm"
+    (ngSubmit)="onSubmit()"
     novalidate
     autocomplete="off"
   >
@@ -17,16 +17,21 @@
     </div>
     <div class="form__content">
       <app-input-box
+        type="hidden"
+        name="id"
+        formControlName="id"
+      ></app-input-box>
+      <app-input-box
         class="form__input"
         label="Name"
         name="name"
-        [(ngModel)]="series.name"
+        formControlName="name"
       ></app-input-box>
       <app-select-box
         class="form__input"
         label="Type"
         name="type"
-        [(ngModel)]="series.type"
+        formControlName="type"
         [options]="types"
         [required]="true"
       ></app-select-box>
@@ -35,9 +40,59 @@
         type="number"
         label="Ending Volume"
         name="volumeCount"
+        formControlName="volumeCount"
         min="0"
-        [(ngModel)]="series.volumeCount"
       ></app-input-box>
+
+      <div class="sub-content">
+        <div class="sub-content__header">
+          <h4 class="sub-content__title">Volume list</h4>
+          <app-rbn-button
+            type="button"
+            [theme]="secondary"
+            (click)="onAddVolume($event)"
+          >
+            Add
+          </app-rbn-button>
+        </div>
+        <app-list
+          columns="one"
+          [isAsync]="false"
+          [items]="volumes.controls"
+          formArrayName="volumes"
+        >
+          <ng-template
+            let-item="item"
+            let-index="i"
+            [formGroupName]="i"
+          >
+            <app-input-box
+              class="form__input"
+              type="number"
+              label="Number"
+              name="{{i}}.number"
+              formControlName="number"
+              min="1"
+            ></app-input-box>
+
+            <app-input-box
+              class="form__input"
+              type="number"
+              label="RRP"
+              name="{{i}}.rrp"
+              formControlName="rrp"
+            ></app-input-box>
+            <app-input-box
+              class="form__input"
+              type="number"
+              label="Paid"
+              name="{{i}}.paid"
+              formControlName="paid"
+            ></app-input-box>
+
+          </ng-template>
+        </app-list>
+      </div>
     </div>
   </form>
 </div>

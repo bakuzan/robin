@@ -21,8 +21,6 @@ export class RbnButtonComponent implements OnInit {
   disabled: boolean;
   @Input()
   icon: string;
-  @Output()
-  click: EventEmitter<any> = new EventEmitter();
 
   constructor() {}
 
@@ -40,9 +38,5 @@ export class RbnButtonComponent implements OnInit {
       'button--depress': this.depress,
       ripple: true
     });
-  }
-
-  onClick(e) {
-    this.click.emit(e);
   }
 }

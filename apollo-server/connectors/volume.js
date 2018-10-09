@@ -4,11 +4,11 @@ module.exports = (db, Types) => {
       type: Types.INTEGER
     },
     releaseDate: {
-      types: Types.DATE,
+      type: Types.DATE,
       allowNull: false
     },
     boughtDate: {
-      types: Types.DATE,
+      type: Types.DATE,
       allowNull: true
     },
     rrp: {

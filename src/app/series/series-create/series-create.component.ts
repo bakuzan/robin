@@ -1,11 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgForm } from '@angular/forms';
+import {
+  NgForm,
+  FormArray,
+  FormGroup,
+  FormControl,
+  Validators
+} from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { SeriesService } from '../shared/series.service';
-import { Urls, SeriesTypes } from 'src/app/common/constants';
+import Volume from '../shared/volume.model';
 import Series from '../shared/series.model';
+import { Urls, SeriesTypes } from 'src/app/common/constants';
 import { mapEnumToSelectOption } from 'src/app/common/utils/mappers';
 import RouteData from 'src/app/common/models/route-data.model';
 
@@ -17,10 +24,17 @@ import RouteData from 'src/app/common/models/route-data.model';
 export class SeriesCreateComponent implements OnInit {
   private seriesId: number;
   private data: RouteData;
+  @ViewChild('seriesForm')
   cancelUrl = `/${Urls.seriesList}`;
   types = mapEnumToSelectOption(SeriesTypes);
   series: Series = new Series();
-  seriesForm: NgForm;
+  seriesForm = new FormGroup({
+    id: new FormControl(null),
+    name: new FormControl('', Validators.required),
+    type: new FormControl(null, Validators.required),
+    volumeCount: new FormControl(null),
+    volumes: new FormArray([])
+  });
 
   constructor(
     private route: ActivatedRoute,
@@ -29,10 +43,11 @@ export class SeriesCreateComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log('INIT', this);
     this.route.data.subscribe((data: RouteData) => {
       this.data = data;
       if (!data.isCreate) {
-        console.log('init - is not create');
+        console.log('init - is not create', this.seriesForm);
         this.seriesId = +this.route.snapshot.paramMap.get('id');
         this.getSeries();
       }
@@ -42,7 +57,13 @@ export class SeriesCreateComponent implements OnInit {
   getSeries() {
     this.service
       .getSeriesById(this.seriesId)
-      .subscribe((series) => (this.series = series));
+      .subscribe((series) =>
+        this.seriesForm.setValue({ ...series, volumes: series.volumes || [] })
+      );
+  }
+
+  get volumes(): FormArray {
+    return this.seriesForm.get('volumes') as FormArray;
   }
 
   onSubmit(form) {
@@ -68,5 +89,16 @@ export class SeriesCreateComponent implements OnInit {
         this.router.navigateByUrl(targetUrl);
       }
     });
+  }
+
+  onAddVolume() {
+    console.log('should add volume here', this.seriesForm);
+    this.volumes.push(
+      new FormGroup({
+        number: new FormControl(),
+        rrp: new FormControl(),
+        paid: new FormControl()
+      })
+    );
   }
 }

@@ -66,7 +66,7 @@ export class SeriesService {
     const payload = createApolloServerPayload(SeriesGQL.Mutation.updateSeries, {
       series
     });
-    return this.http.put(this.seriesUrl, payload, httpOptions).pipe(
+    return this.http.post(this.seriesUrl, payload, httpOptions).pipe(
       tap((_) => this.log(`updated series id=${series.id}`)),
       catchError(this.handleError<any>('updateSeries')),
       map(

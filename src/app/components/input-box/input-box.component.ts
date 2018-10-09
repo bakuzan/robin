@@ -74,7 +74,8 @@ export class InputBoxComponent implements OnInit, ControlValueAccessor {
       'input-container',
       'has-float-label',
       {
-        'input-box--not-clearable': this.isTextInput
+        'input-box--not-clearable': this.isTextInput,
+        'input-box--hidden': this.type === 'hidden'
       },
       this.class
     ]);

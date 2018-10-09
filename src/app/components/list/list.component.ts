@@ -32,6 +32,8 @@ export class ListComponent implements OnInit {
   wrap: boolean;
   @Input()
   fixedWidth: boolean;
+  @Input()
+  isAsync = true;
 
   ngOnInit() {
     this.listClasses = classNames('list', this.class, {
