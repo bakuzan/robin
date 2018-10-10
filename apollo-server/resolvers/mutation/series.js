@@ -1,14 +1,16 @@
-const { Series } = require('../../connectors');
+const { Series, Volume } = require('../../connectors');
 
 module.exports = {
   async seriesCreate(_, { series }) {
     const { ...args } = series;
-    return await Series.create({ ...args });
+    return await Series.create({ ...args }, { include: [Volume] });
   },
   seriesUpdate(_, { series }) {
-    const { id, ...args } = series;
-    return Series.update({ ...args }, { where: { id } }).then(() =>
-      Series.findById(id)
-    );
+    const { id, volumes, ...args } = series;
+    const newVolumes = volumes.filter((x) => !x.id);
+    return Series.update(
+      { ...args, volumes: newVolumes },
+      { where: { id }, include: [Volume] }
+    ).then(() => Series.findById(id));
   }
 };

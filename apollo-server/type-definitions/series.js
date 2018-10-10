@@ -6,7 +6,7 @@ module.exports = gql`
     name: String
     type: SeriesType
     volumeCount: Int
-    volumes: [Volume]
+    volumes(sort: VolumeSortOrder): [Volume]
   }
   input SeriesFilter {
     search: String
@@ -17,5 +17,6 @@ module.exports = gql`
     name: String
     type: SeriesType
     volumeCount: Int
+    volumes: [VolumeInput]
   }
 `;

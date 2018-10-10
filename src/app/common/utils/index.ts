@@ -40,3 +40,11 @@ export const generateUniqueId = (): string =>
       (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
     ).toString(16);
   });
+
+export const round = (n, decimals = 0) =>
+  Number(`${Math.round(`${n}e${decimals}` as any)}e-${decimals}`);
+
+export const roundTo2 = (n) => round(n, 2);
+
+export const displayAs2dp = (n: number): string =>
+  n !== null && n !== undefined ? n.toFixed(2) : null;

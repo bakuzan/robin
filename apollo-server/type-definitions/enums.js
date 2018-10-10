@@ -9,4 +9,11 @@ const SeriesTypeGQL = gql`
   }
 `;
 
-module.exports = [SeriesTypeGQL];
+const VolumeSortOrder = gql`
+  enum VolumeSortOrder {
+    NUMBER_DESC
+    NUMBER_ASC
+  }
+`;
+
+module.exports = [SeriesTypeGQL, VolumeSortOrder];

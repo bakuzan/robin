@@ -15,14 +15,6 @@ const getSeriesById = gql`
   query GetSeriesById($id: Int!) {
     seriesById(id: $id) {
       ...SeriesViewFields
-      volumes {
-        number
-        releaseDate
-        boughtDate
-        rrp
-        paid
-        retailerId
-      }
     }
   }
   ${Fragments.viewFields}

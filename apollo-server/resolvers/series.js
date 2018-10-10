@@ -1,5 +1,6 @@
 module.exports = {
-  volumes(series) {
-    return series.getVolumes().then((volumes) => volumes || []);
+  volumes(series, { sort }) {
+    const order = sort ? sort.split('_') : undefined;
+    return series.getVolumes({ order }).then((volumes) => volumes || []);
   }
 };

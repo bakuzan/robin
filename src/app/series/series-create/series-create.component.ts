@@ -1,18 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import {
-  NgForm,
-  FormArray,
-  FormGroup,
-  FormControl,
-  Validators
-} from '@angular/forms';
+import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { SeriesService } from '../shared/series.service';
-import Volume from '../shared/volume.model';
 import Series from '../shared/series.model';
-import { Urls, SeriesTypes } from 'src/app/common/constants';
+import { Urls, SeriesTypes, Icons, Regexes } from 'src/app/common/constants';
+import { roundTo2, displayAs2dp } from 'src/app/common/utils';
 import { mapEnumToSelectOption } from 'src/app/common/utils/mappers';
 import RouteData from 'src/app/common/models/route-data.model';
 
@@ -24,7 +18,7 @@ import RouteData from 'src/app/common/models/route-data.model';
 export class SeriesCreateComponent implements OnInit {
   private seriesId: number;
   private data: RouteData;
-  @ViewChild('seriesForm')
+  crossIcon = Icons.cross;
   cancelUrl = `/${Urls.seriesList}`;
   types = mapEnumToSelectOption(SeriesTypes);
   series: Series = new Series();
@@ -55,25 +49,36 @@ export class SeriesCreateComponent implements OnInit {
   }
 
   getSeries() {
-    this.service
-      .getSeriesById(this.seriesId)
-      .subscribe((series) =>
-        this.seriesForm.setValue({ ...series, volumes: series.volumes || [] })
-      );
+    this.service.getSeriesById(this.seriesId).subscribe((series) =>
+      this.seriesForm.setValue({
+        ...series,
+        volumes: (series.volumes || []).map((x) => ({
+          ...x,
+          paid: displayAs2dp(x.paid),
+          rrp: displayAs2dp(x.rrp)
+        }))
+      })
+    );
   }
 
   get volumes(): FormArray {
     return this.seriesForm.get('volumes') as FormArray;
   }
 
-  onSubmit(form) {
+  onSubmit() {
     let mutation: Observable<Series>;
-    const formValues = form.value;
-    const series = {
+    const formValues = this.seriesForm.value;
+    const series: Series = {
       ...formValues,
       volumeCount: formValues.volumeCount
         ? Number(formValues.volumeCount)
-        : null
+        : null,
+      volumes: formValues.volumes.map((x) => ({
+        ...x,
+        number: Number(x.number),
+        paid: roundTo2(x.paid),
+        rrp: roundTo2(x.rrp)
+      }))
     };
 
     if (this.data.isCreate) {
@@ -85,7 +90,9 @@ export class SeriesCreateComponent implements OnInit {
     mutation.subscribe((response) => {
       this.series = response;
       if (this.data.isCreate) {
-        const targetUrl = Urls.build(Urls.seriesView, { id: response.id });
+        const targetUrl: string = Urls.build(Urls.seriesView, {
+          id: response.id
+        });
         this.router.navigateByUrl(targetUrl);
       }
     });
@@ -104,9 +111,22 @@ export class SeriesCreateComponent implements OnInit {
       0,
       new FormGroup({
         number: new FormControl(initialVolumeNumber),
-        rrp: new FormControl(rrp),
-        paid: new FormControl()
+        releaseDate: new FormControl(null),
+        boughtDate: new FormControl(null),
+        rrp: new FormControl(
+          rrp,
+          Validators.pattern(Regexes.IS_FLOATING_POINT_NUMBER)
+        ),
+        paid: new FormControl(
+          null,
+          Validators.pattern(Regexes.IS_FLOATING_POINT_NUMBER)
+        ),
+        usedDiscountCode: new FormControl(false)
       })
     );
+  }
+
+  onRemoveVolume(index: number) {
+    this.volumes.removeAt(index);
   }
 }

@@ -48,7 +48,6 @@
         <div class="sub-content__header">
           <h4 class="sub-content__title">Volume list</h4>
           <app-rbn-button
-            type="button"
             [theme]="secondary"
             (click)="onAddVolume($event)"
           >
@@ -80,10 +79,26 @@
 
               <app-input-box
                 class="form__input"
+                type="date"
+                label="Released"
+                name="{{i}}.releaseDate"
+                formControlName="releaseDate"
+              ></app-input-box>
+              <app-input-box
+                class="form__input"
+                type="date"
+                label="Bought"
+                name="{{i}}.boughtDate"
+                formControlName="boughtDate"
+              ></app-input-box>
+
+              <app-input-box
+                class="form__input"
                 type="number"
                 label="RRP"
                 name="{{i}}.rrp"
                 formControlName="rrp"
+                min="0"
               ></app-input-box>
               <app-input-box
                 class="form__input"
@@ -91,7 +106,19 @@
                 label="Paid"
                 name="{{i}}.paid"
                 formControlName="paid"
+                min="0"
               ></app-input-box>
+              <app-tickbox
+                class="form__input"
+                label="Used Discount Code"
+                name="{{i}}.usedDiscountCode"
+                formControlName="usedDiscountCode"
+              >Used Discount Code</app-tickbox>
+              <app-rbn-button
+                title="Remove Volume"
+                [icon]="crossIcon"
+                (click)="onRemoveVolume(i)"
+              ></app-rbn-button>
             </div>
           </ng-template>
         </app-list>

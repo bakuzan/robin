@@ -12,6 +12,14 @@ const viewFields = gql`
     ...SeriesKeyFields
     type
     volumeCount
+    volumes(sort: NUMBER_DESC) {
+      number
+      releaseDate
+      boughtDate
+      rrp
+      paid
+      retailerId
+    }
   }
   ${keyFields}
 `;

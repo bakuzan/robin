@@ -8,7 +8,7 @@ import classNames from 'classnames';
 })
 export class RbnButtonComponent implements OnInit {
   @Input()
-  type = 'text';
+  type = 'button';
   @Input()
   size: string;
   @Input()
