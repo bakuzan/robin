@@ -92,11 +92,19 @@ export class SeriesCreateComponent implements OnInit {
   }
 
   onAddVolume() {
-    console.log('should add volume here', this.seriesForm);
-    this.volumes.push(
+    const initialVolumeNumber = this.volumes.controls.length + 1;
+    let rrp = null;
+
+    if (initialVolumeNumber > 1) {
+      const lastVolume = this.volumes.controls[0];
+      rrp = lastVolume.value.rrp;
+    }
+    console.log('should add volume here', this.seriesForm, initialVolumeNumber);
+    this.volumes.insert(
+      0,
       new FormGroup({
-        number: new FormControl(),
-        rrp: new FormControl(),
+        number: new FormControl(initialVolumeNumber),
+        rrp: new FormControl(rrp),
         paid: new FormControl()
       })
     );

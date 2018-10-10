@@ -63,33 +63,36 @@
         >
           <ng-template
             let-item="item"
-            let-index="i"
-            [formGroupName]="i"
+            let-i="index"
           >
-            <app-input-box
-              class="form__input"
-              type="number"
-              label="Number"
-              name="{{i}}.number"
-              formControlName="number"
-              min="1"
-            ></app-input-box>
+            <div
+              class="form__array-item-wrapper"
+              [formGroupName]="i"
+            >
+              <app-input-box
+                class="form__input"
+                type="number"
+                label="Number"
+                name="{{i}}.number"
+                formControlName="number"
+                min="1"
+              ></app-input-box>
 
-            <app-input-box
-              class="form__input"
-              type="number"
-              label="RRP"
-              name="{{i}}.rrp"
-              formControlName="rrp"
-            ></app-input-box>
-            <app-input-box
-              class="form__input"
-              type="number"
-              label="Paid"
-              name="{{i}}.paid"
-              formControlName="paid"
-            ></app-input-box>
-
+              <app-input-box
+                class="form__input"
+                type="number"
+                label="RRP"
+                name="{{i}}.rrp"
+                formControlName="rrp"
+              ></app-input-box>
+              <app-input-box
+                class="form__input"
+                type="number"
+                label="Paid"
+                name="{{i}}.paid"
+                formControlName="paid"
+              ></app-input-box>
+            </div>
           </ng-template>
         </app-list>
       </div>
