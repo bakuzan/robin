@@ -36,6 +36,15 @@ const series = [
   }
 ];
 
+const retailer = [
+  { name: 'Amazon' },
+  { name: 'Bookdepository (Direct)' },
+  { name: 'Bookdepository (Amazon)' },
+  { name: 'Wordery' },
+  { name: 'UKPaperbackShop' }
+];
+
 module.exports = {
-  series
+  series,
+  retailer
 };

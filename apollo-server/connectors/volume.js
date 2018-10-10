@@ -1,7 +1,8 @@
 module.exports = (db, Types) => {
   return db.define('volume', {
     number: {
-      type: Types.INTEGER
+      type: Types.INTEGER,
+      unique: true
     },
     releaseDate: {
       type: Types.DATE,
@@ -12,10 +13,20 @@ module.exports = (db, Types) => {
       allowNull: true
     },
     rrp: {
-      type: Types.FLOAT
+      type: Types.FLOAT,
+      validate: {
+        isFloat: true
+      }
     },
     paid: {
-      type: Types.FLOAT
+      type: Types.FLOAT,
+      validate: {
+        isFloat: true
+      }
+    },
+    usedDiscountCode: {
+      type: Types.BOOLEAN,
+      defaultValue: false
     }
   });
 };
