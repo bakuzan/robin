@@ -69,6 +69,11 @@
               [formGroupName]="i"
             >
               <app-input-box
+                type="hidden"
+                name="{{i}}.id"
+                formControlName="id"
+              ></app-input-box>
+              <app-input-box
                 class="form__input"
                 type="number"
                 label="Number"
@@ -108,6 +113,17 @@
                 formControlName="paid"
                 min="0"
               ></app-input-box>
+
+              <!-- 
+                TODO
+                Make autocomplete/chip list
+               -->
+              <app-input-box
+                type="hidden"
+                name="{{i}}.retailerId"
+                formControlName="retailerId"
+              ></app-input-box>
+
               <app-tickbox
                 class="form__input"
                 label="Used Discount Code"

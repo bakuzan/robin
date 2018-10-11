@@ -20,8 +20,8 @@ const RetailerModel = db.import('./retailer');
 SeriesModel.Volume = SeriesModel.hasMany(VolumeModel);
 VolumeModel.Series = VolumeModel.belongsTo(SeriesModel);
 
-VolumeModel.Retailer = VolumeModel.hasOne(RetailerModel);
-RetailerModel.Volume = RetailerModel.belongsTo(VolumeModel);
+RetailerModel.Volume = RetailerModel.hasMany(VolumeModel);
+VolumeModel.Retailer = VolumeModel.belongsTo(RetailerModel);
 
 // Sync and Migrate db
 // Only add test data if sync is forced
@@ -39,7 +39,7 @@ db.sync({ force: FORCE_DB_REBUILD })
     }
   });
 
-const { series: Series, volumes: Volume, retailers: Retailer } = db.models;
+const { series: Series, volume: Volume, retailer: Retailer } = db.models;
 
 module.exports = {
   db,

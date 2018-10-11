@@ -13,11 +13,13 @@ const viewFields = gql`
     type
     volumeCount
     volumes(sort: NUMBER_DESC) {
+      id
       number
       releaseDate
       boughtDate
       rrp
       paid
+      usedDiscountCode
       retailerId
     }
   }
