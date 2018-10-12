@@ -43,6 +43,14 @@ main {
   display: flex;
   align-items: center;
 
+  &--stacked {
+    flex-direction: column;
+
+    > *:not(:last-child) {
+      margin-bottom: $app--margin-small;
+    }
+  }
+
   &--right {
     justify-content: flex-end;
   }

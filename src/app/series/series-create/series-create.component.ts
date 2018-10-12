@@ -48,6 +48,10 @@ export class SeriesCreateComponent implements OnInit {
         this.getSeries();
       }
     });
+
+    this.seriesForm.valueChanges.subscribe((...test) => {
+      console.log('form status change > ', test);
+    });
   }
 
   getSeries() {
@@ -64,9 +68,11 @@ export class SeriesCreateComponent implements OnInit {
     const volumes = series.volumes || [];
 
     if (volumes.length && !this.volumes.length) {
-      this.volumes.push(this.initVolume());
+      console.log('volumes mismatch...');
+      volumes.forEach(() => this.volumes.push(this.initVolume()));
     }
 
+    console.log('update form > ', series);
     this.seriesForm.setValue({
       ...series,
       volumes: volumes.map((x) => ({
@@ -83,11 +89,11 @@ export class SeriesCreateComponent implements OnInit {
   ): FormGroup {
     return new FormGroup({
       id: new FormControl(),
-      number: new FormControl(initialVolumeNumber || null),
+      number: new FormControl(initialVolumeNumber, Validators.required),
       releaseDate: new FormControl(null),
       boughtDate: new FormControl(null),
       rrp: new FormControl(
-        rrp || null,
+        rrp,
         Validators.pattern(Regexes.IS_FLOATING_POINT_NUMBER)
       ),
       paid: new FormControl(

@@ -132,16 +132,21 @@
                 name="{{i}}.usedDiscountCode"
                 formControlName="usedDiscountCode"
               >Used Discount Code</app-tickbox>
-              <app-rbn-button
-                title="Save Volume"
-                [icon]="saveIcon"
-                (click)="onSaveVolume(i)"
-              ></app-rbn-button>
-              <app-rbn-button
-                title="Remove Volume"
-                [icon]="crossIcon"
-                (click)="onRemoveVolume(i)"
-              ></app-rbn-button>
+
+              <div class="button-group button-group--stacked">
+                <app-rbn-button
+                  *ngIf="item.value && item.value.id"
+                  title="Save Volume"
+                  [icon]="saveIcon"
+                  (click)="onSaveVolume(i)"
+                  [disabled]="item.pristine"
+                ></app-rbn-button>
+                <app-rbn-button
+                  title="Remove Volume"
+                  [icon]="crossIcon"
+                  (click)="onRemoveVolume(i)"
+                ></app-rbn-button>
+              </div>
             </div>
           </ng-template>
         </app-list>
