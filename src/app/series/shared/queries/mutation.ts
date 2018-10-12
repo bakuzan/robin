@@ -20,7 +20,27 @@ const updateSeries = gql`
   ${Fragments.viewFields}
 `;
 
+const createVolume = gql`
+  mutation CreateVolume($volume: VolumeInput) {
+    volumeCreate(volume: $volume) {
+      ...VolumeFields
+    }
+  }
+  ${Fragments.volumeFields}
+`;
+
+const updateVolume = gql`
+  mutation UpdateVolume($volume: VolumeInput) {
+    volumeUpdate(volume: $volume) {
+      ...VolumeFields
+    }
+  }
+  ${Fragments.volumeFields}
+`;
+
 export default {
   createSeries,
-  updateSeries
+  updateSeries,
+  createVolume,
+  updateVolume
 };

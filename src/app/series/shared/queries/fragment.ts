@@ -7,26 +7,34 @@ const keyFields = gql`
   }
 `;
 
+const volumeFields = gql`
+  fragment VolumeFields on Volume {
+    id
+    number
+    releaseDate
+    boughtDate
+    rrp
+    paid
+    usedDiscountCode
+    retailerId
+  }
+`;
+
 const viewFields = gql`
   fragment SeriesViewFields on Series {
     ...SeriesKeyFields
     type
     volumeCount
     volumes(sort: NUMBER_DESC) {
-      id
-      number
-      releaseDate
-      boughtDate
-      rrp
-      paid
-      usedDiscountCode
-      retailerId
+      ...VolumeFields
     }
   }
   ${keyFields}
+  ${volumeFields}
 `;
 
 export default {
   keyFields,
-  viewFields
+  viewFields,
+  volumeFields
 };

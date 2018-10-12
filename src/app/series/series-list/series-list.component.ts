@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
-import { SeriesService } from '../shared/series.service';
+import { SeriesService } from '../shared/services/series.service';
 import Series from '../shared/series.model';
 import SeriesFilter from '../shared/series-filter.model';
 import { SeriesTypes } from '../shared/series-types.enum';

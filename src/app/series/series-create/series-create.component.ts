@@ -3,7 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
-import { SeriesService } from '../shared/series.service';
+import { SeriesService } from '../shared/services/series.service';
+import { VolumeService } from '../shared/services/volume.service';
 import Series from '../shared/series.model';
 import { Urls, SeriesTypes, Icons, Regexes } from 'src/app/common/constants';
 import { roundTo2, displayAs2dp } from 'src/app/common/utils';
@@ -19,6 +20,7 @@ export class SeriesCreateComponent implements OnInit {
   private seriesId: number;
   private data: RouteData;
   crossIcon = Icons.cross;
+  saveIcon = Icons.save;
   cancelUrl = `/${Urls.seriesList}`;
   types = mapEnumToSelectOption(SeriesTypes);
   seriesForm = new FormGroup({
@@ -32,7 +34,8 @@ export class SeriesCreateComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private service: SeriesService
+    private seriesService: SeriesService,
+    private volumeService: VolumeService
   ) {}
 
   ngOnInit() {
@@ -48,7 +51,7 @@ export class SeriesCreateComponent implements OnInit {
   }
 
   getSeries() {
-    this.service
+    this.seriesService
       .getSeriesById(this.seriesId)
       .subscribe((series) => this.updateForm(series));
   }
@@ -114,6 +117,22 @@ export class SeriesCreateComponent implements OnInit {
     console.log('volumes after add > ', this.volumes.value);
   }
 
+  onSaveVolume(index: number) {
+    let mutation;
+    const value = this.volumes.value[index];
+    const volume = { ...value, seriesId: this.seriesId };
+    console.log('save > ', this.volumes, index, volume);
+    if (!volume.id) {
+      mutation = this.volumeService.addVolume(volume);
+    } else {
+      mutation = this.volumeService.updateVolume(volume);
+    }
+
+    mutation.subscribe((response) =>
+      this.volumes.at(index).patchValue(response)
+    );
+  }
+
   onRemoveVolume(index: number) {
     this.volumes.removeAt(index);
   }
@@ -135,9 +154,9 @@ export class SeriesCreateComponent implements OnInit {
     };
 
     if (this.data.isCreate) {
-      mutation = this.service.addSeries(series);
+      mutation = this.seriesService.addSeries(series);
     } else {
-      mutation = this.service.updateSeries(series);
+      mutation = this.seriesService.updateSeries(series);
     }
 
     mutation.subscribe((response) => {

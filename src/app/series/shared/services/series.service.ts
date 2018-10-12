@@ -5,9 +5,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Urls } from 'src/app/common/constants';
 import { createApolloServerPayload } from 'src/app/common/utils/query-builder';
-import Series from './series.model';
-import SeriesFilter from './series-filter.model';
-import SeriesGQL from './queries';
+import Series from '../series.model';
+import SeriesFilter from '../series-filter.model';
+import SeriesGQL from '../queries';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

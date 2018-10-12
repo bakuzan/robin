@@ -26,6 +26,7 @@
         label="Name"
         name="name"
         formControlName="name"
+        [required]="true"
       ></app-input-box>
       <app-select-box
         class="form__input"
@@ -80,6 +81,7 @@
                 name="{{i}}.number"
                 formControlName="number"
                 min="1"
+                [required]="true"
               ></app-input-box>
 
               <app-input-box
@@ -130,6 +132,11 @@
                 name="{{i}}.usedDiscountCode"
                 formControlName="usedDiscountCode"
               >Used Discount Code</app-tickbox>
+              <app-rbn-button
+                title="Save Volume"
+                [icon]="saveIcon"
+                (click)="onSaveVolume(i)"
+              ></app-rbn-button>
               <app-rbn-button
                 title="Remove Volume"
                 [icon]="crossIcon"
