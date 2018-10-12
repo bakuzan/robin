@@ -22,5 +22,6 @@ module.exports = gql`
     usedDiscountCode: Boolean
     retailerId: Int
     retailer: RetailerInput
+    seriesId: Int
   }
 `;

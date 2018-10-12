@@ -1,6 +1,7 @@
 const Op = require('sequelize').Op;
 
 const { db, Series, Volume } = require('../../connectors');
+const separateArrIntoNewAndExisting = require('../../utils/separate-new-and-existing');
 
 module.exports = {
   async seriesCreate(_, { series }) {
@@ -13,19 +14,20 @@ module.exports = {
   seriesUpdate(_, { series }) {
     const { id, volumes, ...args } = series;
     const createdAt = Date.now();
-    const newVolumes = volumes.filter((x) => !x.id);
-    const existingVolumes = volumes.filter((x) => x.id);
+    const { newItems, existingItemIds } = separateArrIntoNewAndExisting(
+      volumes
+    );
 
     return db.transaction((transaction) =>
       Series.update({ ...args }, { where: { id }, transaction })
         .then(() => Series.findById(id, { transaction }))
         .then(async (instance) => {
-          await instance.setVolumes(existingVolumes, { transaction });
-          if (!newVolumes.length) {
+          await instance.setVolumes(existingItemIds, { transaction });
+          if (!newItems.length) {
             return instance;
           }
 
-          return Volume.bulkCreate(newVolumes, { transaction })
+          return Volume.bulkCreate(newItems, { transaction })
             .then(() =>
               Volume.findAll({
                 where: { createdAt: { [Op.gte]: createdAt } },
