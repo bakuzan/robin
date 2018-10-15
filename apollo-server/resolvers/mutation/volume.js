@@ -1,8 +1,8 @@
-const { Volume } = require('../../connectors');
+const { Volume, Retailer } = require('../../connectors');
 
 module.exports = {
   async volumeCreate(_, { volume }) {
-    return await Volume.create({ ...volume });
+    return await Volume.create({ ...volume }, { include: [Retailer] });
   },
   volumeUpdate(_, { volume }) {
     const { id, ...args } = volume;

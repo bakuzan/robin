@@ -8,4 +8,11 @@ export default class Volume {
   rrp: number;
   paid: number;
   retailer: Retailer;
+  retailerId: number;
+}
+
+export class VolumeInitValues {
+  number: number = null;
+  rrp: number = null;
+  retailerId: number = null;
 }

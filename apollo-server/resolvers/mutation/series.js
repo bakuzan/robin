@@ -1,6 +1,6 @@
 const Op = require('sequelize').Op;
 
-const { db, Series, Volume } = require('../../connectors');
+const { db, Series, Volume, Retailer } = require('../../connectors');
 const separateArrIntoNewAndExisting = require('../../utils/separate-new-and-existing');
 
 module.exports = {
@@ -8,7 +8,7 @@ module.exports = {
     const { volumes, ...args } = series;
     return await Series.create(
       { ...args, volumes },
-      { include: [Series.Volume] }
+      { include: [{ model: Volume, include: [{ model: Retailer }] }] }
     );
   },
   seriesUpdate(_, { series }) {

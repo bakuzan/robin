@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { SeriesService } from '../shared/services/series.service';
 import { VolumeService } from '../shared/services/volume.service';
 import Series from '../shared/series.model';
+import { VolumeInitValues } from '../shared/volume.model';
 import { Urls, SeriesTypes, Icons, Regexes } from 'src/app/common/constants';
 import { roundTo2, displayAs2dp } from 'src/app/common/utils';
 import { mapEnumToSelectOption } from 'src/app/common/utils/mappers';
@@ -50,7 +51,7 @@ export class SeriesCreateComponent implements OnInit {
     });
 
     this.seriesForm.valueChanges.subscribe((...test) => {
-      console.log('form status change > ', test);
+      console.log(this.seriesForm, 'form status change > ', test);
     });
   }
 
@@ -73,23 +74,23 @@ export class SeriesCreateComponent implements OnInit {
     }
 
     console.log('update form > ', series);
-    this.seriesForm.setValue({
-      ...series,
-      volumes: volumes.map((x) => ({
-        ...x,
-        paid: displayAs2dp(x.paid),
-        rrp: displayAs2dp(x.rrp)
-      }))
-    });
+    window.setTimeout(() => {
+      this.seriesForm.setValue({
+        ...series,
+        volumes: volumes.map((x) => ({
+          ...x,
+          paid: displayAs2dp(x.paid),
+          rrp: displayAs2dp(x.rrp)
+        }))
+      });
+    }, 0);
   }
 
-  initVolume(
-    initialVolumeNumber: number = null,
-    rrp: number = null
-  ): FormGroup {
+  initVolume(initValues: VolumeInitValues = new VolumeInitValues()): FormGroup {
+    const { number, rrp, retailerId } = initValues;
     return new FormGroup({
       id: new FormControl(),
-      number: new FormControl(initialVolumeNumber, Validators.required),
+      number: new FormControl(number, Validators.required),
       releaseDate: new FormControl(null),
       boughtDate: new FormControl(null),
       rrp: new FormControl(
@@ -100,33 +101,43 @@ export class SeriesCreateComponent implements OnInit {
         null,
         Validators.pattern(Regexes.IS_FLOATING_POINT_NUMBER)
       ),
-      retailerId: new FormControl(),
+      retailerId: new FormControl(retailerId),
       usedDiscountCode: new FormControl(false)
     });
   }
 
   onAddVolume() {
     const initialVolumeNumber = this.volumes.controls.length + 1;
-    let rrp = null;
+    let rrp = null,
+      retailerId = null;
 
     if (initialVolumeNumber > 1) {
       const lastVolume = this.volumes.controls[0];
-      rrp = lastVolume.value.rrp;
+      const prev = lastVolume.value;
+      rrp = prev.rrp;
+      retailerId = prev.retailerId;
     }
-    console.log(
-      'should add volume here',
-      this.seriesForm,
-      initialVolumeNumber,
-      rrp
-    );
-    this.volumes.insert(0, this.initVolume(initialVolumeNumber, rrp));
+
+    const initialValues: VolumeInitValues = {
+      number: initialVolumeNumber,
+      rrp,
+      retailerId
+    };
+    console.log('should add volume here', this.seriesForm, initialValues);
+    this.volumes.insert(0, this.initVolume(initialValues));
     console.log('volumes after add > ', this.volumes.value);
   }
 
   onSaveVolume(index: number) {
     let mutation;
     const value = this.volumes.value[index];
-    const volume = { ...value, seriesId: this.seriesId };
+    const volume = {
+      ...value,
+      seriesId: this.seriesId,
+      number: Number(value.number),
+      rrp: roundTo2(value.rrp),
+      paid: roundTo2(value.paid)
+    };
     console.log('save > ', this.volumes, index, volume);
     if (!volume.id) {
       mutation = this.volumeService.addVolume(volume);
