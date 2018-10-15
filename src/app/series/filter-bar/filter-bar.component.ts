@@ -5,7 +5,7 @@ import { SeriesTypes } from '../../common/models/series-types.enum';
 import { mapEnumToSelectOption } from 'src/app/common/utils/mappers';
 
 @Component({
-  selector: 'series-filter-bar',
+  selector: 'app-series-filter-bar',
   templateUrl: './filter-bar.component.html',
   styleUrls: ['./filter-bar.component.scss']
 })

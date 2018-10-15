@@ -7,7 +7,7 @@ import { mapEnumToSelectOption } from 'src/app/common/utils/mappers';
 const today = new Date().toISOString();
 
 @Component({
-  selector: 'volume-filter-bar',
+  selector: 'app-volume-filter-bar',
   templateUrl: './filter-bar.component.html',
   styleUrls: ['./filter-bar.component.scss']
 })
