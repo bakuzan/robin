@@ -53,6 +53,8 @@ export class InputBoxComponent implements OnInit, ControlValueAccessor {
   @Input()
   max: number;
   @Input()
+  step: number;
+  @Input()
   maxLength: number;
   @Output()
   update: EventEmitter<any> = new EventEmitter();

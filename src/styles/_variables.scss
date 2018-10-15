@@ -30,13 +30,14 @@ $app--margin-small: 0.2em;
 $app--placeholder-border: 1px solid transparent;
 $app--padding: 0.33em;
 // Component Variables
-$accent--colour: red; // TODO fix this
+$accent--colour: $robin--timeskip-shoes;
 $anchor--colour: $mostly-blue;
 $anchor--colour-hover: lighten($mostly-blue, $app--darken-amount * 3);
 $header--height: 50px;
 $nav-link--height: 50px;
 $sidebar--width: 50px;
 // TODO
+// Add alt themes
 // Themes
 $theme-maps: (
   one: (
