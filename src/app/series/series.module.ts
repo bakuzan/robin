@@ -21,6 +21,7 @@ import { FilterBarComponent } from './filter-bar/filter-bar.component';
     SeriesCreateComponent,
     FilterBarComponent
   ],
+  providers: [],
   exports: [SeriesListComponent, SeriesCreateComponent]
 })
 export class SeriesModule {}

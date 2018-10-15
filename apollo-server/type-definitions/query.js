@@ -4,6 +4,8 @@ const Query = gql`
   type Query {
     series(filters: SeriesFilter): [Series]
     seriesById(id: Int!): Series
+
+    volumes(filters: VolumeFilter): [Volume]
   }
 `;
 

@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import SeriesFilter from '../shared/series-filter.model';
-import { SeriesTypes } from '../shared/series-types.enum';
+import { SeriesTypes } from '../../common/models/series-types.enum';
 import { mapEnumToSelectOption } from 'src/app/common/utils/mappers';
 
 @Component({

@@ -11,7 +11,8 @@ import { Urls } from 'src/app/common/constants';
 export class SidebarComponent implements OnInit {
   links: SidebarLink[] = [
     { to: Urls.dashboard, text: 'Dashboard', icon: 'D' },
-    { to: Urls.seriesList, text: 'Series', icon: 'S' }
+    { to: Urls.seriesList, text: 'Series', icon: 'S' },
+    { to: Urls.purchaseHistory, text: 'Purchase History', icon: 'V' }
   ];
 
   constructor() {}

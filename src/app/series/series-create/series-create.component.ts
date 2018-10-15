@@ -3,10 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 
-import { SeriesService } from '../shared/services/series.service';
-import { VolumeService } from '../shared/services/volume.service';
-import Series from '../shared/series.model';
-import { VolumeInitValues } from '../shared/volume.model';
+import { SeriesService } from '../shared/series.service';
+import { VolumeService } from '../../common/volume.service';
+import Series from '../../common/models/series.model';
+import { VolumeInitValues } from '../../common/models/volume.model';
 import { Urls, SeriesTypes, Icons, Regexes } from 'src/app/common/constants';
 import { roundTo2, displayAs2dp } from 'src/app/common/utils';
 import { mapEnumToSelectOption } from 'src/app/common/utils/mappers';

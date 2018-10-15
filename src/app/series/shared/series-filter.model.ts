@@ -1,4 +1,4 @@
-import SeriesType from './series-types.enum';
+import SeriesType from '../../common/models/series-types.enum';
 
 export default class SeriesFilter {
   search: string;

@@ -11,6 +11,12 @@ module.exports = gql`
     usedDiscountCode: Boolean
     retailerId: Int
     retailer: Retailer
+    series: Series
+  }
+  input VolumeFilter {
+    type: SeriesType
+    fromDate: String
+    toDate: String
   }
   input VolumeInput {
     id: Int

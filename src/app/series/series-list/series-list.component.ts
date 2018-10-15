@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
-import { SeriesService } from '../shared/services/series.service';
-import Series from '../shared/series.model';
+import { SeriesService } from '../shared/series.service';
+import Series from '../../common/models/series.model';
 import SeriesFilter from '../shared/series-filter.model';
-import { SeriesTypes } from '../shared/series-types.enum';
+import { SeriesTypes } from '../../common/models/series-types.enum';
 
 @Component({
   selector: 'app-series-list',

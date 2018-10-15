@@ -5,8 +5,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Urls } from 'src/app/common/constants';
 import { createApolloServerPayload } from 'src/app/common/utils/query-builder';
-import Volume from '../volume.model';
-import VolumeGQL from '../queries';
+import Volume from './models/volume.model';
+import VolumeGQL from './queries';
+import VolumeFilter from '../volume/shared/volume-filter.model';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -19,6 +20,26 @@ export class VolumeService {
   private volumeUrl = Urls.graphqlEndpoint;
 
   constructor(private http: HttpClient) {}
+
+  getVolumes(filter: VolumeFilter): Observable<Volume[]> {
+    const payload = createApolloServerPayload(
+      VolumeGQL.Query.getVolumesForFilters,
+      {
+        filter
+      }
+    );
+
+    return this.http
+      .post<VolumeFilter>(this.volumeUrl, payload, httpOptions)
+      .pipe(
+        tap((s: Volume[]) => this.log(`get volumes`)),
+        catchError(this.handleError<Volume[]>('volumes')),
+        map(
+          (response: any) =>
+            response.data && (response.data.volumes as Volume[])
+        )
+      );
+  }
 
   addVolume(volume: Volume): Observable<Volume> {
     const payload = createApolloServerPayload(VolumeGQL.Mutation.createVolume, {

@@ -20,7 +20,17 @@ const getSeriesById = gql`
   ${Fragments.viewFields}
 `;
 
+const getVolumesForFilters = gql`
+  query getVolumesForFilters($filters: VolumeFilter) {
+    volumes(filters: $filters) {
+      ...VolumeFields
+    }
+  }
+  ${Fragments.volumeFields}
+`;
+
 export default {
   getSeries,
-  getSeriesById
+  getSeriesById,
+  getVolumesForFilters
 };

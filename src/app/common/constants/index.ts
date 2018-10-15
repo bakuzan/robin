@@ -2,7 +2,7 @@ import _urls from './urls';
 import _strings from './strings';
 import _icons from './icons';
 import _keyCode, { OPEN_KEYS as open, CLOSE_KEYS as close } from './key-codes';
-import { SeriesTypes as _seriesTypes } from '../../series/shared/series-types.enum';
+import { SeriesTypes as _seriesTypes } from '../models/series-types.enum';
 import * as _regex from './regexes';
 
 export const Urls = _urls;
