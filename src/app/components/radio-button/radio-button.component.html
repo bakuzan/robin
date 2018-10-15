@@ -1,0 +1,19 @@
+<label
+  class="radio"
+  [attr.for]="id"
+  [attr.aria-checked]="checked"
+>
+  <input
+    #radio
+    type="radio"
+    class="radio__input"
+    [attr.id]="id"
+    [attr.name]="name"
+    [attr.value]="value"
+    [attr.disabled]="disabled"
+    [attr.checked]="checked"
+    [(ngModel)]="checked"
+    (ngModelChange)="handleChange($event)"
+  />
+  <span>{{text}}</span>
+</label>

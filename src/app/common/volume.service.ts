@@ -21,11 +21,11 @@ export class VolumeService {
 
   constructor(private http: HttpClient) {}
 
-  getVolumes(filter: VolumeFilter): Observable<Volume[]> {
+  getVolumes(filters: VolumeFilter): Observable<Volume[]> {
     const payload = createApolloServerPayload(
       VolumeGQL.Query.getVolumesForFilters,
       {
-        filter
+        filters
       }
     );
 

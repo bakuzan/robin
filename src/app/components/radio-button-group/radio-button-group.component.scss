@@ -1,0 +1,10 @@
+@import '_variables';
+
+.radio-button-group {
+  display: flex;
+  padding: $app--padding;
+
+  &--column {
+    flex-direction: column;
+  }
+}

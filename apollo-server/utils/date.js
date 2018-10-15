@@ -5,8 +5,8 @@ function formatDateInput(date) {
 
 function setTime(date, h, m, s, n) {
   const d = new Date(date);
-  date.setHours(h, m, s, n);
-  return date;
+  d.setHours(h, m, s, n);
+  return d;
 }
 
 function startOfDay(d) {

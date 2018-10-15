@@ -1,0 +1,11 @@
+<div [ngClass]="radioGroupClasses">
+  <app-radio-button
+    *ngFor="let item of options; let i = index;"
+    [id]="getKey(i)"
+    [name]="id"
+    [text]="item.text"
+    [value]="item.value"
+    [(ngModel)]="value"
+    (ngModelChange)="onSelect($event)"
+  ></app-radio-button>
+</div>

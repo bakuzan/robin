@@ -1,16 +1,5 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  forwardRef
-} from '@angular/core';
-import {
-  ControlValueAccessor,
-  NG_VALUE_ACCESSOR,
-  NgControl
-} from '@angular/forms';
+import { Component, OnInit, Input, forwardRef } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import classNames from 'classnames';
 
 import SelectOption, {
@@ -41,7 +30,6 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
   hasAllSelected: boolean;
   onChange: Function;
   onTouched: Function;
-  ngControl: NgControl;
   optionsSelected: any[];
   @Input()
   id: string;
@@ -55,8 +43,6 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
   options: SelectOption[];
   @Input()
   listClassName: string;
-  @Output()
-  update: EventEmitter<any> = new EventEmitter();
 
   constructor() {}
 

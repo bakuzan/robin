@@ -1,6 +1,6 @@
 const Op = require('sequelize').Op;
 
-const { db, Series, Volume } = require('../../connectors');
+const { db, Series, Volume, Retailer } = require('../../connectors');
 const RBNDate = require('../../utils/date');
 
 module.exports = {

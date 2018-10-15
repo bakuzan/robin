@@ -12,6 +12,8 @@ import { TickboxComponent } from './tickbox/tickbox.component';
 import { BackdropComponent } from './backdrop/backdrop.component';
 import { SelectBoxComponent } from './select-box/select-box.component';
 import { ListComponent } from './list/list.component';
+import { RadioButtonComponent } from './radio-button/radio-button.component';
+import { RadioButtonGroupComponent } from './radio-button-group/radio-button-group.component';
 
 @NgModule({
   imports: [AppRoutingModule, CommonModule, FormsModule],
@@ -24,7 +26,9 @@ import { ListComponent } from './list/list.component';
     TickboxComponent,
     BackdropComponent,
     SelectBoxComponent,
-    ListComponent
+    ListComponent,
+    RadioButtonComponent,
+    RadioButtonGroupComponent
   ],
   exports: [
     LogoComponent,
@@ -35,7 +39,9 @@ import { ListComponent } from './list/list.component';
     TickboxComponent,
     BackdropComponent,
     SelectBoxComponent,
-    ListComponent
+    ListComponent,
+    RadioButtonComponent,
+    RadioButtonGroupComponent
   ]
 })
 export class ComponentsModule {}

@@ -2,8 +2,6 @@ import {
   Component,
   OnInit,
   Input,
-  Output,
-  EventEmitter,
   Renderer2,
   ViewChild,
   forwardRef
@@ -37,8 +35,6 @@ export class TickboxComponent implements OnInit, ControlValueAccessor {
   disabled: boolean;
   @Input()
   customTickbox: string;
-  @Output()
-  toggle: EventEmitter<any> = new EventEmitter();
 
   constructor(private _renderer: Renderer2) {}
 

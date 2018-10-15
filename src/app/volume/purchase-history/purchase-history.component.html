@@ -1,3 +1,9 @@
-<p>
-  purchase-history works!
-</p>
+<volume-filter-bar (update)="search($event)"></volume-filter-bar>
+<app-list
+  columns="one"
+  [items]="volumes$"
+>
+  <ng-template let-item="item">
+    {{item | json}}
+  </ng-template>
+</app-list>

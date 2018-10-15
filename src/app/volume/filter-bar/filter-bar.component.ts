@@ -1,20 +1,22 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
-import SeriesFilter from '../shared/series-filter.model';
-import { SeriesTypes } from '../../common/models/series-types.enum';
+import VolumeFilter from '../shared/volume-filter.model';
+import SeriesType, { SeriesTypes } from '../../common/models/series-types.enum';
 import { mapEnumToSelectOption } from 'src/app/common/utils/mappers';
 
+const today = new Date().toISOString();
+
 @Component({
-  selector: 'series-filter-bar',
+  selector: 'volume-filter-bar',
   templateUrl: './filter-bar.component.html',
   styleUrls: ['./filter-bar.component.scss']
 })
 export class FilterBarComponent implements OnInit {
-  addUrl = 'create';
   seriesTypeOptions = mapEnumToSelectOption(SeriesTypes);
-  filters: SeriesFilter = {
-    search: '',
-    types: Array.from(SeriesTypes)
+  filters: VolumeFilter = {
+    type: SeriesType.Manga,
+    fromDate: today,
+    toDate: today
   };
   @Output()
   update: EventEmitter<any> = new EventEmitter();
