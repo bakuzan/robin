@@ -7,7 +7,6 @@ import {
   forwardRef
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
 
 @Component({
   selector: 'app-radio-button',
@@ -23,6 +22,7 @@ import { THROW_IF_NOT_FOUND } from '@angular/core/src/di/injector';
 })
 export class RadioButtonComponent implements OnInit, ControlValueAccessor {
   tickboxClasses: string;
+  checked: boolean;
   onTouched: () => void;
   onChange: (_: any) => void;
   @ViewChild('radio')
@@ -36,8 +36,6 @@ export class RadioButtonComponent implements OnInit, ControlValueAccessor {
   @Input()
   text: string;
   @Input()
-  checked: boolean;
-  @Input()
   disabled: boolean;
 
   constructor(private _renderer: Renderer2) {}
@@ -47,7 +45,6 @@ export class RadioButtonComponent implements OnInit, ControlValueAccessor {
   writeValue(v: boolean): void {
     const radio = this.radio.nativeElement;
     const checked = v === radio.value;
-    console.log('up control', radio, v, checked);
     this._renderer.setProperty(radio, 'checked', checked);
   }
   registerOnChange(fn: (_: any) => void): void {
@@ -63,7 +60,10 @@ export class RadioButtonComponent implements OnInit, ControlValueAccessor {
     radio[action]('radio__input--disabled');
   }
 
-  handleChange() {
+  handleChange(event) {
+    event.stopPropagation();
+    const radio = this.radio.nativeElement;
+    this._renderer.setProperty(radio, 'checked', true);
     this.onChange(this.value);
   }
 }

@@ -47,7 +47,6 @@ export class RadioButtonGroupComponent implements OnInit, ControlValueAccessor {
 
   writeValue(value: SelectOptionValue): void {
     this.value = value;
-    console.log('WRITE', value);
   }
   registerOnChange(fn: any): void {
     this.onChange = fn;
@@ -60,7 +59,6 @@ export class RadioButtonGroupComponent implements OnInit, ControlValueAccessor {
   }
 
   onSelect(val) {
-    console.log('option change', this);
     this.onChange(val);
   }
 }

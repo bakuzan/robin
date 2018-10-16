@@ -1,18 +1,18 @@
 <div [class]="classes">
   <input
     #input
+    placeholder=" "
+    autoComplete="off"
     [attr.type]="type"
     [attr.id]="id"
     [attr.name]="name"
-    [(ngModel)]="value"
-    (ngModelChange)="change($event)"
-    placeholder=" "
-    autoComplete="off"
     [attr.min]="min"
     [attr.max]="max"
     [attr.maxLength]="maxLength"
     [attr.disabled]="disabled"
     [attr.step]="step"
+    [(ngModel)]="value"
+    (ngModelChange)="change($event)"
     (focus)="handleFocus"
     (blur)="handleBlur"
     (keydown)="handleKeyDown"

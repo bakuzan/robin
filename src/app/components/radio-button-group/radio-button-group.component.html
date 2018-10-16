@@ -1,4 +1,7 @@
-<div [ngClass]="radioGroupClasses">
+<div
+  [ngClass]="radioGroupClasses"
+  role="radiogroup"
+>
   <app-radio-button
     *ngFor="let item of options; let i = index;"
     [id]="getKey(i)"

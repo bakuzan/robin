@@ -43,7 +43,7 @@ export class PurchaseHistoryComponent implements OnInit {
       debounceTime(500),
       distinctUntilChanged(
         (x, y) =>
-          `${x.type}${x.fromDate}${x.toDate}` !==
+          `${x.type}${x.fromDate}${x.toDate}` ===
           `${y.type}${y.fromDate}${y.toDate}`
       ),
       filter(

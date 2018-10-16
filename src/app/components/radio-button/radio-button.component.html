@@ -11,9 +11,7 @@
     [attr.name]="name"
     [attr.value]="value"
     [attr.disabled]="disabled"
-    [attr.checked]="checked"
-    [(ngModel)]="checked"
-    (ngModelChange)="handleChange($event)"
+    (change)="handleChange($event)"
   />
   <span>{{text}}</span>
 </label>
