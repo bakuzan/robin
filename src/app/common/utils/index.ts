@@ -48,3 +48,6 @@ export const roundTo2 = (n) => round(n, 2);
 
 export const displayAs2dp = (n: number): string =>
   n !== null && n !== undefined ? n.toFixed(2) : null;
+
+export const pad = (n: string, width: number, z = '0'): string =>
+  n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;

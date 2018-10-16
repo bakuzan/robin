@@ -164,6 +164,7 @@ export class SeriesCreateComponent implements OnInit {
         : null,
       volumes: formValues.volumes.map((x) => ({
         ...x,
+        id: x.id ? x.id : undefined,
         number: Number(x.number),
         paid: roundTo2(x.paid),
         rrp: roundTo2(x.rrp)

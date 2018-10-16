@@ -1,12 +1,10 @@
 module.exports = (db, Types) => {
   return db.define('volume', {
     number: {
-      type: Types.INTEGER,
-      unique: true
+      type: Types.INTEGER
     },
     releaseDate: {
-      type: Types.DATE,
-      allowNull: false
+      type: Types.DATE
     },
     boughtDate: {
       type: Types.DATE,

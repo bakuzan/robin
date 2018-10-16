@@ -12,6 +12,7 @@ module.exports = gql`
     retailerId: Int
     retailer: Retailer
     series: Series
+    percentagePaid: String
   }
   input VolumeFilter {
     type: SeriesType

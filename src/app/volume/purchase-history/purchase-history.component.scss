@@ -1,0 +1,27 @@
+@import '_variables';
+
+.purchase-item {
+  display: flex;
+  flex: 1;
+
+  &--header {
+    font-weight: bold;
+    padding: #{$app--padding * 2};
+    margin-top: $app--margin-large;
+  }
+
+  &__data {
+    display: flex;
+    flex: 1;
+
+    &--spaced {
+      justify-content: space-between;
+      > div:last-child {
+        margin-right: $app--margin-small;
+      }
+    }
+    &--align_right {
+      justify-content: flex-end;
+    }
+  }
+}

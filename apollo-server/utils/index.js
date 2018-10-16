@@ -55,6 +55,11 @@ const orderBy = (arr, props, orders) =>
     }, 0)
   );
 
+const round = (n, decimals = 0) =>
+  Number(`${Math.round(`${n}e${decimals}`)}e-${decimals}`);
+
+const roundTo2 = (n) => round(n, 2);
+
 module.exports = {
   enumArrayToObject,
   mapArrToGraphqlString,
@@ -62,5 +67,7 @@ module.exports = {
   castStringToBool,
   resolveInOp,
   shuffleArray,
-  orderBy
+  orderBy,
+  round,
+  roundTo2
 };

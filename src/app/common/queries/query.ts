@@ -24,6 +24,14 @@ const getVolumesForFilters = gql`
   query getVolumesForFilters($filters: VolumeFilter) {
     volumes(filters: $filters) {
       ...VolumeFields
+      percentagePaid
+      retailer {
+        name
+      }
+      series {
+        id
+        name
+      }
     }
   }
   ${Fragments.volumeFields}

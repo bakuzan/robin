@@ -33,9 +33,10 @@ db.sync({ force: FORCE_DB_REBUILD })
   .then(() => migrate(db))
   .then(async () => {
     if (FORCE_DB_REBUILD && SEED_DB) {
-      const { series, retailer } = db.models;
+      const { series, retailer, volume } = db.models;
       await series.bulkCreate(TestData.series);
       await retailer.bulkCreate(TestData.retailer);
+      await volume.bulkCreate(TestData.volume);
     }
   });
 

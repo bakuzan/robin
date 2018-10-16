@@ -6,6 +6,7 @@ import { VolumeService } from '../../common/volume.service';
 import VolumeFilter from '../shared/volume-filter.model';
 import Volume from 'src/app/common/models/volume.model';
 import SeriesType from 'src/app/common/models/series-types.enum';
+import { pad, displayAs2dp } from 'src/app/common/utils';
 
 const today = new Date().toISOString();
 
@@ -35,5 +36,13 @@ export class PurchaseHistoryComponent implements OnInit {
   search(params: VolumeFilter): void {
     console.log('search!', params, this.volumes$);
     this.filterParams.next(params);
+  }
+
+  padNumber(num): string {
+    return pad(`${num}`, 3);
+  }
+
+  rounded(num): string {
+    return displayAs2dp(num);
   }
 }
