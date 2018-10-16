@@ -1,0 +1,38 @@
+@import '_variables';
+
+:host {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.purchase-item {
+  display: flex;
+  flex: 1;
+
+  &--header {
+    font-weight: bold;
+    padding: #{$app--padding * 2} 0;
+    margin-top: $app--margin-large;
+  }
+
+  // space saving attempt
+  &__date-column {
+    max-width: 110px;
+  }
+
+  &__data {
+    display: flex;
+    flex: 1;
+
+    &--spaced {
+      justify-content: space-between;
+      > div:last-child {
+        margin-right: $app--margin-small;
+      }
+    }
+    &--align_right {
+      justify-content: flex-end;
+    }
+  }
+}

@@ -12,8 +12,6 @@ import { VolumeService } from '../../common/volume.service';
 import VolumeFilter from '../shared/volume-filter.model';
 import Volume from 'src/app/common/models/volume.model';
 import {
-  pad,
-  displayAs2dp,
   isValidDate,
   getISOStringDate,
   getDaysAgo
@@ -66,13 +64,5 @@ export class PurchaseHistoryComponent implements OnInit {
 
   datesAreValid(params: VolumeFilter): boolean {
     return isValidDate(params.fromDate) && isValidDate(params.toDate);
-  }
-
-  padNumber(num): string {
-    return pad(`${num}`, 3);
-  }
-
-  rounded(num): string {
-    return displayAs2dp(num);
   }
 }

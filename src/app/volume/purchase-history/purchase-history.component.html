@@ -1,41 +1,16 @@
 <app-volume-filter-bar (update)="search($event)"></app-volume-filter-bar>
 <div class="list-count">Showing {{itemCount}} items</div>
-<div class="purchase-item purchase-item--header">
-  <div class="purchase-item__data">Volume</div>
-  <div class="purchase-item__data">Retailer</div>
-  <div class="purchase-item__data">Bought Date</div>
-  <div class="purchase-item__data purchase-item__data--align_right">RRP (£)</div>
-  <div class="purchase-item__data purchase-item__data--align_right">
-    Paid (£)
-  </div>
-  <div class="purchase-item__data purchase-item__data--align_right">
-    Paid (%)
-  </div>
-</div>
 <app-list
   columns="one"
   [items]="volumes$"
 >
-  <ng-template let-item="item">
-    <div class="purchase-item">
-      <div class="purchase-item__data purchase-item__data--spaced">
-        <div>{{item.series.name}}</div>
-        <div>#{{padNumber(item.number)}}</div>
-      </div>
-      <div class="purchase-item__data">{{item.retailer && item.retailer.name}}</div>
-      <div class="purchase-item__data">{{item.boughtDate}}</div>
-      <div class="purchase-item__data purchase-item__data--align_right">
-        {{rounded(item.rrp)}}
-      </div>
-      <div class="purchase-item__data purchase-item__data--align_right">
-        {{rounded(item.paid)}}
-        <div
-          *ngIf="item.usedDiscountCode"
-          class="purchase-item__icon"
-          title="Discount Used"
-        >X</div>
-      </div>
-      <div class="purchase-item__data purchase-item__data--align_right">{{item.percentagePaid}}</div>
-    </div>
+  <ng-template
+    let-item="item"
+    let-i="index"
+  >
+    <app-purchase-item
+      [isFirst]="i === 0"
+      [item]="item"
+    ></app-purchase-item>
   </ng-template>
 </app-list>

@@ -3,10 +3,10 @@
   [class]="listClasses"
 >
   <li
-    *ngFor="let item of items | async"
+    *ngFor="let item of items | async; let i = index;"
     [class]="listItemClasses"
   >
-    <ng-container *ngTemplateOutlet="itemTemplate; context: { item: item };"></ng-container>
+    <ng-container *ngTemplateOutlet="itemTemplate; context: { item: item, index: i };"></ng-container>
   </li>
 </ul>
 <ul
