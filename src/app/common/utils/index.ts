@@ -60,3 +60,8 @@ export const getDaysAgo = (date, num = 1) => {
 
 export const getISOStringDate = (d = new Date()) =>
   new Date(d).toISOString().split('T')[0];
+
+export const isValidDate = (d: string): boolean => {
+  const maybeDate = Date.parse(d);
+  return maybeDate && maybeDate > 0;
+};

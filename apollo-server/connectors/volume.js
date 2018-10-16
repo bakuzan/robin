@@ -1,10 +1,12 @@
 module.exports = (db, Types) => {
   return db.define('volume', {
     number: {
-      type: Types.INTEGER
+      type: Types.INTEGER,
+      allowNull: false
     },
     releaseDate: {
-      type: Types.DATE
+      type: Types.DATE,
+      allowNull: true
     },
     boughtDate: {
       type: Types.DATE,
@@ -18,6 +20,7 @@ module.exports = (db, Types) => {
     },
     paid: {
       type: Types.FLOAT,
+      allowNull: true,
       validate: {
         isFloat: true
       }
