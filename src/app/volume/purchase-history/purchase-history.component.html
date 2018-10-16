@@ -1,13 +1,16 @@
 <app-volume-filter-bar (update)="search($event)"></app-volume-filter-bar>
+<div class="list-count">Showing {{itemCount}} items</div>
 <div class="purchase-item purchase-item--header">
   <div class="purchase-item__data">Volume</div>
   <div class="purchase-item__data">Retailer</div>
   <div class="purchase-item__data">Bought Date</div>
-  <div class="purchase-item__data purchase-item__data--align_right">RRP</div>
+  <div class="purchase-item__data purchase-item__data--align_right">RRP (£)</div>
   <div class="purchase-item__data purchase-item__data--align_right">
-    Paid
+    Paid (£)
   </div>
-  <div class="purchase-item__data purchase-item__data--align_right">Percentage Paid</div>
+  <div class="purchase-item__data purchase-item__data--align_right">
+    Paid (%)
+  </div>
 </div>
 <app-list
   columns="one"
@@ -29,9 +32,10 @@
         <div
           *ngIf="item.usedDiscountCode"
           class="purchase-item__icon"
+          title="Discount Used"
         >X</div>
       </div>
-      <div class="purchase-item__data purchase-item__data--align_right">{{item.percentagePaid}}%</div>
+      <div class="purchase-item__data purchase-item__data--align_right">{{item.percentagePaid}}</div>
     </div>
   </ng-template>
 </app-list>

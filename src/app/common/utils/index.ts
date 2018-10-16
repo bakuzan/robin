@@ -51,3 +51,12 @@ export const displayAs2dp = (n: number): string =>
 
 export const pad = (n: string, width: number, z = '0'): string =>
   n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+
+export const getDaysAgo = (date, num = 1) => {
+  const d = new Date(date);
+  d.setDate(d.getDate() - num);
+  return d;
+};
+
+export const getISOStringDate = (d = new Date()) =>
+  new Date(d).toISOString().split('T')[0];
