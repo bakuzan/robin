@@ -5,12 +5,14 @@ import { Observable } from 'rxjs';
 
 import { SeriesService } from '../shared/series.service';
 import { VolumeService } from '../../common/volume.service';
+import { RetailerService } from 'src/app/common/retailer.service';
+import RouteData from 'src/app/common/models/route-data.model';
 import Series from '../../common/models/series.model';
+import Retailer from 'src/app/common/models/retailer.model';
 import { VolumeInitValues } from '../../common/models/volume.model';
 import { Urls, SeriesTypes, Icons, Regexes } from 'src/app/common/constants';
 import { roundTo2, displayAs2dp } from 'src/app/common/utils';
 import { mapEnumToSelectOption } from 'src/app/common/utils/mappers';
-import RouteData from 'src/app/common/models/route-data.model';
 
 @Component({
   selector: 'app-series-create',
@@ -24,6 +26,7 @@ export class SeriesCreateComponent implements OnInit {
   saveIcon = Icons.save;
   cancelUrl = `/${Urls.seriesList}`;
   types = mapEnumToSelectOption(SeriesTypes);
+  retailers: Retailer[];
   seriesForm = new FormGroup({
     id: new FormControl(null),
     name: new FormControl('', Validators.required),
@@ -36,11 +39,13 @@ export class SeriesCreateComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private seriesService: SeriesService,
-    private volumeService: VolumeService
+    private volumeService: VolumeService,
+    private retailerService: RetailerService
   ) {}
 
   ngOnInit() {
     console.log('INIT', this);
+    this.getRetailers();
     this.route.data.subscribe((data: RouteData) => {
       this.data = data;
       if (!data.isCreate) {
@@ -59,6 +64,12 @@ export class SeriesCreateComponent implements OnInit {
     this.seriesService
       .getSeriesById(this.seriesId)
       .subscribe((series) => this.updateForm(series));
+  }
+
+  getRetailers() {
+    this.retailerService
+      .getRetailers()
+      .subscribe((result) => (this.retailers = result));
   }
 
   get volumes(): FormArray {
@@ -87,7 +98,7 @@ export class SeriesCreateComponent implements OnInit {
   }
 
   initVolume(initValues: VolumeInitValues = new VolumeInitValues()): FormGroup {
-    const { number, rrp, retailerId } = initValues;
+    const { number, rrp, retailer } = initValues;
     return new FormGroup({
       id: new FormControl(),
       number: new FormControl(number, Validators.required),
@@ -101,7 +112,7 @@ export class SeriesCreateComponent implements OnInit {
         null,
         Validators.pattern(Regexes.IS_FLOATING_POINT_NUMBER)
       ),
-      retailerId: new FormControl(retailerId),
+      retailer: new FormControl(retailer),
       usedDiscountCode: new FormControl(false)
     });
   }
@@ -109,19 +120,19 @@ export class SeriesCreateComponent implements OnInit {
   onAddVolume() {
     const initialVolumeNumber = this.volumes.controls.length + 1;
     let rrp = null,
-      retailerId = null;
+      retailer = null;
 
     if (initialVolumeNumber > 1) {
       const lastVolume = this.volumes.controls[0];
       const prev = lastVolume.value;
       rrp = prev.rrp;
-      retailerId = prev.retailerId;
+      retailer = prev.retailer;
     }
 
     const initialValues: VolumeInitValues = {
       number: initialVolumeNumber,
       rrp,
-      retailerId
+      retailer
     };
     console.log('should add volume here', this.seriesForm, initialValues);
     this.volumes.insert(0, this.initVolume(initialValues));

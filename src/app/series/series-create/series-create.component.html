@@ -118,15 +118,12 @@
                 step="0.01"
               ></app-input-box>
 
-              <!-- 
-                TODO
-                Make autocomplete/chip list
-               -->
-              <app-input-box
-                type="hidden"
-                name="{{i}}.retailerId"
-                formControlName="retailerId"
-              ></app-input-box>
+              <app-autocomplete
+                label="Retailer"
+                name="{{i}}.retailer"
+                formControlName="retailer"
+                [options]="retailers"
+              ></app-autocomplete>
 
               <app-tickbox
                 class="form__input"

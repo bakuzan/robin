@@ -1,0 +1,37 @@
+<div [ngClass]="{
+  'autocomplete': true,
+  'autocomplete--no-suggestions': showNoSuggestionsText
+}">
+  <app-input-box
+    [ngClass]="inputClasses"
+    [label]="label"
+    [name]="name"
+    [disabled]="!!selectedItem"
+    [(ngModel)]="filter"
+    (ngModelChange)="onInput($event)"
+    (focus)="onFocus($event)"
+    (blur)="onBlur($event)"
+    (keydown)="onKeyDown($event)"
+  ></app-input-box>
+  <ul
+    *ngIf="hasSuggestions"
+    [ngClass]="menuClasses"
+  >
+    <app-autocomplete-suggestion
+      *ngFor="let item of suggestions; let index = index;"
+      [activeSuggestion]="activeSuggestion"
+      [index]="index"
+      [item]="item"
+      [highlightMatch]="highlightMatchingText"
+      (select)="onSelectAutocompleteSuggestion(item.id)"
+    ></app-autocomplete-suggestion>
+  </ul>
+  <ul
+    *ngIf="showNoSuggestionsText"
+    [ngClass]="menuClasses"
+  >
+    <li class="suggestion suggestion--active">
+      <div>No suggestions available</div>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,17 @@
+@import '_extensions';
+
+.suggestion {
+  @extend %standard-border;
+
+  &__button {
+    width: 100%;
+  }
+  &__text {
+    display: flex;
+    white-space: pre;
+  }
+}
+
+.highlight {
+  font-weight: bold;
+}

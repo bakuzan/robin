@@ -1,0 +1,16 @@
+<li [ngClass]="{
+  'suggestion': true,
+  'suggestion--active': isActiveSuggestion
+}">
+  <app-rbn-button
+    class="suggestion__button"
+    [title]="item.name"
+    (click)="onClick($event)"
+  >
+    <span class="suggestion__text">
+      <span>{{textPart.pre}}</span>
+      <span class="highlight">{{textPart.highlight}}</span>
+      <span>{{textPart.post}}</span>
+    </span>
+  </app-rbn-button>
+</li>

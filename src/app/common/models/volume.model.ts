@@ -14,5 +14,5 @@ export default class Volume {
 export class VolumeInitValues {
   number: number = null;
   rrp: number = null;
-  retailerId: number = null;
+  retailer: Retailer;
 }

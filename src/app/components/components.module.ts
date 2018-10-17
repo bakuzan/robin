@@ -14,6 +14,8 @@ import { SelectBoxComponent } from './select-box/select-box.component';
 import { ListComponent } from './list/list.component';
 import { RadioButtonComponent } from './radio-button/radio-button.component';
 import { RadioButtonGroupComponent } from './radio-button-group/radio-button-group.component';
+import { AutocompleteComponent } from './autocomplete/autocomplete.component';
+import { AutocompleteSuggestionComponent } from './autocomplete-suggestion/autocomplete-suggestion.component';
 
 @NgModule({
   imports: [AppRoutingModule, CommonModule, FormsModule],
@@ -28,7 +30,9 @@ import { RadioButtonGroupComponent } from './radio-button-group/radio-button-gro
     SelectBoxComponent,
     ListComponent,
     RadioButtonComponent,
-    RadioButtonGroupComponent
+    RadioButtonGroupComponent,
+    AutocompleteComponent,
+    AutocompleteSuggestionComponent
   ],
   exports: [
     LogoComponent,
@@ -41,7 +45,8 @@ import { RadioButtonGroupComponent } from './radio-button-group/radio-button-gro
     SelectBoxComponent,
     ListComponent,
     RadioButtonComponent,
-    RadioButtonGroupComponent
+    RadioButtonGroupComponent,
+    AutocompleteComponent
   ]
 })
 export class ComponentsModule {}

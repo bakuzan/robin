@@ -37,8 +37,18 @@ const getVolumesForFilters = gql`
   ${Fragments.volumeFields}
 `;
 
+const getRetailers = gql`
+  query GetRetailers {
+    retailers {
+      id
+      name
+    }
+  }
+`;
+
 export default {
   getSeries,
   getSeriesById,
-  getVolumesForFilters
+  getVolumesForFilters,
+  getRetailers
 };
