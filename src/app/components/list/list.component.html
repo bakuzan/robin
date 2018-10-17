@@ -1,3 +1,9 @@
+<div
+  *ngIf="itemCount || itemCount === 0"
+  class="list-count"
+>
+  Showing {{itemCount}} items
+</div>
 <ul
   *ngIf="isAsync"
   [class]="listClasses"

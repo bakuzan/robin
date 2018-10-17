@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import classNames from 'classnames';
 
 import ListColumn from './list-column.enum';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list',
@@ -24,6 +25,8 @@ export class ListComponent implements OnInit {
   class: string;
   @Input()
   itemClass: string;
+  @Input()
+  itemCount: number;
   @Input()
   items: Observable<any>;
   @Input()

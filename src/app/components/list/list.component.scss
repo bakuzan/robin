@@ -46,3 +46,7 @@ $columns: (
   @extend %standard-border;
   box-sizing: border-box;
 }
+.list-count {
+  font-size: 0.8em;
+  opacity: 0.75;
+}

@@ -4,7 +4,8 @@ import {
   debounceTime,
   distinctUntilChanged,
   switchMap,
-  filter
+  filter,
+  tap
 } from 'rxjs/operators';
 
 import SeriesType from 'src/app/common/models/series-types.enum';
@@ -18,6 +19,8 @@ import {
 } from 'src/app/common/utils';
 
 const today = new Date();
+const combinedFilterString = (x: VolumeFilter) =>
+  `${x.type}${x.fromDate}${x.toDate}`;
 
 @Component({
   selector: 'app-purchase-history',
@@ -40,25 +43,21 @@ export class PurchaseHistoryComponent implements OnInit {
     this.volumes$ = this.filterParams.pipe(
       debounceTime(500),
       distinctUntilChanged(
-        (x, y) =>
-          `${x.type}${x.fromDate}${x.toDate}` ===
-          `${y.type}${y.fromDate}${y.toDate}`
+        (x: VolumeFilter, y: VolumeFilter) =>
+          combinedFilterString(x) === combinedFilterString(y)
       ),
       filter(
-        (params) =>
+        (params: VolumeFilter) =>
           params.fromDate && params.toDate && this.datesAreValid(params)
       ),
-      switchMap((params: VolumeFilter) => this.volumeService.getVolumes(params))
+      switchMap((params: VolumeFilter) =>
+        this.volumeService.getVolumes(params)
+      ),
+      tap((items: Volume[]) => (this.itemCount = items.length))
     );
-
-    this.volumes$.subscribe((items) => {
-      console.log(items);
-      this.itemCount = items.length;
-    });
   }
 
   search(params: VolumeFilter): void {
-    console.log('search!', params, this.volumes$);
     this.filterParams.next(params);
   }
 

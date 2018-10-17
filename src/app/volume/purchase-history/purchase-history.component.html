@@ -1,7 +1,7 @@
 <app-volume-filter-bar (update)="search($event)"></app-volume-filter-bar>
-<div class="list-count">Showing {{itemCount}} items</div>
 <app-list
   columns="one"
+  [itemCount]="itemCount"
   [items]="volumes$"
 >
   <ng-template

@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  switchMap,
+  tap
+} from 'rxjs/operators';
 
 import { SeriesService } from '../shared/series.service';
 import Series from '../../common/models/series.model';
@@ -18,6 +23,7 @@ export class SeriesListComponent implements OnInit {
     types: Array.from(SeriesTypes)
   });
   series$: Observable<Series[]>;
+  itemCount: number;
 
   constructor(private service: SeriesService) {}
 
@@ -25,12 +31,12 @@ export class SeriesListComponent implements OnInit {
     this.series$ = this.filterParams.pipe(
       debounceTime(300),
       distinctUntilChanged(),
-      switchMap((params: SeriesFilter) => this.service.getSeries(params))
+      switchMap((params: SeriesFilter) => this.service.getSeries(params)),
+      tap((items: Series[]) => (this.itemCount = items.length))
     );
   }
 
   search(params: SeriesFilter): void {
-    console.log('search!', params, this.series$);
     this.filterParams.next(params);
   }
 }

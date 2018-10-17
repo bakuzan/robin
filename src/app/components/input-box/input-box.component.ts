@@ -85,7 +85,6 @@ export class InputBoxComponent implements OnInit, ControlValueAccessor {
 
   writeValue(value: string): void {
     const input = this.input.nativeElement;
-    console.log(input, value);
     this.renderer.setProperty(input, 'value', value);
   }
   registerOnChange(fn: () => void): void {
@@ -101,8 +100,8 @@ export class InputBoxComponent implements OnInit, ControlValueAccessor {
     input[action]('input-box--disabled');
   }
 
-  change(value) {
-    this.onChange(value);
+  change(e) {
+    this.onChange(e.target.value);
   }
 
   handleFocus(e) {
