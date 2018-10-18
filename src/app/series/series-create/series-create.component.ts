@@ -21,7 +21,7 @@ import { mapEnumToSelectOption } from 'src/app/common/utils/mappers';
 })
 export class SeriesCreateComponent implements OnInit {
   private seriesId: number;
-  private data: RouteData;
+  data: RouteData;
   crossIcon = Icons.cross;
   saveIcon = Icons.save;
   cancelUrl = `/${Urls.seriesList}`;
@@ -94,6 +94,21 @@ export class SeriesCreateComponent implements OnInit {
     }, 0);
   }
 
+  updateRetailers(data: any) {
+    if (!data.retailer && !data.volumes) {
+      return;
+    }
+
+    const retailers: Retailer[] = data.retailer
+      ? [data.retailer]
+      : data.volumes.map((x) => x.retailer);
+    console.log('up retail', retailers, this.retailers);
+    this.retailers = [
+      ...this.retailers,
+      ...retailers.filter((x) => this.retailers.every((y) => y.id !== x.id))
+    ];
+  }
+
   initVolume(initValues: VolumeInitValues = new VolumeInitValues()): FormGroup {
     const { number, rrp, retailer } = initValues;
     return new FormGroup({
@@ -137,7 +152,7 @@ export class SeriesCreateComponent implements OnInit {
   }
 
   processVolumePrePost(x): Volume {
-    const { releaseDate, boughtDate, usedDiscountCode } = x;
+    const { releaseDate, boughtDate, usedDiscountCode, seriesId } = x;
     const retailer = !x.retailer
       ? { retailerId: null }
       : typeof x.retailer.id === 'string'
@@ -147,11 +162,12 @@ export class SeriesCreateComponent implements OnInit {
     return {
       id: x.id ? x.id : undefined,
       number: Number(x.number),
+      paid: roundTo2(x.paid),
+      rrp: roundTo2(x.rrp),
       releaseDate,
       boughtDate,
       usedDiscountCode,
-      paid: roundTo2(x.paid),
-      rrp: roundTo2(x.rrp),
+      seriesId,
       ...retailer
     };
   }
@@ -170,9 +186,16 @@ export class SeriesCreateComponent implements OnInit {
       mutation = this.volumeService.updateVolume(volume);
     }
 
-    mutation.subscribe((response) =>
-      this.volumes.at(index).patchValue(response)
-    );
+    mutation.subscribe((response) => {
+      const vol = this.volumes.at(index);
+      vol.patchValue({
+        ...response,
+        paid: displayAs2dp(response.paid),
+        rrp: displayAs2dp(response.rrp)
+      });
+      vol.markAsPristine();
+      this.updateRetailers(response);
+    });
   }
 
   onRemoveVolume(index: number) {
@@ -204,6 +227,7 @@ export class SeriesCreateComponent implements OnInit {
         this.router.navigateByUrl(targetUrl);
       } else {
         this.updateForm(response);
+        this.updateRetailers(response);
       }
     });
   }

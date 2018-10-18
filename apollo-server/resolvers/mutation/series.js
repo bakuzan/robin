@@ -6,42 +6,45 @@ const separateArrIntoNewAndExisting = require('../../utils/separate-new-and-exis
 module.exports = {
   async seriesCreate(_, { series }) {
     const { volumes, ...args } = series;
-    return await Series.create(
-      { ...args, volumes },
-      { include: [{ model: Volume, include: [{ model: Retailer }] }] }
-    );
+    const createdAt = Date.now();
+    const newRetailers = volumes
+      .map((x) => x.retailer)
+      .filter((x, i, arr) => x && arr.indexOf(x) === i);
+
+    return db.transaction(async (transaction) => {
+      let mappedVolumes = volumes;
+
+      if (newRetailers.length) {
+        await Retailer.bulkCreate(newRetailers, { transaction });
+        const created = await Retailer.findAll({
+          where: { createdAt: { [Op.gte]: createdAt } },
+          raw: true,
+          transaction
+        });
+
+        mappedVolumes = volumes.map(({ retailer, ...x }) => {
+          if (!retailer) return x;
+
+          const retailer = created.find((r) => r.name === retailer.name);
+          return { ...x, retailerId: retailer.id };
+        });
+      }
+
+      return await Series.create(
+        { ...args, volumes: mappedVolumes },
+        { include: [Volume] }
+      );
+    });
   },
   seriesUpdate(_, { series }) {
     const { id, volumes, ...args } = series;
-    const createdAt = Date.now();
-    const { newItems, existingItemIds } = separateArrIntoNewAndExisting(
-      volumes
-    );
+    const { existingItemIds } = separateArrIntoNewAndExisting(volumes);
 
-    return db.transaction((transaction) =>
-      Series.update({ ...args }, { where: { id }, transaction })
-        .then(() => Series.findById(id, { transaction }))
-        .then(async (instance) => {
-          await instance.setVolumes(existingItemIds, { transaction });
-          if (!newItems.length) {
-            return instance;
-          }
-
-          return Volume.bulkCreate(newItems, {
-            transaction,
-            include: [Retailer]
-          })
-            .then(() =>
-              Volume.findAll({
-                where: { createdAt: { [Op.gte]: createdAt } },
-                transaction
-              })
-            )
-            .then((createdVolumes) =>
-              instance.addVolumes(createdVolumes, { transaction })
-            )
-            .then(() => instance);
-        })
-    );
+    return db.transaction(async (transaction) => {
+      await Series.update({ ...args }, { where: { id }, transaction });
+      const instance = await Series.findById(id, { transaction });
+      await instance.setVolumes(existingItemIds, { transaction });
+      return instance;
+    });
   }
 };

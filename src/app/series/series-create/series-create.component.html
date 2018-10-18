@@ -134,7 +134,7 @@
 
               <div class="button-group button-group--stacked">
                 <app-rbn-button
-                  *ngIf="item.value && item.value.id"
+                  *ngIf="!data.isCreate && item.value"
                   title="Save Volume"
                   [icon]="saveIcon"
                   (click)="onSaveVolume(i)"

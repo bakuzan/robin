@@ -38,7 +38,10 @@ db.sync({ force: FORCE_DB_REBUILD })
       await retailer.bulkCreate(TestData.retailer);
       await volume.bulkCreate(TestData.volume);
     }
-  });
+  })
+  .then(
+    async () => await db.models.volume.destroy({ where: { seriesId: null } })
+  );
 
 const { series: Series, volume: Volume, retailer: Retailer } = db.models;
 
