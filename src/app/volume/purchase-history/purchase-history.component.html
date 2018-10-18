@@ -1,6 +1,7 @@
 <app-volume-filter-bar (update)="search($event)"></app-volume-filter-bar>
 <app-list
   columns="one"
+  itemClass="list__item--no-padding"
   [itemCount]="itemCount"
   [items]="volumes$"
 >

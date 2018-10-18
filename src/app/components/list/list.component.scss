@@ -45,6 +45,9 @@ $columns: (
   padding: $app--padding;
   @extend %standard-border;
   box-sizing: border-box;
+  &--no-padding {
+    padding: 0;
+  }
 }
 .list-count {
   font-size: 0.8em;

@@ -62,5 +62,9 @@
       }
     }
     // THEMING HERE
+
+    .purchase-item:not(.purchase-item--header)::hover {
+      background-color: $active-background;
+    }
   }
 }

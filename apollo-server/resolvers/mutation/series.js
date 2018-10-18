@@ -12,6 +12,7 @@ module.exports = {
       .filter((x, i, arr) => x && arr.indexOf(x) === i);
 
     return db.transaction(async (transaction) => {
+      const newSeries = await Series.create({ ...args });
       let mappedVolumes = volumes;
 
       if (newRetailers.length) {
@@ -25,15 +26,20 @@ module.exports = {
         mappedVolumes = volumes.map(({ retailer, ...x }) => {
           if (!retailer) return x;
 
-          const retailer = created.find((r) => r.name === retailer.name);
-          return { ...x, retailerId: retailer.id };
+          const newRetailer = created.find((r) => r.name === retailer.name);
+          return { ...x, retailerId: newRetailer.id };
         });
       }
 
-      return await Series.create(
-        { ...args, volumes: mappedVolumes },
-        { include: [Volume] }
-      );
+      await Volume.bulkCreate(mappedVolumes, { transaction });
+      const newVolumes = await Volume.findAll({
+        where: { createdAt: { [Op.gte]: createdAt } },
+        transaction
+      });
+
+      await newSeries.setVolumes(newVolumes, { transaction });
+
+      return await newSeries;
     });
   },
   seriesUpdate(_, { series }) {

@@ -1,8 +1,6 @@
 module.exports = {
   volumes(series, { sort }) {
-    const order = sort ? sort.toLowerCase().split('_') : undefined;
-    return series
-      .getVolumes({ order: [order] })
-      .then((volumes) => volumes || []);
+    const order = sort ? { order: [sort.toLowerCase().split('_')] } : {};
+    return series.getVolumes({ ...order }).then((volumes) => volumes || []);
   }
 };

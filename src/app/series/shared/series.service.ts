@@ -28,10 +28,8 @@ export class SeriesService {
 
     return this.http.post<Series[]>(this.seriesUrl, payload, httpOptions).pipe(
       tap((_) => console.log(`found series matching`, filters)),
-      catchError(this.handleError<Series[]>('searchSeries', [])),
-      map(
-        (response: any) => response.data && (response.data.series as Series[])
-      )
+      map((response: any) => this.mapToResponse<Series[]>('series', response)),
+      catchError(this.handleError<Series[]>('searchSeries', []))
     );
   }
 
@@ -41,10 +39,10 @@ export class SeriesService {
     });
     return this.http.post<Series>(this.seriesUrl, payload, httpOptions).pipe(
       tap((_) => this.log(`fetched series id=${id}`)),
-      catchError(this.handleError<Series>(`getSeries id=${id}`)),
-      map(
-        (response: any) => response.data && (response.data.seriesById as Series)
-      )
+      map((response: any) =>
+        this.mapToResponse<Series>('seriesById', response)
+      ),
+      catchError(this.handleError<Series>(`getSeries id=${id}`))
     );
   }
 
@@ -54,11 +52,10 @@ export class SeriesService {
     });
     return this.http.post<Series>(this.seriesUrl, payload, httpOptions).pipe(
       tap((s: Series) => this.log(`added hero w/ id=${s.id}`)),
-      catchError(this.handleError<Series>('addSeries')),
-      map(
-        (response: any) =>
-          response.data && (response.data.seriesCreate as Series)
-      )
+      map((response: any) =>
+        this.mapToResponse<Series>('seriesCreate', response)
+      ),
+      catchError(this.handleError<Series>('addSeries'))
     );
   }
 
@@ -68,11 +65,10 @@ export class SeriesService {
     });
     return this.http.post(this.seriesUrl, payload, httpOptions).pipe(
       tap((_) => this.log(`updated series id=${series.id}`)),
-      catchError(this.handleError<any>('updateSeries')),
-      map(
-        (response: any) =>
-          response.data && (response.data.seriesUpdate as Series)
-      )
+      map((response: any) =>
+        this.mapToResponse<Series>('seriesUpdate', response)
+      ),
+      catchError(this.handleError<any>('updateSeries'))
     );
   }
 
@@ -86,9 +82,18 @@ export class SeriesService {
     );
   }
 
+  private mapToResponse<T>(attr: string, response: any, ofType?: T): T {
+    const result = response.data && (response.data[attr] as T);
+    if (!result) {
+      throw Error(`${attr} data not found`);
+    }
+
+    return result;
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      console.error(error);
+      console.error('%c Series api Error', 'color: firebrick', error);
       this.log(`${operation} failed: ${error.message}`);
 
       return of(result as T);
