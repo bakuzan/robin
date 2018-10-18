@@ -9,6 +9,7 @@ export default class Volume {
   paid: number;
   retailer: Retailer;
   retailerId: number;
+  usedDiscountCode: boolean;
 }
 
 export class VolumeInitValues {

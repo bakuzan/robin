@@ -4,10 +4,12 @@
   @extend %standard-border;
 
   &__button {
+    display: flex;
     width: 100%;
   }
   &__text {
     display: flex;
+    width: 100%;
     white-space: pre;
   }
 }

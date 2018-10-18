@@ -27,7 +27,10 @@ module.exports = {
             return instance;
           }
 
-          return Volume.bulkCreate(newItems, { transaction })
+          return Volume.bulkCreate(newItems, {
+            transaction,
+            include: [Retailer]
+          })
             .then(() =>
               Volume.findAll({
                 where: { createdAt: { [Op.gte]: createdAt } },

@@ -6,6 +6,8 @@ const Query = gql`
     seriesById(id: Int!): Series
 
     volumes(filters: VolumeFilter): [Volume]
+
+    retailers: [Retailer]
   }
 `;
 

@@ -10,15 +10,16 @@
     [attr.max]="max"
     [attr.maxLength]="maxLength"
     [attr.disabled]="disabled"
+    [attr.readOnly]="readOnly"
     [attr.step]="step"
     (input)="change($event)"
-    (focus)="handleFocus"
-    (blur)="handleBlur"
-    (keydown)="handleKeyDown"
+    (focus)="handleFocus($event)"
+    (blur)="handleBlur($event)"
+    (keydown)="handleKeyDown($event)"
   />
   <label for="{{name}}">{{label}}</label>
   <app-rbn-button
-    *ngIf="value && isTextInput"
+    *ngIf="input.value && isTextInput"
     [class]="clearClasses"
     [size]="small"
     [icon]="icon"
@@ -28,6 +29,6 @@
     *ngIf="showCount"
     class="input-box__count"
   >
-    {{countText()}}
+    {{countText}}
   </span>
 </div>

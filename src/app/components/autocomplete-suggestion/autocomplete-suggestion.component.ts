@@ -1,12 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  Output,
-  EventEmitter
-} from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { TextPart, Suggestion } from 'src/app/common/models/suggestion.model';
 
@@ -15,9 +7,7 @@ import { TextPart, Suggestion } from 'src/app/common/models/suggestion.model';
   templateUrl: './autocomplete-suggestion.component.html',
   styleUrls: ['./autocomplete-suggestion.component.scss']
 })
-export class AutocompleteSuggestionComponent implements OnInit, OnChanges {
-  isActiveSuggestion: boolean;
-  textPart: TextPart;
+export class AutocompleteSuggestionComponent implements OnInit {
   @Input()
   activeSuggestion: number;
   @Input()
@@ -25,7 +15,7 @@ export class AutocompleteSuggestionComponent implements OnInit, OnChanges {
   @Input()
   item: Suggestion;
   @Input()
-  highlightMatch: Function;
+  textPart: TextPart;
   @Output()
   select: EventEmitter<any> = new EventEmitter<any>();
 
@@ -33,10 +23,8 @@ export class AutocompleteSuggestionComponent implements OnInit, OnChanges {
 
   ngOnInit() {}
 
-  ngOnChanges(changes: SimpleChanges) {
-    console.log('changes', changes);
-    // this.isActiveSuggestion = this.activeSuggestion === this.index;
-    // this.textPart = this.highlightMatch(this.item.name);
+  get isActiveSuggestion(): boolean {
+    return this.activeSuggestion === this.index;
   }
 
   onClick() {

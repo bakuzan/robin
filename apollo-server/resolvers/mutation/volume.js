@@ -6,8 +6,9 @@ module.exports = {
   },
   volumeUpdate(_, { volume }) {
     const { id, ...args } = volume;
-    return Volume.update({ ...args }, { where: { id } }).then(() =>
-      Volume.findById(id)
-    );
+    return Volume.update(
+      { ...args },
+      { where: { id }, include: [Retailer] }
+    ).then(() => Volume.findById(id));
   }
 };

@@ -75,7 +75,7 @@
                 formControlName="id"
               ></app-input-box>
               <app-input-box
-                class="form__input"
+                class="form__input form__input--integer"
                 type="number"
                 label="Number"
                 name="{{i}}.number"
@@ -85,14 +85,14 @@
               ></app-input-box>
 
               <app-input-box
-                class="form__input"
+                class="form__input form__input--date"
                 type="date"
                 label="Released"
                 name="{{i}}.releaseDate"
                 formControlName="releaseDate"
               ></app-input-box>
               <app-input-box
-                class="form__input"
+                class="form__input form__input--date"
                 type="date"
                 label="Bought"
                 name="{{i}}.boughtDate"
@@ -100,7 +100,7 @@
               ></app-input-box>
 
               <app-input-box
-                class="form__input"
+                class="form__input form__input--float"
                 type="number"
                 label="RRP"
                 name="{{i}}.rrp"
@@ -109,7 +109,7 @@
                 step="0.01"
               ></app-input-box>
               <app-input-box
-                class="form__input"
+                class="form__input form__input--float"
                 type="number"
                 label="Paid"
                 name="{{i}}.paid"

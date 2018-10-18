@@ -22,7 +22,7 @@
       [activeSuggestion]="activeSuggestion"
       [index]="index"
       [item]="item"
-      [highlightMatch]="highlightMatchingText"
+      [textPart]="highlightMatchingText(item.name)"
       (select)="onSelectAutocompleteSuggestion(item.id)"
     ></app-autocomplete-suggestion>
   </ul>

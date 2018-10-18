@@ -56,8 +56,8 @@ export class InputBoxComponent implements OnInit, ControlValueAccessor {
   step: number;
   @Input()
   maxLength: number;
-  @Output()
-  update: EventEmitter<any> = new EventEmitter();
+  @Input()
+  readOnly: boolean;
   @Output()
   blur: EventEmitter<any> = new EventEmitter();
   @Output()
@@ -76,7 +76,7 @@ export class InputBoxComponent implements OnInit, ControlValueAccessor {
       'input-container',
       'has-float-label',
       {
-        'input-box--not-clearable': this.isTextInput,
+        'input-box--clearable': this.isTextInput,
         'input-box--hidden': this.type === 'hidden'
       },
       this.class
@@ -95,12 +95,11 @@ export class InputBoxComponent implements OnInit, ControlValueAccessor {
   }
   setDisabledState?(isDisabled: boolean): void {
     const input = this.input.nativeElement;
-    const action = isDisabled ? 'addClass' : 'removeClass';
     this.renderer.setProperty(input, 'disabled', isDisabled);
-    input[action]('input-box--disabled');
   }
 
   change(e) {
+    console.log('change input', e.target.value);
     this.onChange(e.target.value);
   }
 
@@ -115,11 +114,11 @@ export class InputBoxComponent implements OnInit, ControlValueAccessor {
     this.keyDown.emit(e);
   }
 
-  showCount(): boolean {
+  get showCount(): boolean {
     return !!this.maxLength || this.hasMaxNumber;
   }
 
-  countText(): string {
+  get countText(): string {
     if (this.maxLength) {
       return `${this.value.length}/${this.maxLength}`;
     }
@@ -130,7 +129,8 @@ export class InputBoxComponent implements OnInit, ControlValueAccessor {
   }
 
   clearAndFocusInput(): void {
-    this.value = '';
+    this.writeValue('');
+    this.onChange('');
     clearTimeout(this.clearTimer);
 
     this.clearTimer = window.setTimeout(

@@ -8,6 +8,8 @@ import classNames from 'classnames';
 })
 export class RbnButtonComponent implements OnInit {
   @Input()
+  grow: boolean;
+  @Input()
   type = 'button';
   @Input()
   size: string;
@@ -36,7 +38,8 @@ export class RbnButtonComponent implements OnInit {
       [`button--size_${size}`]: !!this.size || !!this.icon,
       'button--rounded': this.rounded,
       'button--depress': this.depress,
-      ripple: true
+      ripple: true,
+      'button--grow': this.grow
     });
   }
 }

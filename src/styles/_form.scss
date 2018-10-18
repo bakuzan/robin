@@ -9,6 +9,16 @@
   &__input {
     display: flex;
     max-width: 500px;
+
+    &--integer {
+      max-width: 140px;
+    }
+    &--float {
+      max-width: 150px;
+    }
+    &--date {
+      max-width: 170px;
+    }
   }
   &__array-item-wrapper {
     display: flex;

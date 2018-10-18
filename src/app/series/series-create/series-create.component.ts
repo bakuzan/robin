@@ -9,7 +9,7 @@ import { RetailerService } from 'src/app/common/retailer.service';
 import RouteData from 'src/app/common/models/route-data.model';
 import Series from '../../common/models/series.model';
 import Retailer from 'src/app/common/models/retailer.model';
-import { VolumeInitValues } from '../../common/models/volume.model';
+import Volume, { VolumeInitValues } from '../../common/models/volume.model';
 import { Urls, SeriesTypes, Icons, Regexes } from 'src/app/common/constants';
 import { roundTo2, displayAs2dp } from 'src/app/common/utils';
 import { mapEnumToSelectOption } from 'src/app/common/utils/mappers';
@@ -44,19 +44,17 @@ export class SeriesCreateComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('INIT', this);
     this.getRetailers();
     this.route.data.subscribe((data: RouteData) => {
       this.data = data;
       if (!data.isCreate) {
-        console.log('init - is not create', this.seriesForm);
         this.seriesId = +this.route.snapshot.paramMap.get('id');
         this.getSeries();
       }
     });
 
-    this.seriesForm.valueChanges.subscribe((...test) => {
-      console.log(this.seriesForm, 'form status change > ', test);
+    this.seriesForm.controls.volumes.valueChanges.subscribe((...test) => {
+      console.log('volume change > ', test);
     });
   }
 
@@ -80,7 +78,6 @@ export class SeriesCreateComponent implements OnInit {
     const volumes = series.volumes || [];
 
     if (volumes.length && !this.volumes.length) {
-      console.log('volumes mismatch...');
       volumes.forEach(() => this.volumes.push(this.initVolume()));
     }
 
@@ -139,16 +136,33 @@ export class SeriesCreateComponent implements OnInit {
     console.log('volumes after add > ', this.volumes.value);
   }
 
+  processVolumePrePost(x): Volume {
+    const { releaseDate, boughtDate, usedDiscountCode } = x;
+    const retailer = !x.retailer
+      ? { retailerId: null }
+      : typeof x.retailer.id === 'string'
+        ? ({ retailer: { name: x.retailer.name } } as any)
+        : { retailerId: x.retailer.id };
+
+    return {
+      id: x.id ? x.id : undefined,
+      number: Number(x.number),
+      releaseDate,
+      boughtDate,
+      usedDiscountCode,
+      paid: roundTo2(x.paid),
+      rrp: roundTo2(x.rrp),
+      ...retailer
+    };
+  }
+
   onSaveVolume(index: number) {
     let mutation;
     const value = this.volumes.value[index];
-    const volume = {
+    const volume = this.processVolumePrePost({
       ...value,
-      seriesId: this.seriesId,
-      number: Number(value.number),
-      rrp: roundTo2(value.rrp),
-      paid: roundTo2(value.paid)
-    };
+      seriesId: this.seriesId
+    });
     console.log('save > ', this.volumes, index, volume);
     if (!volume.id) {
       mutation = this.volumeService.addVolume(volume);
@@ -173,13 +187,7 @@ export class SeriesCreateComponent implements OnInit {
       volumeCount: formValues.volumeCount
         ? Number(formValues.volumeCount)
         : null,
-      volumes: formValues.volumes.map((x) => ({
-        ...x,
-        id: x.id ? x.id : undefined,
-        number: Number(x.number),
-        paid: roundTo2(x.paid),
-        rrp: roundTo2(x.rrp)
-      }))
+      volumes: formValues.volumes.map(this.processVolumePrePost)
     };
 
     if (this.data.isCreate) {

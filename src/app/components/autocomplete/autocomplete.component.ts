@@ -23,7 +23,7 @@ export class AutocompleteComponent implements OnInit, ControlValueAccessor {
   private selectedItem: Suggestion;
   menuClasses: string;
   filter = '';
-  activeSuggestion: number;
+  activeSuggestion = 0;
   isFocussed: boolean;
   onChange: Function;
   onTouched: Function;
@@ -52,7 +52,7 @@ export class AutocompleteComponent implements OnInit, ControlValueAccessor {
 
   get showMenu() {
     const focussedWithFilter = this.isFocussed && this.filter;
-    return focussedWithFilter;
+    return focussedWithFilter && !this.selectedItem;
   }
 
   get hasOptions(): boolean {
@@ -91,9 +91,17 @@ export class AutocompleteComponent implements OnInit, ControlValueAccessor {
     throw new Error('Method not implemented.');
   }
 
-  onInput() {
-    this.selectedItem = null;
-    this.activeSuggestion = 0;
+  onInput(value) {
+    if (this.selectedItem) {
+      this.writeValue(null);
+      this.onChange(null);
+    }
+
+    if (this.activeSuggestion) {
+      this.activeSuggestion = 0;
+    }
+
+    this.filter = value;
   }
 
   onKeyDown(event) {
@@ -128,17 +136,19 @@ export class AutocompleteComponent implements OnInit, ControlValueAccessor {
     if (!suggestion) {
       suggestion = { id: generateUniqueId(), name: this.filter };
     }
-
+    this.writeValue(suggestion);
     this.onChange(suggestion);
   }
 
   selectActiveSuggestion() {
     const item = this.suggestions[this.activeSuggestion];
+    console.log('select active', item);
     const id = item ? item.id : null;
     this.onSelectAutocompleteSuggestion(id);
   }
 
   updateActiveSuggestion(value) {
+    console.log('update suggestion', value, this.activeSuggestion);
     const maxIndex = this.suggestions.length - 1;
     let newValue = this.activeSuggestion + value;
     if (newValue > maxIndex) {
@@ -156,7 +166,7 @@ export class AutocompleteComponent implements OnInit, ControlValueAccessor {
       return { pre: value } as TextPart;
     }
 
-    const length = this.filter.length;
+    const length = this.filter ? this.filter.length : 0;
     const breakdown = {
       pre: value.slice(0, match.index),
       highlight: value.slice(match.index, match.index + length),

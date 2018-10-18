@@ -28,9 +28,11 @@ input {
     display: flex;
     flex: 1 0 100%;
   }
-  &:not(.input-box--not-clearable) > input {
+
+  &--clearable > input {
     padding-right: 1.5em !important;
   }
+
   &__clear {
     position: relative;
     right: 30px;

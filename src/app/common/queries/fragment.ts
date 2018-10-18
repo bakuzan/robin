@@ -16,7 +16,10 @@ const volumeFields = gql`
     rrp
     paid
     usedDiscountCode
-    retailerId
+    retailer {
+      id
+      name
+    }
   }
 `;
 
