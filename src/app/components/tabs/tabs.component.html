@@ -1,0 +1,31 @@
+<div [ngClass]="tabsClasses">
+  <ul
+    class="tabs__controls"
+    role="tablist"
+  >
+    <li
+      *ngFor="let tab of tabs; let i = index;"
+      *ngIf="tab.isVisible"
+      class="tabs__tab tab"
+      [ngClass]="{
+        'tab--active': tab.isActive,
+        'tab--disabled': tab.isDisabled
+      }"
+      role="presentation"
+    >
+      <a
+        [aria-controls]="tab.tabHash"
+        [aria-selected]="tab.isActive"
+        [href]="tab.tabHash"
+        class="tab__option"
+        role="tab"
+        (click)="selectTab(tab.tabHash, $event)"
+      >
+        {{tab.text}}
+      </a>
+    </li>
+  </ul>
+  <div class="tabs__container">
+    <ng-content></ng-content>
+  </div>
+</div>

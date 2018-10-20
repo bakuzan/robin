@@ -1,0 +1,43 @@
+@import '_variables.scss';
+@import '_extensions.scss';
+
+$tab-controls-height: 35px;
+
+.tabs {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin: 5px 0;
+  &__container {
+    position: relative;
+    height: calc(100% - #{$tab-controls-height});
+    min-width: 400px;
+  }
+  &__controls {
+    display: flex;
+    height: $tab-controls-height;
+    padding: 0;
+    margin: -1px;
+    white-space: nowrap;
+    list-style-type: none;
+  }
+  &__tab {
+    display: inline-flex;
+    padding: 2px;
+    margin: 0 1px;
+    border: {
+      width: 1px;
+      style: solid;
+    }
+    z-index: map-get($z-index, above-siblings);
+  }
+}
+.tab {
+  display: flex;
+  align-items: center;
+  &__option {
+    padding: $app--padding;
+    color: inherit;
+    text-decoration: none;
+  }
+}

@@ -51,6 +51,9 @@
     svg.themed-background text {
       fill: $primary-colour;
     }
+    .radio__input {
+      color: $primary-background;
+    }
 
     .sidebar__link {
       color: $primary-colour;
@@ -63,8 +66,11 @@
     }
     // THEMING HERE
 
-    .purchase-item:not(.purchase-item--header)::hover {
-      background-color: $active-background;
+    .purchase-item:not(.purchase-item--header):hover {
+      background-color: opacify($active-colour, 0.3);
+    }
+    .suggestion.suggestion--active {
+      border-color: $active-colour;
     }
   }
 }

@@ -18,6 +18,11 @@
     }
     &--date {
       max-width: 170px;
+      margin: {
+        top: -3px;
+        left: -3px;
+        right: 6px;
+      }
     }
   }
   &__array-item-wrapper {
