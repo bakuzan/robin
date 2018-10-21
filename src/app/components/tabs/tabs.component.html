@@ -5,7 +5,6 @@
   >
     <li
       *ngFor="let tab of tabs; let i = index;"
-      *ngIf="tab.isVisible"
       class="tabs__tab tab"
       [ngClass]="{
         'tab--active': tab.isActive,
@@ -14,9 +13,10 @@
       role="presentation"
     >
       <a
-        [aria-controls]="tab.tabHash"
-        [aria-selected]="tab.isActive"
-        [href]="tab.tabHash"
+        [attr.aria-controls]="tab.tabHash"
+        [attr.aria-selected]="tab.isActive"
+        [routerLink]=""
+        fragment="{{tab.tabHash}}"
         class="tab__option"
         role="tab"
         (click)="selectTab(tab.tabHash, $event)"

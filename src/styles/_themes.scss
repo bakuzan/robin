@@ -66,6 +66,22 @@
     }
     // THEMING HERE
 
+    // Tabs
+    .tabs__container {
+      border-top: 1px solid $primary-background;
+    }
+    .tab:not(.tab--active) {
+      color: $faded-out;
+      border-color: $faded-out;
+      border-bottom: none;
+    }
+    .tab--active {
+      border: {
+        color: $primary-background;
+        bottom-color: $base-background;
+      }
+    }
+
     .purchase-item:not(.purchase-item--header):hover {
       background-color: opacify($active-colour, 0.3);
     }

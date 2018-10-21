@@ -46,10 +46,9 @@
       ></app-input-box>
 
       <app-tabs>
-        <app-tab name="volume list">
+        <app-tab name="volumes">
           <div class="sub-content">
             <div class="sub-content__header">
-              <h4 class="sub-content__title">Volume list</h4>
               <app-rbn-button
                 [theme]="secondary"
                 (click)="onAddVolume($event)"
@@ -154,7 +153,23 @@
           </div>
         </app-tab>
         <app-tab name="statistics">
-
+          <div class="sub-content">
+            <div class="sub-content__header">
+            </div>
+            <div class="statistic-widget">
+              <table class="table">
+                <tbody>
+                  <tr
+                    *ngFor="let stat of statistics"
+                    class="table__row statistic"
+                  >
+                    <th class="statistic__label">{{stat.label}}</th>
+                    <td class="statistic__value">{{stat.value}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </app-tab>
       </app-tabs>
     </div>

@@ -6,7 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./tab.component.scss']
 })
 export class TabComponent implements OnInit {
-  isActive: false;
+  isActive = false;
   @Input()
   id: string;
   @Input()
@@ -18,7 +18,11 @@ export class TabComponent implements OnInit {
 
   get tabHash() {
     return this.id
-      ? `#${this.id}`
-      : `#${this.name.toLowerCase().replace(/ /g, '-')}`;
+      ? `${this.id}`
+      : `${this.name.toLowerCase().replace(/ /g, '-')}`;
+  }
+
+  get text() {
+    return this.name;
   }
 }

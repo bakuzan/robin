@@ -1,6 +1,20 @@
+@import '_variables';
+
 .sub-content {
   &__header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
+  }
+}
+
+.statistic-widget {
+  padding: $app--padding;
+}
+
+.statistic {
+  &__label {
+    text-align: left;
+  }
+  &__value {
   }
 }

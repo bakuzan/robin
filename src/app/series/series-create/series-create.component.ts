@@ -14,6 +14,11 @@ import { Urls, SeriesTypes, Icons, Regexes } from 'src/app/common/constants';
 import { roundTo2, displayAs2dp } from 'src/app/common/utils';
 import { mapEnumToSelectOption } from 'src/app/common/utils/mappers';
 
+class SeriesSummary {
+  label: string;
+  value: string;
+}
+
 @Component({
   selector: 'app-series-create',
   templateUrl: './series-create.component.html',
@@ -27,6 +32,7 @@ export class SeriesCreateComponent implements OnInit {
   cancelUrl = `/${Urls.seriesList}`;
   types = mapEnumToSelectOption(SeriesTypes);
   retailers: Retailer[];
+  statistics: SeriesSummary[];
   seriesForm = new FormGroup({
     id: new FormControl(null),
     name: new FormControl('', Validators.required),
@@ -53,8 +59,9 @@ export class SeriesCreateComponent implements OnInit {
       }
     });
 
-    this.seriesForm.controls.volumes.valueChanges.subscribe((...test) => {
-      console.log('volume change > ', test);
+    this.seriesForm.controls.volumes.valueChanges.subscribe((volumes) => {
+      console.log('volume change > ', volumes);
+      this.statistics = this.craftStatistics(volumes);
     });
   }
 
@@ -72,6 +79,39 @@ export class SeriesCreateComponent implements OnInit {
 
   get volumes(): FormArray {
     return this.seriesForm.get('volumes') as FormArray;
+  }
+
+  craftStatistics(volumes = []): SeriesSummary[] {
+    const average = displayAs2dp(
+      volumes.reduce((p, c) => {
+        const value = parseFloat(c.paid);
+        return isNaN(value) ? p : p + value;
+      }, 0) / volumes.length
+    );
+    const minimum = displayAs2dp(
+      Math.min(...volumes.map((x) => x.paid).filter((x) => x))
+    );
+    const maximum = displayAs2dp(
+      Math.max(...volumes.map((x) => x.paid).filter((x) => x))
+    );
+
+    const ratios = volumes
+      .map((x) => (x.paid && x.rrp ? x.paid / x.rrp : 0))
+      .filter((x) => x);
+    const worstDeal = displayAs2dp(
+      ratios.reduce((p, c) => (p < c ? p : c)) * 100
+    );
+    const bestDeal = displayAs2dp(
+      ratios.reduce((p, c) => (p > c ? p : c)) * 100
+    );
+
+    return [
+      { label: 'Average', value: `£ ${average}` },
+      { label: 'Cheapest', value: `£ ${minimum}` },
+      { label: 'Best deal', value: `${bestDeal}%` },
+      { label: 'Dearest', value: `£ ${maximum}` },
+      { label: 'Worst deal', value: `${worstDeal}%` }
+    ];
   }
 
   updateForm(series: Series) {
