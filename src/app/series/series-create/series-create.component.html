@@ -47,7 +47,7 @@
 
       <app-tabs>
         <app-tab name="volumes">
-          <div class="sub-content">
+          <div class="sub-content sub-content--column">
             <div class="sub-content__header">
               <app-rbn-button
                 [theme]="secondary"
@@ -156,18 +156,37 @@
           <div class="sub-content">
             <div class="sub-content__header">
             </div>
-            <div class="statistic-widget">
-              <table class="table">
-                <tbody>
-                  <tr
-                    *ngFor="let stat of statistics"
-                    class="table__row statistic"
-                  >
-                    <th class="statistic__label">{{stat.label}}</th>
-                    <td class="statistic__value">{{stat.value}}</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="statistics__content">
+              <div class="statistics__widget">
+                <table class="table">
+                  <tbody>
+                    <tr
+                      *ngFor="let stat of statistics"
+                      class="table__row statistic"
+                    >
+                      <th class="statistic__label">{{stat.label}}</th>
+                      <td class="statistic__value">{{stat.value}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="statistic-chart">
+                <ngx-charts-line-chart
+                  [view]="view"
+                  [scheme]="colorScheme"
+                  [results]="statisticsChartData"
+                  [gradient]="gradient"
+                  [xAxis]="showXAxis"
+                  [yAxis]="showYAxis"
+                  [legend]="showLegend"
+                  [showXAxisLabel]="showXAxisLabel"
+                  [showYAxisLabel]="showYAxisLabel"
+                  [xAxisLabel]="xAxisLabel"
+                  [yAxisLabel]="yAxisLabel"
+                  [autoScale]="autoScale"
+                >
+                </ngx-charts-line-chart>
+              </div>
             </div>
           </div>
         </app-tab>

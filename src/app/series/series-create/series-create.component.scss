@@ -1,14 +1,30 @@
 @import '_variables';
 
 .sub-content {
+  display: flex;
+  flex: 1;
+
+  &--column {
+    flex-direction: column;
+  }
+
   &__header {
     display: flex;
     justify-content: flex-end;
   }
 }
 
-.statistic-widget {
-  padding: $app--padding;
+.statistics {
+  &__widget {
+    display: flex;
+    flex: 1;
+    padding: $app--padding;
+  }
+
+  &__content {
+    display: flex;
+    flex: 1;
+  }
 }
 
 .statistic {
@@ -16,5 +32,7 @@
     text-align: left;
   }
   &__value {
+    min-width: 100px;
+    text-align: right;
   }
 }

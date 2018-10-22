@@ -26,6 +26,7 @@
     "@angular/platform-browser": "^6.1.0",
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
+    "@swimlane/ngx-charts": "^9.0.0",
     "apollo-server": "^2.1.0",
     "body-parser": "^1.18.3",
     "classnames": "^2.2.6",

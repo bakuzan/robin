@@ -11,7 +11,7 @@ import Series from '../../common/models/series.model';
 import Retailer from 'src/app/common/models/retailer.model';
 import Volume, { VolumeInitValues } from '../../common/models/volume.model';
 import { Urls, SeriesTypes, Icons, Regexes } from 'src/app/common/constants';
-import { roundTo2, displayAs2dp } from 'src/app/common/utils';
+import { roundTo2, displayAs2dp, pad } from 'src/app/common/utils';
 import { mapEnumToSelectOption } from 'src/app/common/utils/mappers';
 
 class SeriesSummary {
@@ -41,6 +41,23 @@ export class SeriesCreateComponent implements OnInit {
     volumes: new FormArray([])
   });
 
+  statisticsChartData: any[];
+  view: any[] = [700, 400];
+
+  // options
+  showXAxis = true;
+  showYAxis = true;
+  gradient = false;
+  showLegend = false;
+  showXAxisLabel = true;
+  showYAxisLabel = true;
+  xAxisLabel = 'Volume';
+  yAxisLabel = 'Cost (£)';
+
+  colorScheme = {
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+  };
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -62,6 +79,7 @@ export class SeriesCreateComponent implements OnInit {
     this.seriesForm.controls.volumes.valueChanges.subscribe((volumes) => {
       console.log('volume change > ', volumes);
       this.statistics = this.craftStatistics(volumes);
+      this.statisticsChartData = this.generateChartData(volumes);
     });
   }
 
@@ -86,7 +104,7 @@ export class SeriesCreateComponent implements OnInit {
       volumes.reduce((p, c) => {
         const value = parseFloat(c.paid);
         return isNaN(value) ? p : p + value;
-      }, 0) / volumes.length
+      }, 0) / volumes.filter((x) => !isNaN(parseFloat(x.paid))).length
     );
     const minimum = displayAs2dp(
       Math.min(...volumes.map((x) => x.paid).filter((x) => x))
@@ -98,11 +116,11 @@ export class SeriesCreateComponent implements OnInit {
     const ratios = volumes
       .map((x) => (x.paid && x.rrp ? x.paid / x.rrp : 0))
       .filter((x) => x);
-    const worstDeal = displayAs2dp(
-      ratios.reduce((p, c) => (p < c ? p : c)) * 100
-    );
     const bestDeal = displayAs2dp(
-      ratios.reduce((p, c) => (p > c ? p : c)) * 100
+      ratios.reduce((p, c) => (p < c ? p : c), 100) * 100
+    );
+    const worstDeal = displayAs2dp(
+      ratios.reduce((p, c) => (p > c ? p : c), null) * 100
     );
 
     return [
@@ -111,6 +129,31 @@ export class SeriesCreateComponent implements OnInit {
       { label: 'Best deal', value: `${bestDeal}%` },
       { label: 'Dearest', value: `£ ${maximum}` },
       { label: 'Worst deal', value: `${worstDeal}%` }
+    ];
+  }
+
+  generateChartData(volumes = []): any[] {
+    const chartSrc = volumes.slice(0).reverse();
+
+    const paidSeries = chartSrc.map((x) => ({
+      name: `#${pad(`${x.number ? x.number : ''}`, 3, '0')}`,
+      value: x.paid
+    }));
+
+    const rrpSeries = chartSrc.map((x) => ({
+      name: `#${pad(`${x.number ? x.number : ''}`, 3, '0')}`,
+      value: x.rrp
+    }));
+
+    return [
+      {
+        name: 'Paid',
+        series: paidSeries
+      },
+      {
+        name: 'RRP',
+        series: rrpSeries
+      }
     ];
   }
 

@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ComponentsModule } from '../components/components.module';
 import { SeriesListComponent } from './series-list/series-list.component';
@@ -14,7 +16,9 @@ import { FilterBarComponent } from './filter-bar/filter-bar.component';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    ComponentsModule
+    ComponentsModule,
+    NgxChartsModule,
+    BrowserAnimationsModule
   ],
   declarations: [
     SeriesListComponent,

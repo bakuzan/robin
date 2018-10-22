@@ -30,12 +30,13 @@ export class TabsComponent implements OnInit, AfterContentInit {
       this.selectTab(window.location.hash);
       return;
     }
-    console.log('init tabs', this.tabs);
+
     this.selectTab(this.tabs.first.tabHash);
   }
 
   findTab(hash: string) {
-    return this.tabs.find((tab) => tab.tabHash === hash);
+    const name = hash.replace(/#/g, '');
+    return this.tabs.find((tab) => tab.name === name);
   }
 
   selectTab(hash: string) {
