@@ -46,9 +46,23 @@ const getRetailers = gql`
   }
 `;
 
+const getDashboard = gql`
+  query GetDashboard {
+    dashboard {
+      aggregates {
+        label
+        average
+        minimum
+        maximum
+      }
+    }
+  }
+`;
+
 export default {
   getSeries,
   getSeriesById,
   getVolumesForFilters,
-  getRetailers
+  getRetailers,
+  getDashboard
 };

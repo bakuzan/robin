@@ -3,5 +3,6 @@ const enums = require('./enums');
 const series = require('./series');
 const volume = require('./volume');
 const retailer = require('./retailer');
+const dashboard = require('./dashboard');
 
-module.exports = [...query, ...enums, series, volume, retailer];
+module.exports = [...query, ...enums, series, volume, retailer, dashboard];

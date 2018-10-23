@@ -8,6 +8,8 @@ const Query = gql`
     volumes(filters: VolumeFilter): [Volume]
 
     retailers: [Retailer]
+
+    dashboard: Dashboard
   }
 `;
 

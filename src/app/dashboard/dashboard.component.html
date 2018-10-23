@@ -1,1 +1,5 @@
-dashboard placeholder
+<div>
+  <div *ngFor="let agg of dashboard.aggregates">
+    {{agg | json}}
+  </div>
+</div>
