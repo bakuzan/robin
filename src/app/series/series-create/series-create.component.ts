@@ -10,14 +10,10 @@ import RouteData from 'src/app/common/models/route-data.model';
 import Series from '../../common/models/series.model';
 import Retailer from 'src/app/common/models/retailer.model';
 import Volume, { VolumeInitValues } from '../../common/models/volume.model';
+import Aggregate from 'src/app/common/models/aggregate.model';
 import { Urls, SeriesTypes, Icons, Regexes } from 'src/app/common/constants';
 import { roundTo2, displayAs2dp, pad } from 'src/app/common/utils';
 import { mapEnumToSelectOption } from 'src/app/common/utils/mappers';
-
-class SeriesSummary {
-  label: string;
-  value: string;
-}
 
 @Component({
   selector: 'app-series-create',
@@ -32,7 +28,7 @@ export class SeriesCreateComponent implements OnInit {
   cancelUrl = `/${Urls.seriesList}`;
   types = mapEnumToSelectOption(SeriesTypes);
   retailers: Retailer[];
-  statistics: SeriesSummary[];
+  statistics: Aggregate[];
   seriesForm = new FormGroup({
     id: new FormControl(null),
     name: new FormControl('', Validators.required),
@@ -99,7 +95,7 @@ export class SeriesCreateComponent implements OnInit {
     return this.seriesForm.get('volumes') as FormArray;
   }
 
-  craftStatistics(volumes = []): SeriesSummary[] {
+  craftStatistics(volumes = []): Aggregate[] {
     const average = displayAs2dp(
       volumes.reduce((p, c) => {
         const value = parseFloat(c.paid);

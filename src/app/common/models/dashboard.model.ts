@@ -1,9 +1,10 @@
+import Aggregate from './aggregate.model';
+
 class DashboardAggregate {
-  average: number;
-  minimum: number;
-  maximum: number;
+  label: string;
+  statistics: Aggregate[] = [];
 }
 
 export default class Dashboard {
-  aggregates: DashboardAggregate[] = [];
+  aggregates: DashboardAggregate;
 }

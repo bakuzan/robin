@@ -1,0 +1,23 @@
+@import '_variables';
+
+.statistics {
+  &__widget {
+    display: flex;
+    flex: 1;
+    padding: $app--padding;
+
+    &--center {
+      justify-content: center;
+    }
+  }
+}
+
+.statistic {
+  &__label {
+    text-align: left;
+  }
+  &__value {
+    min-width: 100px;
+    text-align: right;
+  }
+}

@@ -60,6 +60,9 @@ const round = (n, decimals = 0) =>
 
 const roundTo2 = (n) => round(n, 2);
 
+const displayAs2dp = (n) =>
+  n !== null && n !== undefined ? n.toFixed(2) : null;
+
 module.exports = {
   enumArrayToObject,
   mapArrToGraphqlString,
@@ -69,5 +72,6 @@ module.exports = {
   shuffleArray,
   orderBy,
   round,
-  roundTo2
+  roundTo2,
+  displayAs2dp
 };

@@ -1,12 +1,29 @@
 const { db, Series, Volume } = require('../../connectors');
 
+const { displayAs2dp } = require('../../utils');
+
 function mapStatsToResponse(derviedStats = {}) {
   return {
     label: derviedStats['series.type'],
-    average: derviedStats.average,
-    minimum: derviedStats.minimum,
-    maximum: derviedStats.maximum
+    statistics: [
+      {
+        label: 'Average',
+        value: `£ ${displayAs2dp(derviedStats.average)}`
+      },
+      {
+        label: 'Minimum',
+        value: `£ ${displayAs2dp(derviedStats.minimum)}`
+      },
+      {
+        label: 'Maximum',
+        value: `£ ${displayAs2dp(derviedStats.maximum)}`
+      }
+    ]
   };
+}
+
+function mapGroupCounts(gd) {
+  return [];
 }
 
 module.exports = {
@@ -24,9 +41,23 @@ module.exports = {
       include: [Series]
     });
 
-    console.log('dashboard!! ', comicStat, mangaStat);
+    const graphData = await Volume.findAll({
+      raw: true,
+      attributes: [
+        [db.col('series.type'), 'type'],
+        [db.fn('strftime', '%Y-%m', db.col('volume.boughtDate')), 'group'],
+        [db.fn('COUNT', db.col('volume.id')), 'count']
+      ],
+      group: ['series.type', db.fn('strftime', '%Y-%m', db.col('boughtDate'))],
+      include: [Series]
+    });
+
     return {
-      aggregates: [mapStatsToResponse(comicStat), mapStatsToResponse(mangaStat)]
+      aggregates: [
+        mapStatsToResponse(comicStat),
+        mapStatsToResponse(mangaStat)
+      ],
+      byMonthCounts: mapGroupCounts(graphData)
     };
   }
 };

@@ -1,0 +1,13 @@
+<div [ngClass]="classes">
+  <table class="table">
+    <tbody>
+      <tr
+        *ngFor="let stat of items"
+        class="table__row statistic"
+      >
+        <th class="statistic__label">{{stat.label}}</th>
+        <td class="statistic__value">{{stat.value}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -15,24 +15,8 @@
 }
 
 .statistics {
-  &__widget {
-    display: flex;
-    flex: 1;
-    padding: $app--padding;
-  }
-
   &__content {
     display: flex;
     flex: 1;
-  }
-}
-
-.statistic {
-  &__label {
-    text-align: left;
-  }
-  &__value {
-    min-width: 100px;
-    text-align: right;
   }
 }

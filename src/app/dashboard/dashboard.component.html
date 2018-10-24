@@ -1,5 +1,12 @@
-<div>
-  <div *ngFor="let agg of dashboard.aggregates">
-    {{agg | json}}
+<div class="dashboard">
+  <div
+    *ngFor="let agg of dashboard.aggregates"
+    class="dashboard__card"
+  >
+    <div class="dashboard__title">{{agg.label}}</div>
+    <app-aggregate-widget
+      [items]="agg.statistics"
+      [center]="true"
+    ></app-aggregate-widget>
   </div>
 </div>

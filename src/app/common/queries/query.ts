@@ -51,9 +51,10 @@ const getDashboard = gql`
     dashboard {
       aggregates {
         label
-        average
-        minimum
-        maximum
+        statistics {
+          label
+          value
+        }
       }
     }
   }

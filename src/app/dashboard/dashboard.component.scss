@@ -1,0 +1,18 @@
+.dashboard {
+  display: flex;
+
+  &__card {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  &__title {
+    display: flex;
+    justify-content: center;
+    font: {
+      weight: bold;
+      size: 1.2em;
+    }
+  }
+}

@@ -3,11 +3,22 @@ const gql = require('graphql-tag');
 module.exports = gql`
   type Dashboard {
     aggregates: [DashboardAggregate]
+    byMonthCounts: [DashboardCounts]
   }
   type DashboardAggregate {
     label: String
-    average: Float
-    minimum: Float
-    maximum: Float
+    statistics: [Aggregate]
+  }
+  type Aggregate {
+    label: String
+    value: String
+  }
+  type DashboardCounts {
+    name: String
+    series: [DashboardCountPoint]
+  }
+  type DashboardCountPoint {
+    name: String
+    value: Int
   }
 `;

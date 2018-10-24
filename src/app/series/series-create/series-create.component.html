@@ -157,19 +157,7 @@
             <div class="sub-content__header">
             </div>
             <div class="statistics__content">
-              <div class="statistics__widget">
-                <table class="table">
-                  <tbody>
-                    <tr
-                      *ngFor="let stat of statistics"
-                      class="table__row statistic"
-                    >
-                      <th class="statistic__label">{{stat.label}}</th>
-                      <td class="statistic__value">{{stat.value}}</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+              <app-aggregate-widget [items]="statistics"></app-aggregate-widget>
               <div class="statistic-chart">
                 <ngx-charts-line-chart
                   [view]="view"
