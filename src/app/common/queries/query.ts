@@ -56,6 +56,13 @@ const getDashboard = gql`
           value
         }
       }
+      byMonthCounts {
+        name
+        series {
+          name
+          value
+        }
+      }
     }
   }
 `;

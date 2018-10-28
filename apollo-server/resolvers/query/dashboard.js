@@ -1,6 +1,8 @@
 const { db, Series, Volume } = require('../../connectors');
 
+const { SeriesTypes } = require('../../constants/enums');
 const { displayAs2dp } = require('../../utils');
+const RBNDate = require('../../utils/date');
 
 function mapStatsToResponse(derviedStats = {}) {
   return {
@@ -22,8 +24,38 @@ function mapStatsToResponse(derviedStats = {}) {
   };
 }
 
+function mapSeriesCounts(items) {
+  if (!items || !items.length) return [];
+
+  const dates = items.map((x) => new Date(x.group));
+  const toDate = RBNDate.formatDateInput(Math.max.apply(null, dates));
+  const fromDate = RBNDate.formatDateInput(Math.min.apply(null, dates));
+  const datesInRange = RBNDate.dateRange(fromDate, toDate);
+
+  return datesInRange.map((d) => {
+    const name = d.slice(0, 7);
+    const item = items.find((g) => g.group === name);
+    return {
+      name,
+      value: item ? item.count : 0
+    };
+  });
+}
+
 function mapGroupCounts(gd) {
-  return [];
+  const mangaItems = gd.filter((x) => x.type === SeriesTypes.Manga);
+  const comicItems = gd.filter((x) => x.type === SeriesTypes.Comic);
+
+  return [
+    {
+      name: SeriesTypes.Comic,
+      series: mapSeriesCounts(comicItems)
+    },
+    {
+      name: SeriesTypes.Manga,
+      series: mapSeriesCounts(mangaItems)
+    }
+  ];
 }
 
 module.exports = {

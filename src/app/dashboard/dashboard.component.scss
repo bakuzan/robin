@@ -1,5 +1,10 @@
 .dashboard {
   display: flex;
+  flex-direction: column;
+
+  &__cards {
+    display: flex;
+  }
 
   &__card {
     display: flex;
@@ -14,5 +19,14 @@
       weight: bold;
       size: 1.2em;
     }
+  }
+
+  &__charts {
+    display: flex;
+    flex: 1 1 100%;
+  }
+  &__chart {
+    display: flex;
+    flex: 1;
   }
 }
