@@ -1,4 +1,20 @@
 <div class="dashboard">
+  <div class="dashboard__filters">
+    <app-input-box
+      type="date"
+      label="From"
+      name="fromDate"
+      [(ngModel)]="filters.fromDate"
+      (ngModelChange)="onUserInput($event)"
+    ></app-input-box>
+    <app-input-box
+      type="date"
+      label="To"
+      name="toDate"
+      [(ngModel)]="filters.toDate"
+      (ngModelChange)="onUserInput($event)"
+    ></app-input-box>
+  </div>
   <div class="dashboard__cards">
     <div
       *ngFor="let agg of dashboard.aggregates"
@@ -22,7 +38,7 @@
       <ngx-charts-line-chart
         [view]="view"
         [scheme]="colorScheme"
-        [results]="chartData"
+        [results]="[chartData]"
         [gradient]="gradient"
         [xAxis]="showXAxis"
         [yAxis]="showYAxis"

@@ -9,7 +9,7 @@ const Query = gql`
 
     retailers: [Retailer]
 
-    dashboard: Dashboard
+    dashboard(filters: DashboardFilters): Dashboard
   }
 `;
 

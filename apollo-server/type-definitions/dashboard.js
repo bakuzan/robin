@@ -21,4 +21,8 @@ module.exports = gql`
     name: String
     value: Int
   }
+  input DashboardFilters {
+    fromDate: String
+    toDate: String
+  }
 `;

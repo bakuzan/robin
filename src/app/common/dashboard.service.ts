@@ -7,6 +7,7 @@ import { Urls } from 'src/app/common/constants';
 import { createApolloServerPayload } from 'src/app/common/utils/query-builder';
 import DashboardGQL from './queries';
 import Dashboard from 'src/app/common/models/dashboard.model';
+import DashboardFilters from './models/dashboard-filter.model';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -20,11 +21,10 @@ export class DashboardService {
 
   constructor(private http: HttpClient) {}
 
-  getDashboard(): Observable<Dashboard> {
-    const payload = createApolloServerPayload(
-      DashboardGQL.Query.getDashboard,
-      {}
-    );
+  getDashboard(filters: DashboardFilters): Observable<Dashboard> {
+    const payload = createApolloServerPayload(DashboardGQL.Query.getDashboard, {
+      filters
+    });
 
     return this.http.post(this.dashboardUrl, payload, httpOptions).pipe(
       tap(() => this.log(`get dashboard`)),

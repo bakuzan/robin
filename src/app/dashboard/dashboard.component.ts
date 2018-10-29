@@ -8,6 +8,14 @@ import {
 
 import { DashboardService } from 'src/app/common/dashboard.service';
 import Dashboard from 'src/app/common/models/dashboard.model';
+import DashboardFilters from 'src/app/common/models/dashboard-filter.model';
+import {
+  isValidDate,
+  getISOStringDate,
+  getDaysAgo
+} from 'src/app/common/utils';
+
+const today = new Date();
 
 @Component({
   selector: 'app-dashboard',
@@ -17,8 +25,12 @@ import Dashboard from 'src/app/common/models/dashboard.model';
 export class DashboardComponent implements OnInit {
   @ViewChild('chartsRef')
   chartsRef: ElementRef;
+  filters: DashboardFilters = {
+    fromDate: getISOStringDate(getDaysAgo(today, 365)),
+    toDate: getISOStringDate(today)
+  };
   dashboard = new Dashboard();
-  view: any[] = [];
+  view: any[] = [500, 400];
 
   // options
   showXAxis = true;
@@ -43,13 +55,17 @@ export class DashboardComponent implements OnInit {
 
   getDashboard() {
     this.dashboardService
-      .getDashboard()
+      .getDashboard(this.filters)
       .subscribe((dash) => (this.dashboard = dash));
   }
 
   updateChartViewSize() {
     const width = Math.floor(this.chartsRef.nativeElement.offsetWidth / 2);
     this.view = [width, 400];
+  }
+
+  onUserInput() {
+    this.getDashboard();
   }
 
   @HostListener('window:resize')

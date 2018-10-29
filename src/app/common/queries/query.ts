@@ -47,8 +47,8 @@ const getRetailers = gql`
 `;
 
 const getDashboard = gql`
-  query GetDashboard {
-    dashboard {
+  query GetDashboard($filters: DashboardFilters) {
+    dashboard(filters: $filters) {
       aggregates {
         label
         statistics {

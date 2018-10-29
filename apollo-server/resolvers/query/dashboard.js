@@ -1,3 +1,4 @@
+const Op = require('sequelize').Op;
 const { db, Series, Volume } = require('../../connectors');
 
 const { SeriesTypes } = require('../../constants/enums');
@@ -59,8 +60,16 @@ function mapGroupCounts(gd) {
 }
 
 module.exports = {
-  async dashboard() {
+  async dashboard(_, { filters }) {
+    const where = {
+      boughtDate: {
+        [Op.gte]: RBNDate.startOfDay(filters.fromDate),
+        [Op.lte]: RBNDate.endOfDay(filters.toDate)
+      }
+    };
+
     const [comicStat, mangaStat] = await Volume.findAll({
+      where,
       raw: true,
       group: 'series.type',
       attributes: {
@@ -74,13 +83,14 @@ module.exports = {
     });
 
     const graphData = await Volume.findAll({
+      where,
       raw: true,
+      group: ['series.type', db.fn('strftime', '%Y-%m', db.col('boughtDate'))],
       attributes: [
         [db.col('series.type'), 'type'],
         [db.fn('strftime', '%Y-%m', db.col('volume.boughtDate')), 'group'],
         [db.fn('COUNT', db.col('volume.id')), 'count']
       ],
-      group: ['series.type', db.fn('strftime', '%Y-%m', db.col('boughtDate'))],
       include: [Series]
     });
 
