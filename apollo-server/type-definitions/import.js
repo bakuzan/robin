@@ -6,11 +6,11 @@ module.exports = gql`
     messages: [String]
   }
   input ImportInput {
-    series: Series
+    series: SeriesInput
     number: Int
-    rrp: Int
-    paid: Int
+    rrp: Float
+    paid: Float
     boughtDate: String
-    retailer: Retailer
+    retailer: RetailerInput
   }
 `;

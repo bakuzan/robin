@@ -10,6 +10,7 @@ import VolumeGQL from './queries';
 import VolumeFilter from '../volume/shared/volume-filter.model';
 import ImportResponse from './models/import-response.model';
 import ImportRow from './models/import-row.model';
+import SeriesType from './models/series-types.enum';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -81,11 +82,15 @@ export class VolumeService {
     );
   }
 
-  importVolumes(volumes: ImportRow[]): Observable<ImportResponse> {
+  importVolumes(
+    volumes: ImportRow[],
+    importType: SeriesType
+  ): Observable<ImportResponse> {
     const payload = createApolloServerPayload(
       VolumeGQL.Mutation.importVolumes,
       {
-        volumes
+        volumes,
+        importType
       }
     );
 

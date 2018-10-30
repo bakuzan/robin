@@ -21,7 +21,7 @@ const Mutation = gql`
     volumeCreate(volume: VolumeInput): Volume
     volumeUpdate(volume: VolumeInput): Volume
 
-    import(volumes: [ImportInput]): ImportResponse
+    import(volumes: [ImportInput], importType: SeriesType!): ImportResponse
   }
 `;
 

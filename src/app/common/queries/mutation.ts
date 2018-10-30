@@ -39,8 +39,8 @@ const updateVolume = gql`
 `;
 
 const importVolumes = gql`
-  mutation importVolumes($volumes: [ImportInput]) {
-    import(volumes: $volumes) {
+  mutation importVolumes($volumes: [ImportInput], $importType: SeriesType!) {
+    import(volumes: $volumes, importType: $importType) {
       success
       messages
     }

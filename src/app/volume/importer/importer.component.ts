@@ -123,17 +123,19 @@ export class ImporterComponent implements OnInit {
   onSubmit() {
     console.log('form submitted!', this.previewData);
     this.isLoading = true;
-    this.volumeService.importVolumes(this.previewData).subscribe((response) => {
-      console.log(
-        `%c Import was success: ${response.success}`,
-        response.messages
-      );
-      /**
-       * Remove preview data
-       * Display messages
-       *
-       */
-      this.isLoading = false;
-    });
+    this.volumeService
+      .importVolumes(this.previewData, this.type)
+      .subscribe((response) => {
+        console.log(
+          `%c Import was success: ${response.success}`,
+          response.messages
+        );
+        /**
+         * Remove preview data
+         * Display messages
+         *
+         */
+        this.isLoading = false;
+      });
   }
 }
