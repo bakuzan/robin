@@ -5,6 +5,7 @@ import { DashboardComponent } from 'src/app/dashboard/dashboard.component';
 import { SeriesListComponent } from 'src/app/series/series-list/series-list.component';
 import { SeriesCreateComponent } from 'src/app/series/series-create/series-create.component';
 import { PurchaseHistoryComponent } from 'src/app/volume/purchase-history/purchase-history.component';
+import { ImporterComponent } from 'src/app/volume/importer/importer.component';
 import { PageNotFoundComponent } from 'src/app/page-not-found/page-not-found.component';
 import { Urls } from 'src/app/common/constants';
 
@@ -24,7 +25,12 @@ const routes: Routes = [
   },
   {
     path: Urls.purchaseHistory,
-    component: PurchaseHistoryComponent
+    component: PurchaseHistoryComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: Urls.importer,
+    component: ImporterComponent
   },
   { path: '**', component: PageNotFoundComponent }
 ];

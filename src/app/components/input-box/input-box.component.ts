@@ -49,6 +49,8 @@ export class InputBoxComponent implements OnInit, ControlValueAccessor {
   @Input()
   value;
   @Input()
+  accept: string;
+  @Input()
   min: number;
   @Input()
   max: number;

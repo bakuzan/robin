@@ -1,0 +1,14 @@
+@import '_variables';
+
+.importer {
+  display: flex;
+  flex-direction: column;
+  &__actions {
+    display: flex;
+    justify-content: center;
+  }
+  &__preview {
+    position: relative;
+    padding: $app--padding;
+  }
+}

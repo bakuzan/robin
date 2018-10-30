@@ -6,14 +6,16 @@ import { ComponentsModule } from '../components/components.module';
 import { PurchaseHistoryComponent } from './purchase-history/purchase-history.component';
 import { FilterBarComponent } from './filter-bar/filter-bar.component';
 import { PurchaseItemComponent } from './purchase-item/purchase-item.component';
+import { ImporterComponent } from './importer/importer.component';
 
 @NgModule({
   imports: [CommonModule, FormsModule, ComponentsModule],
   declarations: [
     PurchaseHistoryComponent,
     FilterBarComponent,
-    PurchaseItemComponent
+    PurchaseItemComponent,
+    ImporterComponent
   ],
-  exports: [PurchaseHistoryComponent]
+  exports: [PurchaseHistoryComponent, ImporterComponent]
 })
 export class VolumeModule {}

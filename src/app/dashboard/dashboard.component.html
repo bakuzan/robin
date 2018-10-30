@@ -1,55 +1,57 @@
 <div class="dashboard">
-  <div class="dashboard__filters">
-    <app-input-box
-      type="date"
-      label="From"
-      name="fromDate"
-      [(ngModel)]="filters.fromDate"
-      (ngModelChange)="onUserInput($event)"
-    ></app-input-box>
-    <app-input-box
-      type="date"
-      label="To"
-      name="toDate"
-      [(ngModel)]="filters.toDate"
-      (ngModelChange)="onUserInput($event)"
-    ></app-input-box>
-  </div>
-  <div class="dashboard__cards">
-    <div
-      *ngFor="let agg of dashboard.aggregates"
-      class="dashboard__card"
-    >
-      <div class="dashboard__title">{{agg.label}}</div>
-      <app-aggregate-widget
-        [items]="agg.statistics"
-        [center]="true"
-      ></app-aggregate-widget>
+    <div class="dashboard__filters">
+        <app-input-box
+            type="date"
+            label="From"
+            name="fromDate"
+            [max]="filters.toDate"
+            [(ngModel)]="filters.fromDate"
+            (ngModelChange)="onUserInput($event)"
+        ></app-input-box>
+        <app-input-box
+            type="date"
+            label="To"
+            name="toDate"
+            [min]="filters.fromDate"
+            [(ngModel)]="filters.toDate"
+            (ngModelChange)="onUserInput($event)"
+        ></app-input-box>
     </div>
-  </div>
-  <div
-    class="dashboard__charts"
-    #chartsRef
-  >
-    <div
-      *ngFor="let chartData of dashboard.byMonthCounts"
-      class="dashboard__chart"
-    >
-      <ngx-charts-line-chart
-        [view]="view"
-        [scheme]="colorScheme"
-        [results]="[chartData]"
-        [gradient]="gradient"
-        [xAxis]="showXAxis"
-        [yAxis]="showYAxis"
-        [legend]="showLegend"
-        [showXAxisLabel]="showXAxisLabel"
-        [showYAxisLabel]="showYAxisLabel"
-        [xAxisLabel]="xAxisLabel"
-        [yAxisLabel]="yAxisLabel"
-        [autoScale]="autoScale"
-      >
-      </ngx-charts-line-chart>
+    <div class="dashboard__cards">
+        <div
+            *ngFor="let agg of dashboard.aggregates"
+            class="dashboard__card"
+        >
+            <div class="dashboard__title">{{agg.label}}</div>
+            <app-aggregate-widget
+                [items]="agg.statistics"
+                [center]="true"
+            ></app-aggregate-widget>
+        </div>
     </div>
-  </div>
+    <div
+        class="dashboard__charts"
+        #chartsRef
+    >
+        <div
+            *ngFor="let chartData of dashboard.byMonthCounts"
+            class="dashboard__chart"
+        >
+            <ngx-charts-line-chart
+                [view]="view"
+                [scheme]="colorScheme"
+                [results]="[chartData]"
+                [gradient]="gradient"
+                [xAxis]="showXAxis"
+                [yAxis]="showYAxis"
+                [legend]="showLegend"
+                [showXAxisLabel]="showXAxisLabel"
+                [showYAxisLabel]="showYAxisLabel"
+                [xAxisLabel]="xAxisLabel"
+                [yAxisLabel]="yAxisLabel"
+                [autoScale]="autoScale"
+            >
+            </ngx-charts-line-chart>
+        </div>
+    </div>
 </div>

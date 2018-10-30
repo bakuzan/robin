@@ -8,6 +8,7 @@ class RobinUrls {
   seriesCreate: string;
   seriesView: string;
   purchaseHistory: string;
+  importer: string;
 }
 class ImageUrls {
   deadImage: string;
@@ -31,7 +32,8 @@ const Urls: RobinUrls = Object.freeze({
   seriesList: 'series',
   seriesCreate: 'series/create',
   seriesView: 'series/view/:id',
-  purchaseHistory: 'volumes'
+  purchaseHistory: 'volumes',
+  importer: 'volumes/importer'
 });
 
 export default Urls;

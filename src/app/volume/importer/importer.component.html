@@ -1,0 +1,16 @@
+<div class="importer">
+  <app-loading-bouncer *ngIf="isLoading"></app-loading-bouncer>
+  <div class="importer__actions">
+    <app-input-box
+      type="file"
+      accept=".csv"
+      label="Import"
+      name="import"
+      [(ngModel)]="importData"
+      (change)="onFileSelect($event)"
+    ></app-input-box>
+  </div>
+  <div class="importer__preview">
+    Placeholder to display import preview
+  </div>
+</div>

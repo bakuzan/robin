@@ -19,6 +19,7 @@ import { AutocompleteSuggestionComponent } from './autocomplete-suggestion/autoc
 import { TabsComponent } from './tabs/tabs.component';
 import { TabComponent } from './tab/tab.component';
 import { AggregateWidgetComponent } from './aggregate-widget/aggregate-widget.component';
+import { LoadingBouncerComponent } from './loading-bouncer/loading-bouncer.component';
 
 @NgModule({
   imports: [AppRoutingModule, CommonModule, FormsModule],
@@ -38,7 +39,8 @@ import { AggregateWidgetComponent } from './aggregate-widget/aggregate-widget.co
     AutocompleteSuggestionComponent,
     TabsComponent,
     TabComponent,
-    AggregateWidgetComponent
+    AggregateWidgetComponent,
+    LoadingBouncerComponent
   ],
   exports: [
     LogoComponent,
@@ -55,7 +57,8 @@ import { AggregateWidgetComponent } from './aggregate-widget/aggregate-widget.co
     AutocompleteComponent,
     TabsComponent,
     TabComponent,
-    AggregateWidgetComponent
+    AggregateWidgetComponent,
+    LoadingBouncerComponent
   ]
 })
 export class ComponentsModule {}

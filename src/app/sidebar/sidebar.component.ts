@@ -12,7 +12,8 @@ export class SidebarComponent implements OnInit {
   links: SidebarLink[] = [
     { to: Urls.dashboard, text: 'Dashboard', icon: 'D' },
     { to: Urls.seriesList, text: 'Series', icon: 'S' },
-    { to: Urls.purchaseHistory, text: 'Purchase History', icon: 'V' }
+    { to: Urls.purchaseHistory, text: 'Purchase History', icon: 'V' },
+    { to: Urls.importer, text: 'Importer', icon: 'I' }
   ];
 
   constructor() {}
