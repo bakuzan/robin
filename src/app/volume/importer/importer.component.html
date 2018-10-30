@@ -9,6 +9,13 @@
       [(ngModel)]="importData"
       (change)="onFileSelect($event)"
     ></app-input-box>
+    <app-radio-button-group
+      id="type"
+      class="importer__type-options"
+      [column]="true"
+      [options]="seriesTypeOptions"
+      [(ngModel)]="type"
+    ></app-radio-button-group>
   </div>
   <div class="importer__preview">
     Placeholder to display import preview

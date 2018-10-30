@@ -58,10 +58,24 @@ export const getDaysAgo = (date, num = 1) => {
   return d;
 };
 
-export const getISOStringDate = (d = new Date()) =>
+export const localDateStringToDate = (ds: string): Date =>
+  new Date(
+    ds
+      .trim()
+      .split('/')
+      .reverse()
+      .join('-')
+  );
+
+export const getISOStringDate = (d = new Date()): string =>
   new Date(d).toISOString().split('T')[0];
 
 export const isValidDate = (d: string): boolean => {
   const maybeDate = Date.parse(d);
   return maybeDate && maybeDate > 0;
+};
+
+export const currencyToPlainNumber = (str = ''): number => {
+  const sn = str.trim().slice(1);
+  return parseFloat(sn) ? Number(sn) : null;
 };

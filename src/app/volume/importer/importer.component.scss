@@ -6,7 +6,13 @@
   &__actions {
     display: flex;
     justify-content: center;
+    align-items: center;
   }
+
+  &__type-options {
+    margin: 0 $app--margin-large;
+  }
+
   &__preview {
     position: relative;
     padding: $app--padding;
