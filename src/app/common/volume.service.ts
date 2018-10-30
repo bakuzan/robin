@@ -8,6 +8,8 @@ import { createApolloServerPayload } from 'src/app/common/utils/query-builder';
 import Volume from './models/volume.model';
 import VolumeGQL from './queries';
 import VolumeFilter from '../volume/shared/volume-filter.model';
+import ImportResponse from './models/import-response.model';
+import ImportRow from './models/import-row.model';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -76,6 +78,23 @@ export class VolumeService {
     return this.http.delete<Volume>(url, httpOptions).pipe(
       tap((_) => this.log(`deleted volume id=${id}`)),
       catchError(this.handleError<Volume>('deleteVolume'))
+    );
+  }
+
+  importVolumes(volumes: ImportRow[]): Observable<ImportResponse> {
+    const payload = createApolloServerPayload(
+      VolumeGQL.Mutation.importVolumes,
+      {
+        volumes
+      }
+    );
+
+    return this.http.post(this.volumeUrl, payload, httpOptions).pipe(
+      catchError(this.handleError<any>('import')),
+      map(
+        (response: any) =>
+          response.data && (response.data.import as ImportResponse)
+      )
     );
   }
 

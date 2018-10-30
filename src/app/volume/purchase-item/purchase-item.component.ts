@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
 import Volume from 'src/app/common/models/volume.model';
-import { pad, displayAs2dp } from 'src/app/common/utils';
+import { pad, displayAs2dp, roundTo2 } from 'src/app/common/utils';
 
 @Component({
   selector: 'app-purchase-item',
@@ -13,6 +13,10 @@ export class PurchaseItemComponent implements OnInit {
   isFirst = false;
   @Input()
   item: Volume;
+
+  get percentagePaid(): string {
+    return displayAs2dp((this.item.paid / this.item.rrp) * 100);
+  }
 
   constructor() {}
 

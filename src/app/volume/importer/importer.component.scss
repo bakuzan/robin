@@ -5,7 +5,7 @@
   flex-direction: column;
   &__actions {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
   }
 
@@ -16,5 +16,16 @@
   &__preview {
     position: relative;
     padding: $app--padding;
+  }
+
+  &__message {
+    font-size: 0.8em;
+    opacity: 0.75;
+  }
+}
+
+.user-actions {
+  &__inputs {
+    display: flex;
   }
 }

@@ -38,9 +38,19 @@ const updateVolume = gql`
   ${Fragments.volumeFields}
 `;
 
+const importVolumes = gql`
+  mutation importVolumes($volumes: [ImportInput]) {
+    import(volumes: $volumes) {
+      success
+      messages
+    }
+  }
+`;
+
 export default {
   createSeries,
   updateSeries,
   createVolume,
-  updateVolume
+  updateVolume,
+  importVolumes
 };

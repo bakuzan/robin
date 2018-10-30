@@ -4,5 +4,14 @@ const series = require('./series');
 const volume = require('./volume');
 const retailer = require('./retailer');
 const dashboard = require('./dashboard');
+const importDefs = require('./import');
 
-module.exports = [...query, ...enums, series, volume, retailer, dashboard];
+module.exports = [
+  ...query,
+  ...enums,
+  series,
+  volume,
+  retailer,
+  dashboard,
+  importDefs
+];

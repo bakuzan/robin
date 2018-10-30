@@ -1,23 +1,66 @@
-<div class="importer">
-  <app-loading-bouncer *ngIf="isLoading"></app-loading-bouncer>
-  <div class="importer__actions">
-    <app-input-box
-      type="file"
-      accept=".csv"
-      label="Import"
-      name="import"
-      [(ngModel)]="importData"
-      (change)="onFileSelect($event)"
-    ></app-input-box>
-    <app-radio-button-group
-      id="type"
-      class="importer__type-options"
-      [column]="true"
-      [options]="seriesTypeOptions"
-      [(ngModel)]="type"
-    ></app-radio-button-group>
-  </div>
-  <div class="importer__preview">
-    Placeholder to display import preview
-  </div>
+<div class="page importer">
+  <form
+    class="form"
+    novalidate
+    autocomplete="off"
+    (ngSubmit)="onSubmit($event)"
+  >
+    <app-loading-bouncer *ngIf="isLoading"></app-loading-bouncer>
+    <div class="importer__actions user-actions">
+      <div class="user-actions__inputs">
+        <app-input-box
+          type="file"
+          accept=".csv"
+          label="Import"
+          name="import"
+          [(ngModel)]="importData"
+          [ngModelOptions]="{standalone: true}"
+          (change)="onFileSelect($event)"
+        ></app-input-box>
+        <app-radio-button-group
+          id="type"
+          class="importer__type-options"
+          [column]="true"
+          [options]="seriesTypeOptions"
+          [(ngModel)]="type"
+          [ngModelOptions]="{standalone: true}"
+        ></app-radio-button-group>
+      </div>
+      <div class="
+    button-group
+    button-group--right">
+        <app-nav-link [to]="cancelUrl">Cancel</app-nav-link>
+        <app-rbn-button
+          type="submit"
+          [theme]="primary"
+          [disabled]="!previewData.length"
+        >Save</app-rbn-button>
+      </div>
+    </div>
+    <div class="importer__preview">
+      <p
+        *ngIf="previewData.length"
+        class="importer__message"
+      >
+        * This is preview data.
+      </p>
+      <app-list
+        columns="one"
+        itemClass="list__item--no-padding"
+        [isAsync]="false"
+        [itemCount]="previewData.length"
+        [items]="previewData"
+      >
+        <ng-template
+          let-item="item"
+          let-i="index"
+        >
+          <app-purchase-item
+            [isFirst]="i === 0"
+            [item]="item"
+          ></app-purchase-item>
+        </ng-template>
+      </app-list>
+    </div>
+  </form>
 </div>
