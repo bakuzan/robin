@@ -23,6 +23,8 @@ export class ImporterComponent implements OnInit {
   seriesTypeOptions = mapEnumToSelectOption(SeriesTypes);
   type = SeriesType.Manga;
   importData = '';
+  isPreview = false;
+  messages: string[] = [];
   previewData: ImportRow[] = [];
 
   constructor(private volumeService: VolumeService) {}
@@ -36,6 +38,8 @@ export class ImporterComponent implements OnInit {
     }
 
     this.isLoading = true;
+    this.messages = [];
+
     const fileText = await new Response(file).text();
     const rows = fileText.split('\n');
     const data =
@@ -43,8 +47,8 @@ export class ImporterComponent implements OnInit {
         ? this.processMangaImport(rows)
         : this.processComicImport(rows);
 
-    console.log(`Imported ${this.type} data > `, data);
     this.previewData = data;
+    this.isPreview = true;
     this.isLoading = false;
   }
 
@@ -121,20 +125,13 @@ export class ImporterComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('form submitted!', this.previewData);
     this.isLoading = true;
     this.volumeService
       .importVolumes(this.previewData, this.type)
       .subscribe((response) => {
-        console.log(
-          `%c Import was success: ${response.success}`,
-          response.messages
-        );
-        /**
-         * Remove preview data
-         * Display messages
-         *
-         */
+        this.isPreview = false;
+        this.previewData = [];
+        this.messages = response.messages;
         this.isLoading = false;
       });
   }

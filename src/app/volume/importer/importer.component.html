@@ -45,6 +45,7 @@
         * This is preview data.
       </p>
       <app-list
+        *ngIf="isPreview"
         columns="one"
         itemClass="list__item--no-padding"
         [isAsync]="false"
@@ -59,6 +60,19 @@
             [isFirst]="i === 0"
             [item]="item"
           ></app-purchase-item>
+        </ng-template>
+      </app-list>
+      <app-list
+        columns="one"
+        itemClass="list__item--no-padding"
+        [isAsync]="false"
+        [items]="messages"
+      >
+        <ng-template
+          let-item="item"
+          let-i="index"
+        >
+          <div>{{item}}</div>
         </ng-template>
       </app-list>
     </div>
