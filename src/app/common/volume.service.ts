@@ -98,7 +98,12 @@ export class VolumeService {
       catchError(this.handleError<any>('import')),
       map(
         (response: any) =>
-          response.data && (response.data.import as ImportResponse)
+          (response.data && response.data.import
+            ? response.data.import
+            : {
+                success: false,
+                messages: response.errors.map((x) => x.message)
+              }) as ImportResponse
       )
     );
   }

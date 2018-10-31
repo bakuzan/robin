@@ -1,12 +1,14 @@
 const Op = require('sequelize').Op;
 const { db, Volume, Series, Retailer } = require('../../connectors');
 
+const { prepString } = require('../../utils');
+
 async function getExistingEntities(entity, { search, transaction }) {
   return await entity.findAll({
     raw: true,
     attributes: ['id', 'name'],
     where: {
-      name: db.where(db.fn('LOWER', db.col('name')), 'LIKE', `%${search}%`)
+      name: db.where(db.fn('LOWER', db.col('name')), { [Op.in]: search })
     },
     transaction
   });
@@ -26,8 +28,8 @@ async function createNewEntities(entity, { newEntities, transaction }) {
 
 function filterDistinctValues(volumes, existing, { attr, importType }) {
   const existingNames = existing.map((x) => x.name.toLowerCase());
-  return Array.from(new Set(volumes.map((x) => x[attr].name.toLowerCase())))
-    .filter((x) => !existingNames.some((en) => en.includes(x)))
+  return Array.from(new Set(volumes.map((x) => x[attr].name)))
+    .filter((x) => !existingNames.some((en) => en === x || en.includes(x)))
     .map((name) => {
       return importType ? { name, type: importType } : { name };
     });
@@ -38,7 +40,7 @@ async function processAssociation(
   volumes,
   { attr, importType, messages, transaction }
 ) {
-  const names = Array.from(new Set(volumes.map((x) => x[attr].name))).join('|');
+  const names = Array.from(new Set(volumes.map((x) => x[attr].name)));
 
   const entities = await getExistingEntities(entity, {
     search: names,
@@ -54,7 +56,7 @@ async function processAssociation(
 }
 
 function findAndResolveAssociation(entities, { value, attr, messages }) {
-  const loweredValue = value.name.toLowerCase();
+  const loweredValue = value.name;
   const found = entities.find((s) => s.name.toLowerCase() === loweredValue);
   if (found) {
     return { [attr]: found.id };
@@ -68,19 +70,25 @@ module.exports = {
   import(_, { volumes, importType }) {
     return db.transaction(async (transaction) => {
       const messages = [];
-      const rbnSeries = await processAssociation(Series, volumes, {
+      const cleanedVolumes = volumes.map((x) => ({
+        ...x,
+        retailer: { ...x.retailer, name: prepString(x.retailer.name) },
+        series: { ...x.series, name: prepString(x.series.name) }
+      }));
+
+      const rbnSeries = await processAssociation(Series, cleanedVolumes, {
         attr: 'series',
         importType,
         messages,
         transaction
       });
-      const rbnRetailers = await processAssociation(Retailer, volumes, {
+      const rbnRetailers = await processAssociation(Retailer, cleanedVolumes, {
         attr: 'retailer',
         messages,
         transaction
       });
 
-      const preppedVolumes = volumes.map((x) => {
+      const preppedVolumes = cleanedVolumes.map((x) => {
         const { retailer, series, ...vol } = x;
         const volSeries = findAndResolveAssociation(rbnSeries, {
           value: series,
