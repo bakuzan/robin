@@ -23,6 +23,7 @@
   }
 
   &__data {
+    position: relative;
     display: flex;
     flex: 1;
 
@@ -35,5 +36,12 @@
     &--align_right {
       justify-content: flex-end;
     }
+  }
+
+  &__icon {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    z-index: map-get($z-index, above-siblings);
   }
 }
