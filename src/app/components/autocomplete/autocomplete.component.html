@@ -9,8 +9,8 @@
     [disabled]="!!selectedItem"
     [(ngModel)]="filter"
     (ngModelChange)="onInput($event)"
-    (focus)="onFocus($event)"
-    (blur)="onBlur($event)"
+    (focus)="onFocus()"
+    (blur)="onBlur()"
     (keydown)="onKeyDown($event)"
   ></app-input-box>
   <ul

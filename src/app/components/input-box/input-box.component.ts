@@ -60,6 +60,8 @@ export class InputBoxComponent implements OnInit, ControlValueAccessor {
   maxLength: number;
   @Input()
   readOnly: boolean;
+  @Input()
+  disabled: boolean;
   @Output()
   blur: EventEmitter<any> = new EventEmitter();
   @Output()

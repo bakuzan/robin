@@ -3,7 +3,7 @@
     class="form"
     novalidate
     autocomplete="off"
-    (ngSubmit)="onSubmit($event)"
+    (ngSubmit)="onSubmit()"
   >
     <app-loading-bouncer *ngIf="isLoading"></app-loading-bouncer>
     <div class="importer__actions user-actions">
@@ -29,10 +29,10 @@
       <div class="
     button-group
     button-group--right">
-        <app-nav-link [to]="cancelUrl">Cancel</app-nav-link>
+        <app-rbn-button (click)="onClear()">Clear</app-rbn-button>
         <app-rbn-button
           type="submit"
-          [theme]="primary"
+          theme="primary"
           [disabled]="!previewData.length"
         >Save</app-rbn-button>
       </div>

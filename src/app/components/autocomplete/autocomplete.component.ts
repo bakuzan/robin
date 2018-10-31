@@ -20,7 +20,7 @@ import { generateUniqueId } from 'src/app/common/utils';
 })
 export class AutocompleteComponent implements OnInit, ControlValueAccessor {
   private timer: number;
-  private selectedItem: Suggestion;
+  selectedItem: Suggestion;
   menuClasses: string;
   filter = '';
   activeSuggestion = 0;

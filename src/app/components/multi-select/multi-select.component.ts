@@ -38,6 +38,8 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
   @Input()
   label: string;
   @Input()
+  placeholder: string;
+  @Input()
   value: SelectOptionValue[];
   @Input()
   options: SelectOption[];

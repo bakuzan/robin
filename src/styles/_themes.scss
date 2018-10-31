@@ -70,11 +70,12 @@
     .tabs__container {
       border-top: 1px solid $primary-background;
     }
-    .tab:not(.tab--active) {
+    .tab:not(.tab--active):not(:hover) {
       color: $faded-out;
       border-color: $faded-out;
       border-bottom: none;
     }
+    .tab:hover,
     .tab--active {
       border: {
         color: $primary-background;

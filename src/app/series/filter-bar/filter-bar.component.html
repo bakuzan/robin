@@ -3,7 +3,7 @@
     class="filter-bar__input"
     name="search"
     [(ngModel)]="filters.search"
-    (ngModelChange)="onInput($event)"
+    (ngModelChange)="onInput()"
   ></app-input-box>
   <app-multi-select
     id="types"
@@ -11,7 +11,7 @@
     label="Types"
     [options]="seriesTypeOptions"
     [(ngModel)]="filters.types"
-    (ngModelChange)="onInput($event)"
+    (ngModelChange)="onInput()"
   ></app-multi-select>
   <app-nav-link
     class="button button--link themed-background"

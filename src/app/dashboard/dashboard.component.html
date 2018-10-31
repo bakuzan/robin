@@ -6,7 +6,7 @@
             name="fromDate"
             [max]="filters.toDate"
             [(ngModel)]="filters.fromDate"
-            (ngModelChange)="onUserInput($event)"
+            (ngModelChange)="onUserInput()"
         ></app-input-box>
         <app-input-box
             type="date"
@@ -14,7 +14,7 @@
             name="toDate"
             [min]="filters.fromDate"
             [(ngModel)]="filters.toDate"
-            (ngModelChange)="onUserInput($event)"
+            (ngModelChange)="onUserInput()"
         ></app-input-box>
     </div>
     <div class="dashboard__cards">

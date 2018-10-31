@@ -1,4 +1,5 @@
 import Retailer from './retailer.model';
+import Series from './series.model';
 
 export default class Volume {
   id: number;
@@ -7,6 +8,8 @@ export default class Volume {
   boughtDate: string;
   rrp: number;
   paid: number;
+  percentagePaid: number;
+  series: Series;
   retailer: Retailer;
   retailerId: number;
   usedDiscountCode: boolean;

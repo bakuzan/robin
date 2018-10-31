@@ -135,4 +135,11 @@ export class ImporterComponent implements OnInit {
         this.isLoading = false;
       });
   }
+
+  onClear() {
+    this.isPreview = false;
+    this.previewData = [];
+    this.messages = [];
+    this.isLoading = false;
+  }
 }

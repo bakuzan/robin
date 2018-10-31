@@ -12,7 +12,7 @@
       <app-nav-link [to]="cancelUrl">Cancel</app-nav-link>
       <app-rbn-button
         type="submit"
-        [theme]="primary"
+        theme="primary"
       >Save</app-rbn-button>
     </div>
     <div class="form__content">
@@ -50,8 +50,8 @@
           <div class="sub-content sub-content--column">
             <div class="sub-content__header">
               <app-rbn-button
-                [theme]="secondary"
-                (click)="onAddVolume($event)"
+                theme="secondary"
+                (click)="onAddVolume()"
               >
                 Add
               </app-rbn-button>
@@ -171,7 +171,7 @@
                   [showYAxisLabel]="showYAxisLabel"
                   [xAxisLabel]="xAxisLabel"
                   [yAxisLabel]="yAxisLabel"
-                  [autoScale]="autoScale"
+                  autoScale="autoScale"
                 >
                   <!-- <ng-template
                     #tooltipTemplate

@@ -6,7 +6,7 @@
     label="From"
     [attr.max]="filters.toDate"
     [(ngModel)]="filters.fromDate"
-    (ngModelChange)="onInput($event)"
+    (ngModelChange)="onInput()"
   ></app-input-box>
   <app-input-box
     class="filter-bar__input"
@@ -15,13 +15,13 @@
     label="To"
     [attr.min]="filters.fromDate"
     [(ngModel)]="filters.toDate"
-    (ngModelChange)="onInput($event)"
+    (ngModelChange)="onInput()"
   ></app-input-box>
   <app-radio-button-group
     id="type"
     [column]="true"
     [options]="seriesTypeOptions"
     [(ngModel)]="filters.type"
-    (ngModelChange)="onInput($event)"
+    (ngModelChange)="onInput()"
   ></app-radio-button-group>
 </div>
