@@ -52,13 +52,13 @@ app.use(
   `/${Constants.appName}/favicon.ico`,
   favicon(path.join(__dirname, '..', 'src', 'favicon.ico'))
 );
-app.use(express.static(path.resolve(__dirname, '..', 'dist')));
+app.use(express.static(path.resolve(__dirname, '..', 'dist/robin')));
 app.use('/graphql', cors(corsOptions), bodyParser.json());
 
 // Always return the main index.html, so react-router render the route in the client
 if (process.env.NODE_ENV === Constants.environment.production) {
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '..', 'dist', 'index.html'));
+    res.sendFile(path.resolve(__dirname, '..', 'dist/robin', 'index.html'));
   });
 }
 
