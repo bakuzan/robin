@@ -35,6 +35,8 @@ testem.log
 /typings
 .env
 *.sqlite
+web.config
+/iisnode
 
 # System Files
 .DS_Store
