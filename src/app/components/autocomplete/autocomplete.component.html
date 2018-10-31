@@ -6,7 +6,7 @@
     [ngClass]="inputClasses"
     [label]="label"
     [name]="name"
-    [disabled]="!!selectedItem"
+    [disabled]="hasSelection"
     [(ngModel)]="filter"
     (ngModelChange)="onInput($event)"
     (focus)="onFocus()"

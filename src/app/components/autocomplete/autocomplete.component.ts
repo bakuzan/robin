@@ -20,7 +20,7 @@ import { generateUniqueId } from 'src/app/common/utils';
 })
 export class AutocompleteComponent implements OnInit, ControlValueAccessor {
   private timer: number;
-  selectedItem: Suggestion;
+  private selectedItem: Suggestion;
   menuClasses: string;
   filter = '';
   activeSuggestion = 0;
@@ -67,6 +67,10 @@ export class AutocompleteComponent implements OnInit, ControlValueAccessor {
     return this.showMenu && !this.hasSuggestions && this.hasOptions;
   }
 
+  get hasSelection(): boolean {
+    return !!this.selectedItem;
+  }
+
   constructor() {}
 
   ngOnInit() {
@@ -80,6 +84,7 @@ export class AutocompleteComponent implements OnInit, ControlValueAccessor {
   writeValue(obj: Suggestion): void {
     this.selectedItem = obj;
     this.filter = this.selectedItem ? this.selectedItem.name : '';
+    console.log('WRITE AUTO', obj, this.options);
   }
   registerOnChange(fn: any): void {
     this.onChange = fn;
