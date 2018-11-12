@@ -30,6 +30,13 @@ $app--margin-large: $app--margin * 3;
 $app--margin-small: 0.2em;
 $app--placeholder-border: 1px solid transparent;
 $app--padding: 0.33em;
+// Status Colours
+$app--failure-background-colour: $red;
+$app--failure-colour: $white;
+$app--info-background-colour: $cyan;
+$app--success-background-colour: $green;
+$app--success-colour: $white;
+$app--warning-background-colour: $orange;
 // Component Variables
 $accent--colour: $robin--timeskip-shoes;
 $anchor--colour: $mostly-blue;
@@ -37,6 +44,28 @@ $anchor--colour-hover: lighten($mostly-blue, $app--darken-amount * 3);
 $header--height: 50px;
 $nav-link--height: 50px;
 $sidebar--width: 50px;
+$ui-messaging: (
+  success: (
+    background: $app--success-background-colour,
+    colour: #000,
+    icon: '\2713'
+  ),
+  error: (
+    background: $app--failure-background-colour,
+    colour: #fff,
+    icon: '\0021'
+  ),
+  warning: (
+    background: $app--warning-background-colour,
+    colour: #000,
+    icon: '\26a0'
+  ),
+  info: (
+    background: $app--info-background-colour,
+    colour: #000,
+    icon: '\2139'
+  )
+);
 // TODO
 // Add alt themes
 // Themes

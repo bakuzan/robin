@@ -25,6 +25,7 @@ const today = new Date();
 export class DashboardComponent implements OnInit {
   @ViewChild('chartsRef')
   chartsRef: ElementRef;
+  isLoading = false;
   filters: DashboardFilters = {
     fromDate: getISOStringDate(getDaysAgo(today, 365)),
     toDate: getISOStringDate(today)
@@ -54,9 +55,11 @@ export class DashboardComponent implements OnInit {
   }
 
   getDashboard() {
-    this.dashboardService
-      .getDashboard(this.filters)
-      .subscribe((dash) => (this.dashboard = dash));
+    this.isLoading = true;
+    this.dashboardService.getDashboard(this.filters).subscribe((data) => {
+      this.dashboard = data;
+      this.isLoading = false;
+    });
   }
 
   updateChartViewSize() {

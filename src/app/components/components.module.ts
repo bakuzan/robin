@@ -20,6 +20,7 @@ import { TabsComponent } from './tabs/tabs.component';
 import { TabComponent } from './tab/tab.component';
 import { AggregateWidgetComponent } from './aggregate-widget/aggregate-widget.component';
 import { LoadingBouncerComponent } from './loading-bouncer/loading-bouncer.component';
+import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
   imports: [AppRoutingModule, CommonModule, FormsModule],
@@ -40,7 +41,8 @@ import { LoadingBouncerComponent } from './loading-bouncer/loading-bouncer.compo
     TabsComponent,
     TabComponent,
     AggregateWidgetComponent,
-    LoadingBouncerComponent
+    LoadingBouncerComponent,
+    AlertComponent
   ],
   exports: [
     LogoComponent,
@@ -58,7 +60,8 @@ import { LoadingBouncerComponent } from './loading-bouncer/loading-bouncer.compo
     TabsComponent,
     TabComponent,
     AggregateWidgetComponent,
-    LoadingBouncerComponent
+    LoadingBouncerComponent,
+    AlertComponent
   ]
 })
 export class ComponentsModule {}

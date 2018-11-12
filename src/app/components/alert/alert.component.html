@@ -1,0 +1,23 @@
+<div [ngClass]="alertClasses" *ngIf="hasAlert">
+  <div *ngIf="hasAlert" [ngClass]="messageClasses">
+    <div class="alert__inner">
+      <div [ngClass]="iconClasses"></div>
+      <div class="alert__title">{{ activeAlert.message }}</div>
+      <div class="button-group button-group--shrink">
+        <app-rbn-button
+          size="small"
+          [icon]="expandIcon"
+          (click)="showDetail(activeAlert.id)"
+        ></app-rbn-button>
+        <app-rbn-button
+          size="small"
+          [icon]="closeIcon"
+          (click)="remove(activeAlert.id)"
+        ></app-rbn-button>
+      </div>
+    </div>
+    <div class="alert__detail" *ngIf="activeAlert.showDetail">
+      {{ activeAlert.detail }}
+    </div>
+  </div>
+</div>

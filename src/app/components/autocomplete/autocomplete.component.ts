@@ -84,7 +84,6 @@ export class AutocompleteComponent implements OnInit, ControlValueAccessor {
   writeValue(obj: Suggestion): void {
     this.selectedItem = obj;
     this.filter = this.selectedItem ? this.selectedItem.name : '';
-    console.log('WRITE AUTO', obj, this.options);
   }
   registerOnChange(fn: any): void {
     this.onChange = fn;
@@ -147,13 +146,11 @@ export class AutocompleteComponent implements OnInit, ControlValueAccessor {
 
   selectActiveSuggestion() {
     const item = this.suggestions[this.activeSuggestion];
-    console.log('select active', item);
     const id = item ? item.id : null;
     this.onSelectAutocompleteSuggestion(id);
   }
 
   updateActiveSuggestion(value) {
-    console.log('update suggestion', value, this.activeSuggestion);
     const maxIndex = this.suggestions.length - 1;
     let newValue = this.activeSuggestion + value;
     if (newValue > maxIndex) {

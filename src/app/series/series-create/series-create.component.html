@@ -1,4 +1,5 @@
 <div class="page">
+  <app-loading-bouncer *ngIf="isLoading"></app-loading-bouncer>
   <form
     class="form"
     [formGroup]="seriesForm"
@@ -6,15 +7,6 @@
     novalidate
     autocomplete="off"
   >
-    <div class="
-    button-group
-    button-group--right">
-      <app-nav-link [to]="cancelUrl">Cancel</app-nav-link>
-      <app-rbn-button
-        type="submit"
-        theme="primary"
-      >Save</app-rbn-button>
-    </div>
     <div class="form__content">
       <app-input-box
         type="hidden"
@@ -44,15 +36,19 @@
         formControlName="volumeCount"
         min="0"
       ></app-input-box>
-
+      <div
+        class="
+    button-group
+    button-group--right"
+      >
+        <app-nav-link [to]="cancelUrl">Cancel</app-nav-link>
+        <app-rbn-button type="submit" theme="primary">Save</app-rbn-button>
+      </div>
       <app-tabs>
         <app-tab name="volumes">
           <div class="sub-content sub-content--column">
             <div class="sub-content__header">
-              <app-rbn-button
-                theme="secondary"
-                (click)="onAddVolume()"
-              >
+              <app-rbn-button theme="secondary" (click)="onAddVolume()">
                 Add
               </app-rbn-button>
             </div>
@@ -62,14 +58,8 @@
               [items]="volumes.controls"
               formArrayName="volumes"
             >
-              <ng-template
-                let-item="item"
-                let-i="index"
-              >
-                <div
-                  class="form__array-item-wrapper"
-                  [formGroupName]="i"
-                >
+              <ng-template let-item="item" let-i="index">
+                <div class="form__array-item-wrapper" [formGroupName]="i">
                   <app-input-box
                     type="hidden"
                     name="{{i}}.id"
@@ -131,7 +121,8 @@
                     label="Used Discount Code"
                     name="{{i}}.usedDiscountCode"
                     formControlName="usedDiscountCode"
-                  >Used Discount Code</app-tickbox>
+                    >Used Discount Code</app-tickbox
+                  >
 
                   <div class="button-group button-group--stacked">
                     <app-rbn-button
@@ -154,8 +145,7 @@
         </app-tab>
         <app-tab name="statistics">
           <div class="sub-content">
-            <div class="sub-content__header">
-            </div>
+            <div class="sub-content__header"></div>
             <div class="statistics__content">
               <app-aggregate-widget [items]="statistics"></app-aggregate-widget>
               <div class="statistic-chart">
@@ -173,13 +163,15 @@
                   [yAxisLabel]="yAxisLabel"
                   autoScale="autoScale"
                 >
-                  <!-- <ng-template
-                    #tooltipTemplate
-                    let-model="model"
-                  >
-                    <div>{{model.series}} . {{model.name}}</div>
-                    <div>£{{model.value}}</div>
-                  </ng-template> -->
+                  <!--
+                    <ng-template
+                      #tooltipTemplate
+                      let-model="model"
+                    >
+                      <div>{{model.series}} . {{model.name}}</div>
+                      <div>£{{model.value}}</div>
+                    </ng-template>
+                  -->
                 </ngx-charts-line-chart>
               </div>
             </div>

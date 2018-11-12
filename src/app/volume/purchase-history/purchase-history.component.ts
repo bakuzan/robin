@@ -34,6 +34,7 @@ export class PurchaseHistoryComponent implements OnInit {
     toDate: getISOStringDate(today)
   };
   private filterParams = new BehaviorSubject<VolumeFilter>(this.startingParams);
+  isLoading = false;
   volumes$: Observable<Volume[]>;
   itemCount: number;
 
@@ -50,10 +51,14 @@ export class PurchaseHistoryComponent implements OnInit {
         (params: VolumeFilter) =>
           params.fromDate && params.toDate && this.datesAreValid(params)
       ),
+      tap(() => (this.isLoading = true)),
       switchMap((params: VolumeFilter) =>
         this.volumeService.getVolumes(params)
       ),
-      tap((items: Volume[]) => (this.itemCount = items.length))
+      tap((items: Volume[]) => {
+        this.itemCount = items.length;
+        this.isLoading = false;
+      })
     );
   }
 

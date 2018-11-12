@@ -11,6 +11,7 @@ import VolumeFilter from '../volume/shared/volume-filter.model';
 import ImportResponse from './models/import-response.model';
 import ImportRow from './models/import-row.model';
 import SeriesType from './models/series-types.enum';
+import { AlertService } from './alert.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -22,7 +23,7 @@ const httpOptions = {
 export class VolumeService {
   private volumeUrl = Urls.graphqlEndpoint;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private alertService: AlertService) {}
 
   getVolumes(filters: VolumeFilter): Observable<Volume[]> {
     const payload = createApolloServerPayload(
@@ -35,7 +36,6 @@ export class VolumeService {
     return this.http
       .post<VolumeFilter>(this.volumeUrl, payload, httpOptions)
       .pipe(
-        tap((s: Volume[]) => this.log(`get volumes`)),
         catchError(this.handleError<Volume[]>('volumes')),
         map(
           (response: any) =>
@@ -49,7 +49,6 @@ export class VolumeService {
       volume
     });
     return this.http.post<Volume>(this.volumeUrl, payload, httpOptions).pipe(
-      tap((s: Volume) => this.log(`added hero w/ id=${s.id}`)),
       catchError(this.handleError<Volume>('addVolume')),
       map(
         (response: any) =>
@@ -63,7 +62,6 @@ export class VolumeService {
       volume
     });
     return this.http.post(this.volumeUrl, payload, httpOptions).pipe(
-      tap((_) => this.log(`updated volume id=${volume.id}`)),
       catchError(this.handleError<any>('updateVolume')),
       map(
         (response: any) =>
@@ -76,10 +74,9 @@ export class VolumeService {
     const id = typeof volume === 'number' ? volume : volume.id;
     const url = `${this.volumeUrl}/${id}`;
 
-    return this.http.delete<Volume>(url, httpOptions).pipe(
-      tap((_) => this.log(`deleted volume id=${id}`)),
-      catchError(this.handleError<Volume>('deleteVolume'))
-    );
+    return this.http
+      .delete<Volume>(url, httpOptions)
+      .pipe(catchError(this.handleError<Volume>('deleteVolume')));
   }
 
   importVolumes(
@@ -111,14 +108,12 @@ export class VolumeService {
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);
-      this.log(`${operation} failed: ${error.message}`);
+      this.alertService.sendError({
+        message: `${operation} failed`,
+        detail: error.message
+      });
 
       return of(result as T);
     };
-  }
-
-  private log(message: string) {
-    // TODO:
-    // transforming error to be user friendly
   }
 }
