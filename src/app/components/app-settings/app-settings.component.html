@@ -1,0 +1,23 @@
+<div>
+  <app-dropdown-menu
+    ignore-position
+    [id]="id"
+    className="app-settings"
+    [align]="alignment"
+    [title]="title"
+    [icon]="icon"
+  >
+    <li class="app-settings__item">
+      <app-select-box
+        id="appTheme"
+        class="app-settings__setting"
+        name="appTheme"
+        label="App Theme"
+        [options]="appThemes"
+        [(ngModel)]="theme"
+        (ngModelChange)="onChange($event)"
+        [required]="true"
+      ></app-select-box>
+    </li>
+  </app-dropdown-menu>
+</div>

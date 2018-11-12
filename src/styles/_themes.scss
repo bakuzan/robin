@@ -30,7 +30,7 @@
       background-color: $base-background;
     }
     .dropdown__arrow {
-      border-bottom-color: $base-background;
+      border-bottom-color: $base-background !important;
     }
 
     // Primary

@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import classNames from 'classnames';
+import SelectOption from 'src/app/common/models/select-option.model';
 
 @Component({
   selector: 'app-select-box',
@@ -42,7 +43,7 @@ export class SelectBoxComponent implements OnInit, ControlValueAccessor {
   @Input()
   required: boolean;
   @Input()
-  options: number[];
+  options: SelectOption[];
   @Output()
   update: EventEmitter<any> = new EventEmitter();
 
@@ -69,7 +70,7 @@ export class SelectBoxComponent implements OnInit, ControlValueAccessor {
     select[action]('select-box--disabled');
   }
 
-  handleChange(value) {
-    this.onChange(value);
+  handleChange(event) {
+    this.onChange(event.target.value);
   }
 }

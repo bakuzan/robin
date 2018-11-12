@@ -1,0 +1,25 @@
+<div [id]="id" class="dropdown">
+  <app-rbn-button
+    [id]="togglerId"
+    class="dropdown__toggler ripple"
+    [icon]="icon"
+    size="normal"
+    [title]="title"
+    (click)="toggleDropdown($event)"
+  ></app-rbn-button>
+  <ul
+    *ngIf="isDropdownOpen"
+    [id]="menuId"
+    [ngClass]="dropdownMenuClasses"
+    [ngStyle]="menuStyle"
+    role="menu"
+  >
+    <li class="dropdown__arrow"></li>
+    <ng-content></ng-content>
+  </ul>
+  <app-backdrop
+    *ngIf="isDropdownOpen"
+    [id]="id"
+    (close)="toggleDropdown($event)"
+  ></app-backdrop>
+</div>

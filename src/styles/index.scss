@@ -59,3 +59,13 @@ main {
 .relative {
   position: relative;
 }
+
+.fake-button {
+  text-decoration: none;
+}
+
+// App settings "globals"
+.app-settings__setting {
+  flex: 1;
+  color: initial;
+}
