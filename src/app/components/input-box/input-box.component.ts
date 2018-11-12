@@ -101,7 +101,6 @@ export class InputBoxComponent implements OnInit, ControlValueAccessor {
   }
 
   change(e) {
-    console.log('change input', e.target.value);
     this.onChange(e.target.value);
   }
 

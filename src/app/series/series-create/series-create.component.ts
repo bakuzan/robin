@@ -22,6 +22,7 @@ import { mapEnumToSelectOption } from 'src/app/common/utils/mappers';
 })
 export class SeriesCreateComponent implements OnInit {
   private seriesId: number;
+  isLoading = false;
   data: RouteData;
   crossIcon = Icons.cross;
   saveIcon = Icons.save;
@@ -73,13 +74,13 @@ export class SeriesCreateComponent implements OnInit {
     });
 
     this.seriesForm.controls.volumes.valueChanges.subscribe((volumes) => {
-      console.log('volume change > ', volumes);
       this.statistics = this.craftStatistics(volumes);
       this.statisticsChartData = this.generateChartData(volumes);
     });
   }
 
   getSeries() {
+    this.isLoading = true;
     this.seriesService
       .getSeriesById(this.seriesId)
       .subscribe((series) => this.updateForm(series));
@@ -154,13 +155,15 @@ export class SeriesCreateComponent implements OnInit {
   }
 
   updateForm(series: Series) {
-    const volumes = series.volumes || [];
+    if (!series) {
+      return;
+    }
 
+    const volumes = series.volumes || [];
     if (volumes.length && !this.volumes.length) {
       volumes.forEach(() => this.volumes.push(this.initVolume()));
     }
 
-    console.log('update form > ', series);
     window.setTimeout(() => {
       this.seriesForm.setValue({
         ...series,
@@ -170,6 +173,7 @@ export class SeriesCreateComponent implements OnInit {
           rrp: displayAs2dp(x.rrp)
         }))
       });
+      this.isLoading = false;
     }, 0);
   }
 
@@ -225,9 +229,8 @@ export class SeriesCreateComponent implements OnInit {
       rrp,
       retailer
     };
-    console.log('should add volume here', this.seriesForm, initialValues);
+
     this.volumes.insert(0, this.initVolume(initialValues));
-    console.log('volumes after add > ', this.volumes.value);
   }
 
   processVolumePrePost(x): Volume {
@@ -258,7 +261,8 @@ export class SeriesCreateComponent implements OnInit {
       ...value,
       seriesId: this.seriesId
     });
-    console.log('save > ', this.volumes, index, volume);
+
+    this.isLoading = true;
     if (!volume.id) {
       mutation = this.volumeService.addVolume(volume);
     } else {
@@ -274,6 +278,7 @@ export class SeriesCreateComponent implements OnInit {
       });
       vol.markAsPristine();
       this.updateRetailers(response);
+      this.isLoading = false;
     });
   }
 
@@ -292,6 +297,7 @@ export class SeriesCreateComponent implements OnInit {
       volumes: formValues.volumes.map(this.processVolumePrePost)
     };
 
+    this.isLoading = true;
     if (this.data.isCreate) {
       mutation = this.seriesService.addSeries(series);
     } else {

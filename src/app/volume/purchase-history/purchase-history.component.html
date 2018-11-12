@@ -1,17 +1,14 @@
 <app-volume-filter-bar (update)="search($event)"></app-volume-filter-bar>
+<div class="relative">
+  <app-loading-bouncer *ngIf="isLoading" [local]="true"></app-loading-bouncer>
+</div>
 <app-list
   columns="one"
   itemClass="list__item--no-padding"
   [itemCount]="itemCount"
   [items]="volumes$"
 >
-  <ng-template
-    let-item="item"
-    let-i="index"
-  >
-    <app-purchase-item
-      [isFirst]="i === 0"
-      [item]="item"
-    ></app-purchase-item>
+  <ng-template let-item="item" let-i="index">
+    <app-purchase-item [isFirst]="i === 0" [item]="item"></app-purchase-item>
   </ng-template>
 </app-list>

@@ -1,0 +1,55 @@
+@import '_extensions';
+@import '_variables';
+
+.dropdown {
+  > input {
+    display: none;
+  }
+  > label {
+    cursor: pointer;
+    &:before {
+      content: attr(icon);
+      font-size: 1.5rem;
+    }
+  }
+}
+.dropdown__arrow {
+  position: absolute;
+  top: -20px;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 20px solid $white;
+  width: 0;
+  height: 0;
+  filter: drop-shadow(0 -2px 2px #aaa);
+}
+.dropdown__menu {
+  position: fixed;
+  width: 200px;
+  min-height: 100px;
+  border-radius: 4px;
+  top: 0;
+  right: 0;
+  padding: 2px;
+  margin: 0;
+  list-style-type: none;
+  transform: translateY(50%);
+  transition: visibility 0.5s;
+  transition-delay: 1s !important;
+  z-index: map-get($z-index, popover);
+  @extend %standard-shadow;
+  &--align_left .dropdown-arrow {
+    left: 0;
+  }
+  &--align_center {
+    left: 50%;
+    transform: translateY(50%) translateX(-50%);
+    .dropdown__arrow {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+  &--align_right .dropdown__arrow {
+    right: 0;
+  }
+}

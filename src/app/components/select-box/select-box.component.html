@@ -5,16 +5,11 @@
     attr.aria-placeholder="Please select a {{label}}"
     [attr.id]="id"
     [attr.name]="name"
-    [(ngModel)]="value"
     [attr.disabled]="disabled"
     [attr.required]="required"
-    (ngModelChange)="handleChange($event)"
+    (change)="handleChange($event)"
   >
-    <option
-      *ngIf="!required"
-      [value]="null"
-      class="select-box__option"
-    >
+    <option *ngIf="!required" [value]="null" class="select-box__option">
       None
     </option>
     <option
@@ -22,8 +17,8 @@
       [value]="item.value"
       class="select-box__option"
     >
-      {{item.text}}
+      {{ item.text }}
     </option>
   </select>
-  <label [for]="id">{{label}}</label>
+  <label [for]="id">{{ label }}</label>
 </div>

@@ -1,0 +1,11 @@
+@import '_variables';
+
+.app-settings {
+  top: 50px;
+  right: 5px;
+  &__item {
+    display: flex;
+    justify-content: center;
+    margin: $app--margin-small 0;
+  }
+}

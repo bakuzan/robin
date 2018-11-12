@@ -23,23 +23,28 @@ export class RbnButtonComponent implements OnInit {
   disabled: boolean;
   @Input()
   icon: string;
+  @Input()
+  class: string;
 
   constructor() {}
 
   ngOnInit() {}
 
-  classes() {
+  get classes(): string {
     const size = this.size || (this.icon && 'small');
-    return classNames({
-      button: true,
-      'themed-background': this.theme !== 'default',
-      'themed-background--reversed': this.theme === 'secondary',
-      'button--icon': !!this.icon,
-      [`button--size_${size}`]: !!this.size || !!this.icon,
-      'button--rounded': this.rounded,
-      'button--depress': this.depress,
-      ripple: true,
-      'button--grow': this.grow
-    });
+    return classNames(
+      {
+        button: true,
+        'themed-background': this.theme !== 'default',
+        'themed-background--reversed': this.theme === 'secondary',
+        'button--icon': !!this.icon,
+        [`button--size_${size}`]: !!this.size || !!this.icon,
+        'button--rounded': this.rounded,
+        'button--depress': this.depress,
+        ripple: true,
+        'button--grow': this.grow
+      },
+      this.class
+    );
   }
 }

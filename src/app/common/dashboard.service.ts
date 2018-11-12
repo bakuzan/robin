@@ -8,6 +8,7 @@ import { createApolloServerPayload } from 'src/app/common/utils/query-builder';
 import DashboardGQL from './queries';
 import Dashboard from 'src/app/common/models/dashboard.model';
 import DashboardFilters from './models/dashboard-filter.model';
+import { AlertService } from './alert.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -19,7 +20,7 @@ const httpOptions = {
 export class DashboardService {
   private dashboardUrl = Urls.graphqlEndpoint;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private alertService: AlertService) {}
 
   getDashboard(filters: DashboardFilters): Observable<Dashboard> {
     const payload = createApolloServerPayload(DashboardGQL.Query.getDashboard, {
@@ -27,7 +28,6 @@ export class DashboardService {
     });
 
     return this.http.post(this.dashboardUrl, payload, httpOptions).pipe(
-      tap(() => this.log(`get dashboard`)),
       catchError(this.handleError<Dashboard>('dashboard')),
       map(
         (response: any) =>
@@ -39,14 +39,12 @@ export class DashboardService {
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);
-      this.log(`${operation} failed: ${error.message}`);
+      this.alertService.sendError({
+        message: `${operation} failed`,
+        detail: error.message
+      });
 
       return of(result as T);
     };
-  }
-
-  private log(message: string) {
-    // TODO:
-    // transforming error to be user friendly
   }
 }

@@ -55,3 +55,23 @@ main {
     justify-content: flex-end;
   }
 }
+
+.relative {
+  position: relative;
+}
+
+.fake-button {
+  text-decoration: none;
+}
+
+// App settings "globals"
+.app-settings__setting {
+  flex: 1;
+  color: initial;
+}
+
+// Input box "globals"
+.input-box__clear {
+  position: relative;
+  right: 30px;
+}
