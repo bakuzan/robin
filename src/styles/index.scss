@@ -69,3 +69,9 @@ main {
   flex: 1;
   color: initial;
 }
+
+// Input box "globals"
+.input-box__clear {
+  position: relative;
+  right: 30px;
+}

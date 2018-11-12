@@ -16,8 +16,9 @@ export class AppSettingsComponent implements OnInit {
   icon = Icons.settings;
   appThemes = [
     { value: 'none', text: 'No theme' },
-    { value: 'one', text: 'Time skip' },
-    { value: 'two', text: 'TODO' }
+    { value: 'one', text: 'Sabaody (TS)' },
+    { value: 'two', text: 'Whiskey peak' },
+    { value: 'three', text: 'Enies Lobby' }
   ];
 
   constructor(private store: StorageService) {}

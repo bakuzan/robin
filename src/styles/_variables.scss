@@ -78,5 +78,23 @@ $theme-maps: (
     active-background: $robin--light-timeskip-skirt,
     active-colour: $robin--timeskip-pattern,
     faded-out: $grey80
+  ),
+  two: (
+    base-background: #fff,
+    base-colour: $robin--whiskey-peak-outfit,
+    primary-background: $robin--whiskey-peak-outfit,
+    primary-colour: $robin--whiskey-peak-belt,
+    active-background: $robin--whiskey-peak-belt,
+    active-colour: $robin--whiskey-peak-trim,
+    faded-out: $grey80
+  ),
+  three: (
+    base-background: #fff,
+    base-colour: $robin--enies-lobby-base,
+    primary-background: $robin--enies-lobby-base,
+    primary-colour: $robin--enies-lobby-shine,
+    active-background: $robin--enies-lobby-shine,
+    active-colour: $robin--enies-lobby-pattern,
+    faded-out: $grey80
   )
 );
