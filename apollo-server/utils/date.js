@@ -1,7 +1,11 @@
 function formatDateInput(date) {
   if (!date) return date;
   const d = new Date(date);
-  return d.toISOString().split('T')[0];
+  return d
+    .toLocaleDateString()
+    .split('/')
+    .reverse()
+    .join('-');
 }
 
 function setTime(date, h, m, s, n) {
@@ -18,7 +22,10 @@ function endOfDay(d) {
   return setTime(d, 23, 59, 59, 999);
 }
 
-function dateRange(startDate, endDate) {
+function dateRange(fromDate, toDate) {
+  const startDate = formatDateInput(fromDate);
+  const endDate = formatDateInput(toDate);
+
   var start = startDate.split('-');
   var end = endDate.split('-');
   var startYear = parseInt(start[0]);
