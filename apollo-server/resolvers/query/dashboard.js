@@ -25,14 +25,7 @@ function mapStatsToResponse(derviedStats = {}) {
   };
 }
 
-function mapSeriesCounts(items) {
-  if (!items || !items.length) return [];
-
-  const dates = items.map((x) => new Date(x.group));
-  const toDate = RBNDate.formatDateInput(Math.max.apply(null, dates));
-  const fromDate = RBNDate.formatDateInput(Math.min.apply(null, dates));
-  const datesInRange = RBNDate.dateRange(fromDate, toDate);
-
+function mapSeriesCounts(datesInRange, items = []) {
   return datesInRange.map((d) => {
     const name = d.slice(0, 7);
     const item = items.find((g) => g.group === name);
@@ -43,18 +36,19 @@ function mapSeriesCounts(items) {
   });
 }
 
-function mapGroupCounts(gd) {
+function mapGroupCounts(filters, gd) {
+  const datesInRange = RBNDate.dateRange(filters.fromDate, filters.toDate);
   const mangaItems = gd.filter((x) => x.type === SeriesTypes.Manga);
   const comicItems = gd.filter((x) => x.type === SeriesTypes.Comic);
 
   return [
     {
       name: SeriesTypes.Comic,
-      series: mapSeriesCounts(comicItems)
+      series: mapSeriesCounts(datesInRange, comicItems)
     },
     {
       name: SeriesTypes.Manga,
-      series: mapSeriesCounts(mangaItems)
+      series: mapSeriesCounts(datesInRange, mangaItems)
     }
   ];
 }
@@ -99,7 +93,7 @@ module.exports = {
         mapStatsToResponse(comicStat),
         mapStatsToResponse(mangaStat)
       ],
-      byMonthCounts: mapGroupCounts(graphData)
+      byMonthCounts: mapGroupCounts(filters, graphData)
     };
   }
 };
