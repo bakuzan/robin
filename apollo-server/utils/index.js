@@ -65,6 +65,11 @@ const displayAs2dp = (n) =>
 
 const prepString = (s) => (s ? s.trim().toLowerCase() : '');
 
+const pad = (n = '', width, z = '0') => {
+  n += '';
+  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+};
+
 module.exports = {
   enumArrayToObject,
   mapArrToGraphqlString,
@@ -76,5 +81,6 @@ module.exports = {
   round,
   roundTo2,
   displayAs2dp,
-  prepString
+  prepString,
+  pad
 };

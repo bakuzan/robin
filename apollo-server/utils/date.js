@@ -1,11 +1,15 @@
+const { pad } = require('./index');
+
 function formatDateInput(date) {
-  if (!date) return date;
+  if (!date) {
+    return date;
+  }
+
   const d = new Date(date);
-  return d
-    .toLocaleDateString()
-    .split('/')
-    .reverse()
-    .join('-');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1, 2)}-${pad(
+    d.getDate(),
+    2
+  )}`;
 }
 
 function setTime(date, h, m, s, n) {
