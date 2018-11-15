@@ -1,5 +1,5 @@
 const RBNDate = require('../utils/date');
-const { roundTo2 } = require('../utils');
+const { roundTo2, displayAs2dp } = require('../utils');
 
 module.exports = {
   series(volume) {
@@ -19,6 +19,6 @@ module.exports = {
     return RBNDate.formatDateInput(volume.boughtDate);
   },
   percentagePaid(volume) {
-    return roundTo2((volume.paid / volume.rrp) * 100);
+    return displayAs2dp(roundTo2((volume.paid / volume.rrp) * 100));
   }
 };
