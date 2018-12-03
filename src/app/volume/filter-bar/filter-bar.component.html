@@ -4,8 +4,8 @@
     type="date"
     name="fromDate"
     label="From"
-    [attr.max]="filters.toDate"
-    [(ngModel)]="filters.fromDate"
+    [attr.max]="values.toDate"
+    [(ngModel)]="values.fromDate"
     (ngModelChange)="onInput()"
   ></app-input-box>
   <app-input-box
@@ -13,15 +13,15 @@
     type="date"
     name="toDate"
     label="To"
-    [attr.min]="filters.fromDate"
-    [(ngModel)]="filters.toDate"
+    [attr.min]="values.fromDate"
+    [(ngModel)]="values.toDate"
     (ngModelChange)="onInput()"
   ></app-input-box>
   <app-radio-button-group
     id="type"
     [column]="true"
     [options]="seriesTypeOptions"
-    [(ngModel)]="filters.type"
+    [(ngModel)]="values.type"
     (ngModelChange)="onInput()"
   ></app-radio-button-group>
 </div>

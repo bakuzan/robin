@@ -49,7 +49,7 @@ app.use(function(req, _, next) {
 });
 
 app.use(
-  `/${Constants.appName}/favicon.ico`,
+  '/favicon.ico',
   favicon(path.join(__dirname, '..', 'src', 'favicon.ico'))
 );
 app.use(express.static(path.resolve(__dirname, '..', 'dist/robin')));

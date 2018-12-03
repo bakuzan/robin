@@ -5,15 +5,14 @@ import {
   ElementRef,
   HostListener
 } from '@angular/core';
+import { Router, NavigationExtras } from '@angular/router';
 
 import { DashboardService } from 'src/app/common/dashboard.service';
 import Dashboard from 'src/app/common/models/dashboard.model';
 import DashboardFilters from 'src/app/common/models/dashboard-filter.model';
-import {
-  isValidDate,
-  getISOStringDate,
-  getDaysAgo
-} from 'src/app/common/utils';
+import { getISOStringDate, getDaysAgo } from 'src/app/common/utils';
+import DashboardChartEvent from '../common/models/dashboard-chart-event.model';
+import Urls from '../common/constants/urls';
 
 const today = new Date();
 
@@ -47,7 +46,10 @@ export class DashboardComponent implements OnInit {
     domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
   };
 
-  constructor(private dashboardService: DashboardService) {}
+  constructor(
+    private dashboardService: DashboardService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.getDashboard();
@@ -69,6 +71,15 @@ export class DashboardComponent implements OnInit {
 
   onUserInput() {
     this.getDashboard();
+  }
+
+  onChartClick(point: DashboardChartEvent) {
+    const targetUrl = Urls.purchaseHistory;
+    const navigationExtras: NavigationExtras = {
+      queryParams: { type: point.series, month: point.name }
+    };
+
+    this.router.navigate([targetUrl], navigationExtras);
   }
 
   @HostListener('window:resize')

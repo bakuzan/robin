@@ -106,3 +106,14 @@ export function getElementCoordinates(elem): ElementCoordinates {
 
 export const capitalise = (str = ''): string =>
   str.charAt(0).toUpperCase() + str.slice(1);
+
+export const getFirstDateOfMonth = (date: string | number | Date): Date => {
+  const d = new Date(date);
+  d.setDate(1);
+  return d;
+};
+
+export const getLastDateOfMonth = (date: string | number | Date): Date => {
+  const d = new Date(date);
+  return new Date(d.getFullYear(), d.getMonth() + 1, 0);
+};
