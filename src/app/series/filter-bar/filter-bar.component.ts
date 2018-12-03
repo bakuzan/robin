@@ -24,7 +24,6 @@ export class FilterBarComponent implements OnInit {
   ngOnInit() {}
 
   onInput() {
-    console.log('update!', this.filters);
     this.update.emit({ ...this.filters });
   }
 }

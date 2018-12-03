@@ -49,7 +49,6 @@ export class PurchaseHistoryComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('init');
     this.activatedRoute.queryParams
       .subscribe((params) => {
         const { type, month } = params;

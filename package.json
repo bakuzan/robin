@@ -1,12 +1,13 @@
 {
   "name": "robin",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "apollo-server": "nodemon apollo-server",
     "start": "npm-run-all -p serve apollo-server",
     "serve": " ng serve",
     "build": "ng build",
+    "build-prod": "ng build --prod",
     "test": "ng test",
     "precommit": "run-s format:fix lint",
     "format:fix": "pretty-quick --staged",

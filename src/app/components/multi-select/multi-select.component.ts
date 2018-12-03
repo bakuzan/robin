@@ -122,7 +122,7 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
     const value = this.optionsSelected
       .filter((x) => x.selected)
       .map((x) => x.value);
-    console.log('option change', value, this, this.optionsSelected);
+
     this.onChange(value);
 
     this.displayValue = this.getDisplayValue(value);
