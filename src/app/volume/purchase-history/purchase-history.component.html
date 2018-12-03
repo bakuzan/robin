@@ -1,4 +1,7 @@
-<app-volume-filter-bar (update)="search($event)"></app-volume-filter-bar>
+<app-volume-filter-bar
+  [filters]="startingParams"
+  (update)="search($event)"
+></app-volume-filter-bar>
 <div class="relative">
   <app-loading-bouncer *ngIf="isLoading" [local]="true"></app-loading-bouncer>
 </div>

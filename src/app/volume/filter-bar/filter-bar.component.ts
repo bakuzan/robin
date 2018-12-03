@@ -1,11 +1,8 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 import VolumeFilter from '../shared/volume-filter.model';
-import SeriesType, { SeriesTypes } from '../../common/models/series-types.enum';
+import { SeriesTypes } from '../../common/models/series-types.enum';
 import { mapEnumToSelectOption } from 'src/app/common/utils/mappers';
-import { getDaysAgo, getISOStringDate } from 'src/app/common/utils';
-
-const today = new Date();
 
 @Component({
   selector: 'app-volume-filter-bar',
@@ -14,19 +11,19 @@ const today = new Date();
 })
 export class FilterBarComponent implements OnInit {
   seriesTypeOptions = mapEnumToSelectOption(SeriesTypes);
-  filters: VolumeFilter = {
-    type: SeriesType.Manga,
-    fromDate: getISOStringDate(getDaysAgo(today, 30)),
-    toDate: getISOStringDate(today)
-  };
+  values: VolumeFilter;
+  @Input()
+  filters: VolumeFilter;
   @Output()
   update: EventEmitter<any> = new EventEmitter();
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.values = { ...this.filters };
+  }
 
   onInput() {
-    this.update.emit({ ...this.filters });
+    this.update.emit({ ...this.values });
   }
 }

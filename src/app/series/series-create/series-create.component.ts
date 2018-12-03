@@ -185,7 +185,7 @@ export class SeriesCreateComponent implements OnInit {
     const retailers: Retailer[] = data.retailer
       ? [data.retailer]
       : data.volumes.map((x) => x.retailer);
-    console.log('up retail', retailers, this.retailers);
+
     this.retailers = [
       ...this.retailers,
       ...retailers.filter((x) => this.retailers.every((y) => y.id !== x.id))
