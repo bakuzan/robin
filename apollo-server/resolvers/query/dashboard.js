@@ -20,6 +20,10 @@ function mapStatsToResponse(derviedStats = {}) {
       {
         label: 'Maximum',
         value: `£ ${displayAs2dp(derviedStats.maximum)}`
+      },
+      {
+        label: 'Total',
+        value: derviedStats.total || 0
       }
     ]
   };
@@ -70,7 +74,8 @@ module.exports = {
         include: [
           [db.fn('AVG', db.col('paid')), 'average'],
           [db.fn('MIN', db.col('paid')), 'minimum'],
-          [db.fn('MAX', db.col('paid')), 'maximum']
+          [db.fn('MAX', db.col('paid')), 'maximum'],
+          [db.fn('COUNT', db.col('paid')), 'total']
         ]
       },
       include: [Series]

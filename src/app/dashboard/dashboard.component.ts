@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ElementRef,
-  HostListener
-} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 
 import { DashboardService } from 'src/app/common/dashboard.service';
@@ -22,6 +16,8 @@ const today = new Date();
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+  private comicColour = '#339933';
+  private mangaColour = '#3366cc';
   @ViewChild('chartsRef')
   chartsRef: ElementRef;
   isLoading = false;
@@ -30,7 +26,7 @@ export class DashboardComponent implements OnInit {
     toDate: getISOStringDate(today)
   };
   dashboard = new Dashboard();
-  view: any[] = [500, 400];
+  view: any[] = [800, 400];
 
   // options
   showXAxis = true;
@@ -43,7 +39,7 @@ export class DashboardComponent implements OnInit {
   yAxisLabel = 'Count';
 
   colorScheme = {
-    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+    domain: [this.comicColour, this.mangaColour]
   };
 
   constructor(
@@ -53,7 +49,6 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.getDashboard();
-    this.updateChartViewSize();
   }
 
   getDashboard() {
@@ -62,11 +57,6 @@ export class DashboardComponent implements OnInit {
       this.dashboard = data;
       this.isLoading = false;
     });
-  }
-
-  updateChartViewSize() {
-    const width = Math.floor(this.chartsRef.nativeElement.offsetWidth / 2);
-    this.view = [width, 400];
   }
 
   onUserInput() {
@@ -80,10 +70,5 @@ export class DashboardComponent implements OnInit {
     };
 
     this.router.navigate([targetUrl], navigationExtras);
-  }
-
-  @HostListener('window:resize')
-  onResize() {
-    this.updateChartViewSize();
   }
 }

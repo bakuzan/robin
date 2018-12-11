@@ -28,14 +28,11 @@
     </div>
   </div>
   <div class="dashboard__charts" #chartsRef>
-    <div
-      *ngFor="let chartData of dashboard.byMonthCounts"
-      class="dashboard__chart"
-    >
+    <div class="dashboard__chart">
       <ngx-charts-line-chart
         [view]="view"
         [scheme]="colorScheme"
-        [results]="[chartData]"
+        [results]="dashboard.byMonthCounts"
         [gradient]="gradient"
         [xAxis]="showXAxis"
         [yAxis]="showYAxis"
