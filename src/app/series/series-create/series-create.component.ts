@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  HostListener
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -22,6 +28,8 @@ import { mapEnumToSelectOption } from 'src/app/common/utils/mappers';
 })
 export class SeriesCreateComponent implements OnInit {
   private seriesId: number;
+  @ViewChild('chartRef')
+  chartRef: ElementRef;
   isLoading = false;
   data: RouteData;
   crossIcon = Icons.cross;
@@ -76,6 +84,7 @@ export class SeriesCreateComponent implements OnInit {
     this.seriesForm.controls.volumes.valueChanges.subscribe((volumes) => {
       this.statistics = this.craftStatistics(volumes);
       this.statisticsChartData = this.generateChartData(volumes);
+      this.updateChartViewSize();
     });
   }
 
@@ -315,5 +324,15 @@ export class SeriesCreateComponent implements OnInit {
         this.updateRetailers(response);
       }
     });
+  }
+
+  updateChartViewSize() {
+    const width = this.chartRef.nativeElement.offsetWidth;
+    this.view = [width, 400];
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.updateChartViewSize();
   }
 }

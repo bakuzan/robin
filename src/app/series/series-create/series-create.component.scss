@@ -17,6 +17,10 @@
 .statistics {
   &__content {
     display: flex;
+    flex-direction: column;
     flex: 1;
+  }
+  &__chart {
+    margin: 25px 0;
   }
 }

@@ -6,7 +6,7 @@
   [items]="series$"
 >
   <ng-template let-item="item">
-    <app-nav-link to="view/{{item.id}}">
+    <app-nav-link class="series-link" to="view/{{item.id}}">
       {{item.name}}
     </app-nav-link>
   </ng-template>

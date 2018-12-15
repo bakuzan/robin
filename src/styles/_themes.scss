@@ -17,8 +17,8 @@
     .nav-link {
       color: $base-colour;
 
-      &:hover,
-      &--active {
+      &:hover:not(.fake-button),
+      &--active:not(.fake-button) {
         color: $active-colour;
       }
     }
@@ -35,12 +35,25 @@
 
     // Primary
     .themed-background,
-    .button.themed-background {
+    .button.button--themed,
+    .fake-button.fake-button--themed {
       background-color: $primary-background;
       color: $primary-colour;
-      &--reversed {
-        color: $primary-background;
-        background-color: $primary-colour;
+    }
+    .themed-background--reversed,
+    .button.button--themed_reversed,
+    .fake-button.fake-button--themed_reversed {
+      color: $primary-background;
+      background-color: $primary-colour;
+    }
+    .button.button--themed,
+    .fake-button.fake-button--themed {
+      &:hover {
+        background-color: lighten($primary-background, 10%);
+      }
+
+      &_reversed:hover {
+        background-color: darken($primary-colour, 10%);
       }
     }
     .has-float-label input,

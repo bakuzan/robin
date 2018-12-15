@@ -35,8 +35,8 @@ export class RbnButtonComponent implements OnInit {
     return classNames(
       {
         button: true,
-        'themed-background': this.theme !== 'default',
-        'themed-background--reversed': this.theme === 'secondary',
+        'button--themed': this.theme !== 'default',
+        'button--themed_reversed': this.theme === 'secondary',
         'button--icon': !!this.icon,
         [`button--size_${size}`]: !!this.size || !!this.icon,
         'button--rounded': this.rounded,

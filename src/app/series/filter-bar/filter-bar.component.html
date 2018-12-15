@@ -14,7 +14,10 @@
     [(ngModel)]="filters.types"
     (ngModelChange)="onInput()"
   ></app-multi-select>
-  <app-nav-link class="fake-button themed-background" [to]="addUrl"
-    >Add</app-nav-link
+  <app-nav-link 
+    class="fake-button fake-button--themed" 
+    [to]="addUrl"
   >
+    Add
+  </app-nav-link>
 </div>

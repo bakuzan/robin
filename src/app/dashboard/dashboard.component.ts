@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  HostListener
+} from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 
 import { DashboardService } from 'src/app/common/dashboard.service';
@@ -49,6 +55,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.getDashboard();
+    this.updateChartViewSize();
   }
 
   getDashboard() {
@@ -70,5 +77,15 @@ export class DashboardComponent implements OnInit {
     };
 
     this.router.navigate([targetUrl], navigationExtras);
+  }
+
+  updateChartViewSize() {
+    const width = this.chartsRef.nativeElement.offsetWidth;
+    this.view = [width, 400];
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.updateChartViewSize();
   }
 }

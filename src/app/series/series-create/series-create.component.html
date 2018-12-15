@@ -148,7 +148,7 @@
             <div class="sub-content__header"></div>
             <div class="statistics__content">
               <app-aggregate-widget [items]="statistics"></app-aggregate-widget>
-              <div class="statistic-chart">
+              <div class="statistic-chart" #chartRef>
                 <ngx-charts-line-chart
                   [view]="view"
                   [scheme]="colorScheme"
