@@ -5,17 +5,20 @@ module.exports = gql`
     id: Int!
     name: String
     type: SeriesType
+    status: SeriesStatus
     volumeCount: Int
     volumes(sort: VolumeSortOrder): [Volume]
   }
   input SeriesFilter {
     search: String
     type: SeriesType
+    statuses: [SeriesStatus]
   }
   input SeriesInput {
     id: Int
     name: String
     type: SeriesType
+    status: SeriesStatus
     volumeCount: Int
     volumes: [VolumeInput]
   }

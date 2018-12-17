@@ -5,6 +5,15 @@
     [(ngModel)]="values.search"
     (ngModelChange)="onInput()"
   ></app-input-box>
+  <app-multi-select
+    id="statuses"
+    name="statuses"
+    label="Statuses"
+    placeholder="Statuses"
+    [options]="seriesStatusOptions"
+    [(ngModel)]="values.statuses"
+    (ngModelChange)="onInput()"
+  ></app-multi-select>
   <app-radio-button-group
     id="types"
     [column]="true"
@@ -12,6 +21,7 @@
     [(ngModel)]="values.type"
     (ngModelChange)="onInput()"
   ></app-radio-button-group>
+
   <app-nav-link class="fake-button fake-button--themed" [to]="addUrl">
     Add
   </app-nav-link>

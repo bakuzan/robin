@@ -1,4 +1,8 @@
-const { SeriesType } = require('../constants/enums');
+const {
+  SeriesType,
+  SeriesStatus,
+  SeriesStatuses
+} = require('../constants/enums');
 
 module.exports = (db, Types) => {
   return db.define('series', {
@@ -11,6 +15,11 @@ module.exports = (db, Types) => {
       type: Types.INTEGER,
       defaultValue: null,
       allowNull: true
+    },
+    status: {
+      type: Types.ENUM,
+      values: [...SeriesStatus],
+      defaultValue: SeriesStatuses.Ongoing
     }
   });
 };

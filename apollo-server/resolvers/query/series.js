@@ -5,7 +5,8 @@ const { SeriesTypes } = require('../../constants/enums');
 
 module.exports = {
   series(_, { filters }) {
-    const { search = '', type = SeriesTypes.Manga } = filters;
+    const { search = '', type = SeriesTypes.Manga, statuses = [] } = filters;
+
     return Series.findAll({
       where: {
         name: {
@@ -13,7 +14,8 @@ module.exports = {
         },
         type: {
           [Op.eq]: type
-        }
+        },
+        status: { [Op.in]: statuses }
       },
       order: [['name', 'ASC']]
     });

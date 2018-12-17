@@ -27,6 +27,7 @@ const viewFields = gql`
   fragment SeriesViewFields on Series {
     ...SeriesKeyFields
     type
+    status
     volumeCount
     volumes(sort: NUMBER_DESC) {
       ...VolumeFields

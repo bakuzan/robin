@@ -11,6 +11,9 @@ import { SeriesService } from '../shared/series.service';
 import Series from '../../common/models/series.model';
 import SeriesFilter from '../shared/series-filter.model';
 import SeriesType from 'src/app/common/models/series-types.enum';
+import SeriesStatus, {
+  SeriesStatuses
+} from 'src/app/common/models/series-statuses.enum';
 
 @Component({
   selector: 'app-series-list',
@@ -20,7 +23,8 @@ import SeriesType from 'src/app/common/models/series-types.enum';
 export class SeriesListComponent implements OnInit {
   startingParams: SeriesFilter = {
     search: '',
-    type: SeriesType.Manga
+    type: SeriesType.Manga,
+    statuses: [SeriesStatus.Ongoing]
   };
   private filterParams = new BehaviorSubject<SeriesFilter>(this.startingParams);
   series$: Observable<Series[]>;

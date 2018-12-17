@@ -1,11 +1,17 @@
 const gql = require('graphql-tag');
 
 const { mapArrToGraphqlString } = require('../utils');
-const { SeriesType } = require('../constants/enums');
+const { SeriesType, SeriesStatus } = require('../constants/enums');
 
 const SeriesTypeGQL = gql`
   enum SeriesType {
     ${mapArrToGraphqlString(SeriesType)}
+  }
+`;
+
+const SeriesStatusGQL = gql`
+  enum SeriesStatus {
+    ${mapArrToGraphqlString(SeriesStatus)}
   }
 `;
 
@@ -16,4 +22,4 @@ const VolumeSortOrder = gql`
   }
 `;
 
-module.exports = [SeriesTypeGQL, VolumeSortOrder];
+module.exports = [SeriesTypeGQL, SeriesStatusGQL, VolumeSortOrder];

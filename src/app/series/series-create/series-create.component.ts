@@ -17,7 +17,13 @@ import Series from '../../common/models/series.model';
 import Retailer from 'src/app/common/models/retailer.model';
 import Volume, { VolumeInitValues } from '../../common/models/volume.model';
 import Aggregate from 'src/app/common/models/aggregate.model';
-import { Urls, SeriesTypes, Icons, Regexes } from 'src/app/common/constants';
+import {
+  Urls,
+  SeriesTypes,
+  SeriesStatuses,
+  Icons,
+  Regexes
+} from 'src/app/common/constants';
 import { roundTo2, displayAs2dp, pad } from 'src/app/common/utils';
 import { mapEnumToSelectOption } from 'src/app/common/utils/mappers';
 
@@ -36,12 +42,14 @@ export class SeriesCreateComponent implements OnInit {
   saveIcon = Icons.save;
   cancelUrl = `/${Urls.seriesList}`;
   types = mapEnumToSelectOption(SeriesTypes);
+  statuses = mapEnumToSelectOption(SeriesStatuses);
   retailers: Retailer[];
   statistics: Aggregate[];
   seriesForm = new FormGroup({
     id: new FormControl(null),
     name: new FormControl('', Validators.required),
     type: new FormControl(null, Validators.required),
+    status: new FormControl(null, Validators.required),
     volumeCount: new FormControl(null),
     volumes: new FormArray([])
   });
