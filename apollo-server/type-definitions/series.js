@@ -10,7 +10,7 @@ module.exports = gql`
   }
   input SeriesFilter {
     search: String
-    types: [SeriesType]
+    type: SeriesType
   }
   input SeriesInput {
     id: Int

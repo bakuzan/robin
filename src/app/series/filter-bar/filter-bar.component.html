@@ -2,22 +2,17 @@
   <app-input-box
     class="filter-bar__input"
     name="search"
-    [(ngModel)]="filters.search"
+    [(ngModel)]="values.search"
     (ngModelChange)="onInput()"
   ></app-input-box>
-  <app-multi-select
+  <app-radio-button-group
     id="types"
-    name="types"
-    label="Types"
-    placeholder="Types"
+    [column]="true"
     [options]="seriesTypeOptions"
-    [(ngModel)]="filters.types"
+    [(ngModel)]="values.type"
     (ngModelChange)="onInput()"
-  ></app-multi-select>
-  <app-nav-link 
-    class="fake-button fake-button--themed" 
-    [to]="addUrl"
-  >
+  ></app-radio-button-group>
+  <app-nav-link class="fake-button fake-button--themed" [to]="addUrl">
     Add
   </app-nav-link>
 </div>

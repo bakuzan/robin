@@ -1,4 +1,7 @@
-<app-series-filter-bar (update)="search($event)"></app-series-filter-bar>
+<app-series-filter-bar
+  [filters]="startingParams"
+  (update)="search($event)"
+></app-series-filter-bar>
 <app-list
   columns="five"
   [fixedWidth]="true"
@@ -7,7 +10,7 @@
 >
   <ng-template let-item="item">
     <app-nav-link class="series-link" to="view/{{item.id}}">
-      {{item.name}}
+      {{ item.name }}
     </app-nav-link>
   </ng-template>
 </app-list>

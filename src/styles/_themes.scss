@@ -1,4 +1,5 @@
 @import './_variables';
+@import './_mixins';
 
 @each $theme, $values in $theme-maps {
   $base-background: map-get($values, base-background);
@@ -49,11 +50,11 @@
     .button.button--themed,
     .fake-button.fake-button--themed {
       &:hover {
-        background-color: lighten($primary-background, 10%);
+        @include lightenOrDarken('background-color', $primary-background);
       }
 
       &_reversed:hover {
-        background-color: darken($primary-colour, 10%);
+        @include lightenOrDarken('background-color', $primary-colour);
       }
     }
     .has-float-label input,

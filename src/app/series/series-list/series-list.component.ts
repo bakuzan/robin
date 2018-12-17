@@ -10,7 +10,7 @@ import {
 import { SeriesService } from '../shared/series.service';
 import Series from '../../common/models/series.model';
 import SeriesFilter from '../shared/series-filter.model';
-import { SeriesTypes } from '../../common/models/series-types.enum';
+import SeriesType from 'src/app/common/models/series-types.enum';
 
 @Component({
   selector: 'app-series-list',
@@ -18,10 +18,11 @@ import { SeriesTypes } from '../../common/models/series-types.enum';
   styleUrls: ['./series-list.component.scss']
 })
 export class SeriesListComponent implements OnInit {
-  private filterParams = new BehaviorSubject<SeriesFilter>({
+  startingParams: SeriesFilter = {
     search: '',
-    types: Array.from(SeriesTypes)
-  });
+    type: SeriesType.Manga
+  };
+  private filterParams = new BehaviorSubject<SeriesFilter>(this.startingParams);
   series$: Observable<Series[]>;
   itemCount: number;
 
