@@ -9,7 +9,6 @@ import { Observable } from 'rxjs';
 import classNames from 'classnames';
 
 import ListColumn from './list-column.enum';
-import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list',
@@ -37,15 +36,22 @@ export class ListComponent implements OnInit {
   fixedWidth: boolean;
   @Input()
   isAsync = true;
+  @Input()
+  isGrid = false;
 
   ngOnInit() {
-    this.listClasses = classNames('list', this.class, {
-      'list--wrap': this.wrap,
-      'list--column': this.columns,
-      [`list--column_${this.columns}`]: this.columns
-    });
-    this.listItemClasses = classNames('list__item', this.itemClass, {
-      'list__item--fixed-width': this.fixedWidth
-    });
+    if (!this.isGrid) {
+      this.listClasses = classNames('list', this.class, {
+        'list--wrap': this.wrap,
+        'list--column': this.columns,
+        [`list--column_${this.columns}`]: this.columns
+      });
+      this.listItemClasses = classNames('list__item', this.itemClass, {
+        'list__item--fixed-width': this.fixedWidth
+      });
+    } else {
+      this.listClasses = classNames('grid', this.class);
+      this.listItemClasses = classNames('grid__item');
+    }
   }
 }

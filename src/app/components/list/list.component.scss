@@ -1,5 +1,6 @@
 @import '_variables.scss';
 @import '_extensions.scss';
+@import '_mixins.scss';
 
 $columns: (
   one: 100%,
@@ -52,4 +53,30 @@ $columns: (
 .list-count {
   font-size: 0.8em;
   opacity: 0.75;
+}
+// Grid styles
+.grid {
+  display: grid;
+  padding: 5px;
+  margin: 5px 0;
+  list-style-type: none;
+}
+@mixin gridColumnsForPercentage($value) {
+  $percentage: $value * 1%;
+  grid-template-columns: repeat(auto-fit, $percentage);
+  grid-auto-rows: 1fr;
+}
+.series-grid {
+  @include respond-to(xs) {
+    @include gridColumnsForPercentage(50);
+  }
+  @include respond-to(sm) {
+    @include gridColumnsForPercentage(33);
+  }
+  @include respond-to(md) {
+    @include gridColumnsForPercentage(25);
+  }
+  @include respond-to(lg) {
+    @include gridColumnsForPercentage(20);
+  }
 }
