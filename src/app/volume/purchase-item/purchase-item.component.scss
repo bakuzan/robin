@@ -8,13 +8,12 @@
 
 .purchase-item {
   display: flex;
-  flex: 1;
   padding: $app--padding;
 
   &--header {
     font-weight: bold;
     padding: #{$app--padding * 2} 0;
-    margin-top: $app--margin-large;
+    margin-top: $app--margin-small;
   }
 
   // space saving attempt

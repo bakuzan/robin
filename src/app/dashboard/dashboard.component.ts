@@ -24,6 +24,7 @@ const today = new Date();
 export class DashboardComponent implements OnInit {
   private comicColour = '#339933';
   private mangaColour = '#3366cc';
+  private rightHandSideSpacing = 25;
   @ViewChild('chartsRef')
   chartsRef: ElementRef;
   isLoading = false;
@@ -80,7 +81,8 @@ export class DashboardComponent implements OnInit {
   }
 
   updateChartViewSize() {
-    const width = this.chartsRef.nativeElement.offsetWidth;
+    const width =
+      this.chartsRef.nativeElement.offsetWidth - this.rightHandSideSpacing;
     this.view = [width, 400];
   }
 

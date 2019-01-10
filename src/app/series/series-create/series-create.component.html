@@ -70,69 +70,77 @@
                 <div class="form__array-item-wrapper" [formGroupName]="i">
                   <app-input-box
                     type="hidden"
-                    name="{{i}}.id"
+                    name="{{ i }}.id"
                     formControlName="id"
                   ></app-input-box>
                   <app-input-box
                     class="form__input form__input--integer"
                     type="number"
                     label="Number"
-                    name="{{i}}.number"
+                    name="{{ i }}.number"
                     formControlName="number"
                     min="1"
                     [required]="true"
                   ></app-input-box>
+                  <div class="form__group">
+                    <app-input-box
+                      class="form__input form__input--date"
+                      type="date"
+                      label="Released"
+                      name="{{ i }}.releaseDate"
+                      formControlName="releaseDate"
+                    ></app-input-box>
+                    <app-input-box
+                      class="form__input form__input--date"
+                      type="date"
+                      label="Bought"
+                      name="{{ i }}.boughtDate"
+                      formControlName="boughtDate"
+                    ></app-input-box>
+                  </div>
 
-                  <app-input-box
-                    class="form__input form__input--date"
-                    type="date"
-                    label="Released"
-                    name="{{i}}.releaseDate"
-                    formControlName="releaseDate"
-                  ></app-input-box>
-                  <app-input-box
-                    class="form__input form__input--date"
-                    type="date"
-                    label="Bought"
-                    name="{{i}}.boughtDate"
-                    formControlName="boughtDate"
-                  ></app-input-box>
+                  <div class="form__group">
+                    <app-input-box
+                      class="form__input form__input--float"
+                      type="number"
+                      label="RRP"
+                      name="{{ i }}.rrp"
+                      formControlName="rrp"
+                      min="0"
+                      step="0.01"
+                    ></app-input-box>
+                    <app-input-box
+                      class="form__input form__input--float"
+                      type="number"
+                      label="Paid"
+                      name="{{ i }}.paid"
+                      formControlName="paid"
+                      min="0"
+                      step="0.01"
+                    ></app-input-box>
+                  </div>
 
-                  <app-input-box
-                    class="form__input form__input--float"
-                    type="number"
-                    label="RRP"
-                    name="{{i}}.rrp"
-                    formControlName="rrp"
-                    min="0"
-                    step="0.01"
-                  ></app-input-box>
-                  <app-input-box
-                    class="form__input form__input--float"
-                    type="number"
-                    label="Paid"
-                    name="{{i}}.paid"
-                    formControlName="paid"
-                    min="0"
-                    step="0.01"
-                  ></app-input-box>
+                  <div class="form__group">
+                    <app-autocomplete
+                      label="Retailer"
+                      name="{{ i }}.retailer"
+                      formControlName="retailer"
+                      [options]="retailers"
+                    ></app-autocomplete>
 
-                  <app-autocomplete
-                    label="Retailer"
-                    name="{{i}}.retailer"
-                    formControlName="retailer"
-                    [options]="retailers"
-                  ></app-autocomplete>
+                    <app-tickbox
+                      class="form__input"
+                      label="Used Discount Code"
+                      name="{{ i }}.usedDiscountCode"
+                      formControlName="usedDiscountCode"
+                    >
+                      Used Discount Code
+                    </app-tickbox>
+                  </div>
 
-                  <app-tickbox
-                    class="form__input"
-                    label="Used Discount Code"
-                    name="{{i}}.usedDiscountCode"
-                    formControlName="usedDiscountCode"
-                    >Used Discount Code</app-tickbox
+                  <div
+                    class="button-group button-group--stacked form__button-group"
                   >
-
-                  <div class="button-group button-group--stacked">
                     <app-rbn-button
                       *ngIf="!data.isCreate && item.value"
                       title="Save Volume"

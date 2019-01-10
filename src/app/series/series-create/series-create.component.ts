@@ -230,13 +230,14 @@ export class SeriesCreateComponent implements OnInit {
   }
 
   onAddVolume() {
-    const initialVolumeNumber = this.volumes.controls.length + 1;
-    let rrp = null,
+    let initialVolumeNumber = this.volumes.controls.length + 1,
+      rrp = null,
       retailer = null;
 
     if (initialVolumeNumber > 1) {
       const lastVolume = this.volumes.controls[0];
       const prev = lastVolume.value;
+      initialVolumeNumber = prev.number + 1;
       rrp = prev.rrp;
       retailer = prev.retailer;
     }
