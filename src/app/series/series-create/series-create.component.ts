@@ -7,6 +7,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
 
 import { SeriesService } from '../shared/series.service';
@@ -24,7 +25,12 @@ import {
   Icons,
   Regexes
 } from 'src/app/common/constants';
-import { roundTo2, displayAs2dp, pad } from 'src/app/common/utils';
+import {
+  roundTo2,
+  displayAs2dp,
+  pad,
+  capitaliseEachWord
+} from 'src/app/common/utils';
 import { mapEnumToSelectOption } from 'src/app/common/utils/mappers';
 
 @Component({
@@ -74,6 +80,7 @@ export class SeriesCreateComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private titleService: Title,
     private seriesService: SeriesService,
     private volumeService: VolumeService,
     private retailerService: RetailerService
@@ -98,9 +105,11 @@ export class SeriesCreateComponent implements OnInit {
 
   getSeries() {
     this.isLoading = true;
-    this.seriesService
-      .getSeriesById(this.seriesId)
-      .subscribe((series) => this.updateForm(series));
+    this.seriesService.getSeriesById(this.seriesId).subscribe((series) => {
+      const pageName = `View ${capitaliseEachWord(series.name)}`;
+      this.titleService.setTitle(`Robin - ${pageName}`);
+      this.updateForm(series);
+    });
   }
 
   getRetailers() {
