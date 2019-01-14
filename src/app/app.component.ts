@@ -16,9 +16,12 @@ export class AppComponent implements OnInit {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
-        const { url } = event;
-        if (!url.match(/\d+/g)) {
-          const pageName = capitaliseEachWord(url.replace(/\//g, ' ').trim());
+        const { urlAfterRedirects } = event;
+
+        if (!urlAfterRedirects.match(/\d+/g)) {
+          const pageName = capitaliseEachWord(
+            urlAfterRedirects.replace(/\//g, ' ').trim()
+          );
           const pageTitle = `Robin - ${pageName}`;
           this.titleService.setTitle(pageTitle);
         }
