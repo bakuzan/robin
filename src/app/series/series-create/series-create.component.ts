@@ -47,6 +47,7 @@ export class SeriesCreateComponent implements OnInit {
   crossIcon = Icons.cross;
   saveIcon = Icons.save;
   cancelUrl = `/${Urls.seriesList}`;
+  cancelQueryParams = {};
   types = mapEnumToSelectOption(SeriesTypes);
   statuses = mapEnumToSelectOption(SeriesStatuses);
   retailers: Retailer[];
@@ -108,6 +109,7 @@ export class SeriesCreateComponent implements OnInit {
     this.seriesService.getSeriesById(this.seriesId).subscribe((series) => {
       const pageName = `View ${capitaliseEachWord(series.name)}`;
       this.titleService.setTitle(`Robin - ${pageName}`);
+      this.cancelQueryParams = { type: series.type };
       this.updateForm(series);
     });
   }

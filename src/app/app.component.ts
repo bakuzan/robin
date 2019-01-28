@@ -17,10 +17,13 @@ export class AppComponent implements OnInit {
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event: NavigationEnd) => {
         const { urlAfterRedirects } = event;
+        const index = urlAfterRedirects.indexOf('?');
+        const coreUrl =
+          index === -1 ? urlAfterRedirects : urlAfterRedirects.slice(0, index);
 
-        if (!urlAfterRedirects.match(/\d+/g)) {
+        if (!coreUrl.match(/\d+/g)) {
           const pageName = capitaliseEachWord(
-            urlAfterRedirects.replace(/\//g, ' ').trim()
+            coreUrl.replace(/\//g, ' ').trim()
           );
           const pageTitle = `Robin - ${pageName}`;
           this.titleService.setTitle(pageTitle);

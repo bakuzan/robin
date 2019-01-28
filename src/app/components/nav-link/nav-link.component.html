@@ -1,8 +1,8 @@
 <a
   [class]="linkClasses"
+  [class.nav-link--active]="isLinkActive(to)"
   [routerLink]="to"
-  [routerLinkActive]="'nav-link--active'"
-  [routerLinkActiveOptions]="{exact: true}"
+  [queryParams]="queryParams"
   rel="noopener noreferrer"
 >
   <ng-content></ng-content>

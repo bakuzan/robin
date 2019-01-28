@@ -10,7 +10,12 @@ import { Router, NavigationExtras } from '@angular/router';
 import { DashboardService } from 'src/app/common/dashboard.service';
 import Dashboard from 'src/app/common/models/dashboard.model';
 import DashboardFilters from 'src/app/common/models/dashboard-filter.model';
-import { getISOStringDate, getDaysAgo } from 'src/app/common/utils';
+import {
+  getISOStringDate,
+  getDaysAgo,
+  getFirstDateOfMonth,
+  getLastDateOfMonth
+} from 'src/app/common/utils';
 import DashboardChartEvent from '../common/models/dashboard-chart-event.model';
 import Urls from '../common/constants/urls';
 
@@ -73,8 +78,13 @@ export class DashboardComponent implements OnInit {
 
   onChartClick(point: DashboardChartEvent) {
     const targetUrl = Urls.purchaseHistory;
+
+    const fullDate = `${point.name}-01`;
+    const fromDate = getISOStringDate(getFirstDateOfMonth(fullDate));
+    const toDate = getISOStringDate(getLastDateOfMonth(fullDate));
+
     const navigationExtras: NavigationExtras = {
-      queryParams: { type: point.series, month: point.name }
+      queryParams: { type: point.series, fromDate, toDate }
     };
 
     this.router.navigate([targetUrl], navigationExtras);

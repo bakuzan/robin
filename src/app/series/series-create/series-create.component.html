@@ -49,7 +49,9 @@
     button-group
     button-group--right"
       >
-        <app-nav-link [to]="cancelUrl">Cancel</app-nav-link>
+        <app-nav-link [to]="cancelUrl" [queryParams]="cancelQueryParams"
+          >Cancel</app-nav-link
+        >
         <app-rbn-button type="submit" theme="primary">Save</app-rbn-button>
       </div>
       <app-tabs>
