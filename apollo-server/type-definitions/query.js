@@ -2,14 +2,14 @@ const gql = require('graphql-tag');
 
 const Query = gql`
   type Query {
-    series(filters: SeriesFilter): [Series]
+    series(filters: SeriesFilter!): [Series]
     seriesById(id: Int!): Series
 
-    volumes(filters: VolumeFilter): [Volume]
+    volumes(filters: VolumeFilter!): [Volume]
 
     retailers: [Retailer]
 
-    dashboard(filters: DashboardFilters): Dashboard
+    dashboard(filters: DashboardFilters!): Dashboard
   }
 `;
 

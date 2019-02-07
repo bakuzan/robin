@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import Fragments from './fragment';
 
 const getSeries = gql`
-  query GetSeries($filters: SeriesFilter) {
+  query GetSeries($filters: SeriesFilter!) {
     series(filters: $filters) {
       ...SeriesKeyFields
     }
@@ -21,7 +21,7 @@ const getSeriesById = gql`
 `;
 
 const getVolumesForFilters = gql`
-  query getVolumesForFilters($filters: VolumeFilter) {
+  query getVolumesForFilters($filters: VolumeFilter!) {
     volumes(filters: $filters) {
       ...VolumeFields
       percentagePaid
@@ -47,7 +47,7 @@ const getRetailers = gql`
 `;
 
 const getDashboard = gql`
-  query GetDashboard($filters: DashboardFilters) {
+  query GetDashboard($filters: DashboardFilters!) {
     dashboard(filters: $filters) {
       aggregates {
         label
