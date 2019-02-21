@@ -4,7 +4,7 @@
       type="text"
       autoComplete="off"
       class="display__input"
-      [attr.id]="id"
+      id="{{ id }}-multiselect"
       [attr.name]="name"
       [attr.placeholder]="placeholder"
       [attr.value]="displayValue"
@@ -13,7 +13,7 @@
       (click)="handleToggleOpen($event)"
       (keydown)="handleToggleOpen($event)"
     />
-    <label [attr.for]="id">{{label}}</label>
+    <label for="{{ id }}-multiselect">{{ label }}</label>
   </div>
   <div
     [class]="dropdownClasses"
@@ -30,17 +30,15 @@
         </app-tickbox>
       </li>
       <li class="multi-select__separator"></li>
-      <li *ngFor="let op of optionsSelected; let i = index;">
+      <li *ngFor="let op of optionsSelected; let i = index">
         <app-tickbox
           [name]="getName(i)"
           [(ngModel)]="op.selected"
           (ngModelChange)="handleOptionChange($event)"
-        >{{op.text}}</app-tickbox>
+          >{{ op.text }}</app-tickbox
+        >
       </li>
     </ul>
-    <app-backdrop
-      [attr.id]="id"
-      (close)="handleToggleClose()"
-    ></app-backdrop>
+    <app-backdrop (close)="handleToggleClose()"></app-backdrop>
   </div>
 </div>

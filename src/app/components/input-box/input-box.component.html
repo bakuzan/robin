@@ -4,7 +4,7 @@
     placeholder=" "
     autoComplete="off"
     [attr.type]="type"
-    [attr.id]="id"
+    id="{{ id }}-input"
     [attr.name]="name"
     [attr.accept]="accept"
     [attr.min]="min"
@@ -17,18 +17,17 @@
     (blur)="handleBlur($event)"
     (keydown)="handleKeyDown($event)"
   />
-  <label for="{{name}}">{{label}}</label>
+  <label for="{{ id }}-input">{{ label }}</label>
   <app-rbn-button
     *ngIf="input.value && isTextInput"
     [class]="clearClasses"
     [size]="small"
     [icon]="icon"
+    name="Clear Input"
+    [attr.aria-label]="'Clear input'"
     (click)="clearAndFocusInput($event)"
   ></app-rbn-button>
-  <span
-    *ngIf="showCount"
-    class="input-box__count"
-  >
-    {{countText}}
+  <span *ngIf="showCount" class="input-box__count">
+    {{ countText }}
   </span>
 </div>

@@ -34,6 +34,8 @@ export class AutocompleteComponent implements OnInit, ControlValueAccessor {
   @Input()
   label: string;
   @Input()
+  id: string;
+  @Input()
   name: string;
   @Input()
   options: Suggestion[];

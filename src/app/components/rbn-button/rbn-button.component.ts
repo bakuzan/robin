@@ -25,6 +25,8 @@ export class RbnButtonComponent implements OnInit {
   icon: string;
   @Input()
   class: string;
+  @Input()
+  name?: string;
 
   constructor() {}
 

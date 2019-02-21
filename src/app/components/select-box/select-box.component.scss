@@ -14,10 +14,9 @@
   }
   &__input {
     width: 100%;
-    // background-color: inherit;
-    // color: inherit;
   }
-  &__option {
+  &__option,
+  &__input {
     background-color: inherit;
     color: inherit;
   }

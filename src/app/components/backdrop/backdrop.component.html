@@ -2,6 +2,8 @@
   [attr.id]="backdropId"
   class="backdrop"
   role="button"
+  name="backdrop"
+  [attr.aria-label]="'Click to close active control'"
   tabIndex="0"
   (click)="handleClose($event)"
   (keydown)="handleClose($event)"

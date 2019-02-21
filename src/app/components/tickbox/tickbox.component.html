@@ -1,13 +1,10 @@
 <div class="input-container">
-  <label
-    [class]="tickboxClasses"
-    [attr.for]="name"
-  >
+  <label [class]="tickboxClasses" [attr.for]="name">
     <input
       #checkbox
       type="checkbox"
       class="tickbox__input"
-      [attr.id]="name"
+      id="{{ name }}-tickbox"
       [attr.name]="name"
       [(ngModel)]="checked"
       [attr.disabled]="disabled"

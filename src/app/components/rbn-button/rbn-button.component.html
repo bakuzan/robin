@@ -1,8 +1,10 @@
 <button
   [ngClass]="classes"
   [type]="type"
-  [attr.icon]="icon"
+  [name]="name"
   [disabled]="disabled"
+  [attr.icon]="icon"
+  [attr.aria-label]="name"
 >
   <ng-content></ng-content>
 </button>

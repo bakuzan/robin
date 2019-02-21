@@ -1,9 +1,10 @@
 <div [id]="id" class="dropdown">
   <app-rbn-button
-    [id]="togglerId"
     class="dropdown__toggler ripple"
-    [icon]="icon"
+    [id]="togglerId"
+    [name]="name"
     size="normal"
+    [icon]="icon"
     [title]="title"
     (click)="toggleDropdown($event)"
   ></app-rbn-button>

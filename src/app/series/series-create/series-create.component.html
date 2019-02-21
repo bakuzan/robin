@@ -16,6 +16,7 @@
       <app-input-box
         class="form__input"
         label="Name"
+        id="name"
         name="name"
         formControlName="name"
         [required]="true"
@@ -23,6 +24,7 @@
       <app-select-box
         class="form__input"
         label="Type"
+        id="type"
         name="type"
         formControlName="type"
         [options]="types"
@@ -31,6 +33,7 @@
       <app-select-box
         class="form__input"
         label="Status"
+        id="status"
         name="status"
         formControlName="status"
         [options]="statuses"
@@ -40,6 +43,7 @@
         class="form__input"
         type="number"
         label="Ending Volume"
+        id="volumeCount"
         name="volumeCount"
         formControlName="volumeCount"
         min="0"
@@ -72,6 +76,7 @@
                 <div class="form__array-item-wrapper" [formGroupName]="i">
                   <app-input-box
                     type="hidden"
+                    id="{{ i }}.id"
                     name="{{ i }}.id"
                     formControlName="id"
                   ></app-input-box>
@@ -79,6 +84,7 @@
                     class="form__input form__input--integer"
                     type="number"
                     label="Number"
+                    id="{{ i }}.number"
                     name="{{ i }}.number"
                     formControlName="number"
                     min="1"
@@ -89,6 +95,7 @@
                       class="form__input form__input--date"
                       type="date"
                       label="Released"
+                      id="{{ i }}.releaseDate"
                       name="{{ i }}.releaseDate"
                       formControlName="releaseDate"
                     ></app-input-box>
@@ -96,6 +103,7 @@
                       class="form__input form__input--date"
                       type="date"
                       label="Bought"
+                      id="{{ i }}.boughtDate"
                       name="{{ i }}.boughtDate"
                       formControlName="boughtDate"
                     ></app-input-box>
@@ -106,6 +114,7 @@
                       class="form__input form__input--float"
                       type="number"
                       label="RRP"
+                      id="{{ i }}.rrp"
                       name="{{ i }}.rrp"
                       formControlName="rrp"
                       min="0"
@@ -115,6 +124,7 @@
                       class="form__input form__input--float"
                       type="number"
                       label="Paid"
+                      id="{{ i }}.paid"
                       name="{{ i }}.paid"
                       formControlName="paid"
                       min="0"
@@ -125,6 +135,7 @@
                   <div class="form__group">
                     <app-autocomplete
                       label="Retailer"
+                      id="{{ i }}.retailer"
                       name="{{ i }}.retailer"
                       formControlName="retailer"
                       [options]="retailers"
@@ -133,6 +144,7 @@
                     <app-tickbox
                       class="form__input"
                       label="Used Discount Code"
+                      id="{{ i }}.usedDiscountCode"
                       name="{{ i }}.usedDiscountCode"
                       formControlName="usedDiscountCode"
                     >
@@ -146,12 +158,16 @@
                     <app-rbn-button
                       *ngIf="!data.isCreate && item.value"
                       title="Save Volume"
+                      name="Save Volume"
+                      [attr.aria-label]="'Save Volume'"
                       [icon]="saveIcon"
                       (click)="onSaveVolume(i)"
                       [disabled]="item.pristine"
                     ></app-rbn-button>
                     <app-rbn-button
                       title="Remove Volume"
+                      name="Remove Volume"
+                      [attr.aria-label]="'Remove Volume'"
                       [icon]="crossIcon"
                       (click)="onRemoveVolume(i)"
                     ></app-rbn-button>

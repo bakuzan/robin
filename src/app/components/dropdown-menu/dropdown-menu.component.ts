@@ -16,6 +16,8 @@ export class DropdownMenuComponent implements OnInit {
   @Input()
   id: string;
   @Input()
+  name: string;
+  @Input()
   icon: string;
   @Input()
   title: string;

@@ -14,6 +14,11 @@
     background-color: $base-background;
     color: $base-colour;
 
+    // for charts
+    text {
+      fill: $base-colour;
+    }
+
     // Navigation
     .nav-link {
       color: $base-colour;

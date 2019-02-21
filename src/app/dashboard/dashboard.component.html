@@ -4,6 +4,7 @@
     <app-input-box
       type="date"
       label="From"
+      id="fromDate"
       name="fromDate"
       [max]="filters.toDate"
       [(ngModel)]="filters.fromDate"
@@ -12,6 +13,7 @@
     <app-input-box
       type="date"
       label="To"
+      id="toDate"
       name="toDate"
       [min]="filters.fromDate"
       [(ngModel)]="filters.toDate"

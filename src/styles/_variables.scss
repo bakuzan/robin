@@ -66,8 +66,6 @@ $ui-messaging: (
     icon: '\2139'
   )
 );
-// TODO
-// Add alt themes
 // Themes
 $theme-maps: (
   one: (
@@ -89,11 +87,11 @@ $theme-maps: (
     faded-out: $grey80
   ),
   three: (
-    base-background: #fff,
-    base-colour: $robin--enies-lobby-base,
-    primary-background: $robin--enies-lobby-base,
-    primary-colour: $robin--enies-lobby-shine,
-    active-background: $robin--enies-lobby-shine,
+    base-background: $robin--enies-lobby-base,
+    base-colour: #fff,
+    primary-background: darken($robin--enies-lobby-shine, 14%),
+    primary-colour: lighten($robin--enies-lobby-pattern, 10.5%),
+    active-background: $robin--enies-lobby-base,
     active-colour: $robin--enies-lobby-pattern,
     faded-out: $grey80
   )

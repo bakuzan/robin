@@ -2,8 +2,8 @@
   <select
     #select
     class="select-box__input"
-    attr.aria-placeholder="Please select a {{label}}"
-    [attr.id]="id"
+    [attr.placeholder]="'Please select a ' + label"
+    id="{{ id }}-select-box"
     [attr.name]="name"
     [attr.disabled]="disabled"
     [attr.required]="required"
@@ -20,5 +20,5 @@
       {{ item.text }}
     </option>
   </select>
-  <label [for]="id">{{ label }}</label>
+  <label for="{{ id }}-select-box">{{ label }}</label>
 </div>

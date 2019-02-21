@@ -13,6 +13,8 @@ import { HeaderComponent } from './header/header.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,10 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
     SeriesModule,
     VolumeModule,
     ComponentsModule,
-    NgxChartsModule
+    NgxChartsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
