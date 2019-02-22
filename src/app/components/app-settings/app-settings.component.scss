@@ -3,6 +3,9 @@
 .app-settings {
   top: 50px;
   right: 5px;
+  &__setting {
+    flex: 1;
+  }
   &__item {
     display: flex;
     justify-content: center;

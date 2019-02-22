@@ -1,17 +1,17 @@
 // Robin
 $robin--timeskip-top: #1e2a65;
 $robin--timeskip-skirt: #e68c80;
-$robin--timeskip-pattern: #add9a0;
+$robin--timeskip-pattern: darken(#add9a0, 46.5%);
 $robin--timeskip-shoes: #c4545c;
 
 // Robin Lighten
 $robin--light-timeskip-top: lighten(#1e2a65, 10%);
-$robin--light-timeskip-skirt: lighten(#e68c80, 10%);
+$robin--light-timeskip-skirt: lighten(#e68c80, 15%);
 
 // Whiskey peak
 $robin--whiskey-peak-outfit: #402a5f;
 $robin--whiskey-peak-belt: #89dbd1;
-$robin--whiskey-peak-trim: #c49452;
+$robin--whiskey-peak-trim: lighten(#c49452, 2%);
 
 // Enies lobby
 $robin--enies-lobby-base: #000;
