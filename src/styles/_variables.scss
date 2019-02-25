@@ -75,7 +75,7 @@ $theme-maps: (
     primary-colour: $robin--light-timeskip-skirt,
     active-background: $robin--light-timeskip-skirt,
     active-colour: $robin--timeskip-pattern,
-    faded-out: $grey80
+    faded-out: $grey87
   ),
   two: (
     base-background: #fff,
@@ -93,6 +93,6 @@ $theme-maps: (
     primary-colour: lighten($robin--enies-lobby-pattern, 10.5%),
     active-background: $robin--enies-lobby-base,
     active-colour: $robin--enies-lobby-pattern,
-    faded-out: $grey80
+    faded-out: $grey40
   )
 );

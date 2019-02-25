@@ -87,14 +87,13 @@
         color: $active-colour;
       }
     }
-    // THEMING HERE
 
     // Tabs
     .tabs__container {
       border-top: 1px solid $primary-background;
     }
     .tab:not(.tab--active):not(:hover) {
-      color: $faded-out;
+      background-color: $faded-out;
       border-color: $faded-out;
       border-bottom: none;
     }
@@ -108,6 +107,7 @@
 
     .purchase-item:not(.purchase-item--header):hover {
       background-color: opacify($active-colour, 0.3);
+      color: $white; // This works for all themes. Currently.
     }
     .suggestion.suggestion--active {
       border-color: $active-colour;
