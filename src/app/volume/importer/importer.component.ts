@@ -5,13 +5,19 @@ import SeriesType, {
   SeriesTypes
 } from 'src/app/common/models/series-types.enum';
 import ImportRow from '../../common/models/import-row.model';
+import DateRangeFilter from 'src/app/common/models/date-range-filter.model';
 import {
   isValidDate,
   getISOStringDate,
   localDateStringToDate,
-  currencyToPlainNumber
+  currencyToPlainNumber,
+  getDaysAgo
 } from 'src/app/common/utils';
 import { VolumeService } from 'src/app/common/volume.service';
+import { DownloadService } from 'src/app/common/download.service';
+import whenRecordsBegan from 'src/app/common/constants/when-records-began';
+
+const today = new Date();
 
 @Component({
   selector: 'app-importer',
@@ -26,13 +32,22 @@ export class ImporterComponent implements OnInit {
   isPreview = false;
   messages: string[] = [];
   previewData: ImportRow[] = [];
+  filters: DateRangeFilter = {
+    fromDate: getISOStringDate(getDaysAgo(today, 365)),
+    toDate: getISOStringDate(today)
+  };
+  whenRecordsBegan = whenRecordsBegan;
 
-  constructor(private volumeService: VolumeService) {}
+  constructor(
+    private volumeService: VolumeService,
+    private downloadService: DownloadService
+  ) {}
 
   ngOnInit() {}
 
-  async onFileSelect(e) {
-    const [file] = e.target.files;
+  async onFileSelect(e: Event) {
+    const fileElement = e.target as HTMLInputElement;
+    const [file] = Array.from(fileElement.files);
     if (!file) {
       return;
     }
@@ -141,5 +156,25 @@ export class ImporterComponent implements OnInit {
     this.previewData = [];
     this.messages = [];
     this.isLoading = false;
+  }
+
+  onExport() {
+    this.isLoading = true;
+    this.messages = [];
+
+    this.volumeService
+      .exportVolumes({ ...this.filters, type: this.type })
+      .subscribe((response) => {
+        this.isLoading = false;
+        this.messages = response.messages;
+
+        if (response.success) {
+          const filename = `robin-volume-export_type=${this.type}&from=${
+            this.filters.fromDate
+          }&to=${this.filters.toDate}`;
+
+          this.downloadService.downloadCSV(filename, response.data);
+        }
+      });
   }
 }

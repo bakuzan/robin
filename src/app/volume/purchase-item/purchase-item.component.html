@@ -1,11 +1,10 @@
-<div
-  *ngIf="isFirst"
-  class="purchase-item purchase-item--header"
->
+<div *ngIf="isFirst" class="purchase-item purchase-item--header">
   <div class="purchase-item__data">Volume</div>
   <div class="purchase-item__data">Retailer</div>
   <div class="purchase-item__data purchase-item__date-column">Bought Date</div>
-  <div class="purchase-item__data purchase-item__data--align_right">RRP (£)</div>
+  <div class="purchase-item__data purchase-item__data--align_right">
+    RRP (£)
+  </div>
   <div class="purchase-item__data purchase-item__data--align_right">
     Paid (£)
   </div>
@@ -15,23 +14,31 @@
 </div>
 <div class="purchase-item">
   <div class="purchase-item__data purchase-item__data--spaced">
-    <div>{{item.series && item.series.name}}</div>
-    <div>#{{padNumber(item.number)}}</div>
+    <app-nav-link class="purchase-item__link" [to]="seriesUrl">
+      <div>{{ item.series && item.series.name }}</div>
+    </app-nav-link>
+    <div>#{{ padNumber(item.number) }}</div>
   </div>
   <div class="purchase-item__data">
-    {{item.retailer && item.retailer.name}}
+    {{ item.retailer && item.retailer.name }}
   </div>
-  <div class="purchase-item__data purchase-item__date-column">{{item.boughtDate}}</div>
-  <div class="purchase-item__data purchase-item__data--align_right">
-    {{rounded(item.rrp)}}
+  <div class="purchase-item__data purchase-item__date-column">
+    {{ item.boughtDate }}
   </div>
   <div class="purchase-item__data purchase-item__data--align_right">
-    {{rounded(item.paid)}}
+    {{ rounded(item.rrp) }}
+  </div>
+  <div class="purchase-item__data purchase-item__data--align_right">
+    {{ rounded(item.paid) }}
     <div
       *ngIf="item.usedDiscountCode"
       class="purchase-item__icon"
       title="Discount Used"
-    >*</div>
+    >
+      *
+    </div>
   </div>
-  <div class="purchase-item__data purchase-item__data--align_right">{{item.percentagePaid || percentagePaid}}</div>
+  <div class="purchase-item__data purchase-item__data--align_right">
+    {{ item.percentagePaid || percentagePaid }}
+  </div>
 </div>

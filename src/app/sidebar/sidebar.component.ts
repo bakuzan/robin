@@ -13,7 +13,7 @@ export class SidebarComponent implements OnInit {
     { to: Urls.dashboard, text: 'Dashboard', icon: 'D' },
     { to: Urls.seriesList, text: 'Series', icon: 'S' },
     { to: Urls.purchaseHistory, text: 'Purchase History', icon: 'PH' },
-    { to: Urls.importer, text: 'Importer', icon: 'I' }
+    { to: Urls.importer, text: 'Import and Export', icon: 'IE' }
   ];
 
   constructor() {}

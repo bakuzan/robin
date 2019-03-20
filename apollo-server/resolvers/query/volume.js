@@ -1,25 +1,31 @@
-const Op = require('sequelize').Op;
-
-const { db, Series, Volume, Retailer } = require('../../connectors');
-const RBNDate = require('../../utils/date');
+const generateVolumesExport = require('../../utils/generate-volumes-export');
 
 module.exports = {
-  volumes(_, { filters }) {
-    const fromDate = RBNDate.startOfDay(filters.fromDate);
-    const toDate = RBNDate.endOfDay(filters.toDate);
-
-    return Volume.findAll({
-      where: {
-        type: db.where(db.col('series.type'), {
-          [Op.eq]: filters.type
-        }),
-        boughtDate: {
-          [Op.lte]: toDate,
-          [Op.gte]: fromDate
-        }
-      },
-      order: [['boughtDate', 'DESC']],
-      include: [Series, Retailer]
+  async volumes(_, { filters }, context) {
+    return await context.getVolumesForDateRange(filters);
+  },
+  async export(_, { filters }, context) {
+    const volumes = await context.getVolumesForDateRange(filters, {
+      order: [['boughtDate', 'ASC']],
+      raw: true
     });
+
+    if (!volumes.length) {
+      const { fromDate, toDate } = filters;
+
+      return {
+        success: false,
+        messages: [`No volumes found between ${fromDate} and ${toDate}`],
+        data: null
+      };
+    }
+
+    const data = generateVolumesExport(volumes);
+
+    return {
+      success: true,
+      messages: [],
+      data
+    };
   }
 };

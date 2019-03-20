@@ -1,80 +1,140 @@
-<div class="page importer">
-  <form
-    class="form"
-    novalidate
-    autocomplete="off"
-    (ngSubmit)="onSubmit()"
-  >
-    <app-loading-bouncer *ngIf="isLoading"></app-loading-bouncer>
-    <div class="importer__actions user-actions">
-      <div class="user-actions__inputs">
-        <app-input-box
-          type="file"
-          accept=".csv"
-          label="Import"
-          name="import"
-          [(ngModel)]="importData"
-          [ngModelOptions]="{standalone: true}"
-          (change)="onFileSelect($event)"
-        ></app-input-box>
-        <app-radio-button-group
-          id="type"
-          class="importer__type-options"
-          [column]="true"
-          [options]="seriesTypeOptions"
-          [(ngModel)]="type"
-          [ngModelOptions]="{standalone: true}"
-        ></app-radio-button-group>
+<div class="page">
+  <app-tabs>
+    <app-tab name="export">
+      <div class="exporter">
+        <form
+          class="form"
+          novalidate
+          autocomplete="off"
+          (ngSubmit)="onExport()"
+        >
+          <app-loading-bouncer *ngIf="isLoading"></app-loading-bouncer>
+          <div class="exporter__actions user-actions">
+            <div class="user-actions__inputs">
+              <app-input-box
+                type="date"
+                label="From"
+                id="fromDate"
+                name="fromDate"
+                [min]="whenRecordsBegan"
+                [max]="filters.toDate"
+                [(ngModel)]="filters.fromDate"
+              ></app-input-box>
+              <app-input-box
+                type="date"
+                label="To"
+                id="toDate"
+                name="toDate"
+                [min]="filters.fromDate"
+                [(ngModel)]="filters.toDate"
+              ></app-input-box>
+              <app-radio-button-group
+                id="type"
+                class="exporter__type-options"
+                [column]="true"
+                [options]="seriesTypeOptions"
+                [(ngModel)]="type"
+                [ngModelOptions]="{ standalone: true }"
+              ></app-radio-button-group>
+            </div>
+            <div
+              class="
+        button-group
+        button-group--right"
+            >
+              <app-rbn-button type="submit" theme="primary"
+                >Export</app-rbn-button
+              >
+            </div>
+          </div>
+          <app-list
+            columns="one"
+            itemClass="list__item--no-padding"
+            [isAsync]="false"
+            [items]="messages"
+          >
+            <ng-template let-item="item" let-i="index">
+              <div>{{ item }}</div>
+            </ng-template>
+          </app-list>
+        </form>
       </div>
-      <div class="
+    </app-tab>
+    <app-tab name="import">
+      <div class="importer">
+        <form
+          class="form"
+          novalidate
+          autocomplete="off"
+          (ngSubmit)="onSubmit()"
+        >
+          <app-loading-bouncer *ngIf="isLoading"></app-loading-bouncer>
+          <div class="importer__actions user-actions">
+            <div class="user-actions__inputs">
+              <app-input-box
+                type="file"
+                accept=".csv"
+                label="Import"
+                name="import"
+                [(ngModel)]="importData"
+                [ngModelOptions]="{ standalone: true }"
+                (change)="onFileSelect($event)"
+              ></app-input-box>
+              <app-radio-button-group
+                id="type"
+                class="importer__type-options"
+                [column]="true"
+                [options]="seriesTypeOptions"
+                [(ngModel)]="type"
+                [ngModelOptions]="{ standalone: true }"
+              ></app-radio-button-group>
+            </div>
+            <div
+              class="
     button-group
-    button-group--right">
-        <app-rbn-button (click)="onClear()">Clear</app-rbn-button>
-        <app-rbn-button
-          type="submit"
-          theme="primary"
-          [disabled]="!previewData.length"
-        >Save</app-rbn-button>
+    button-group--right"
+            >
+              <app-rbn-button (click)="onClear()">Clear</app-rbn-button>
+              <app-rbn-button
+                type="submit"
+                theme="primary"
+                [disabled]="!previewData.length"
+                >Save</app-rbn-button
+              >
+            </div>
+          </div>
+          <div class="importer__preview">
+            <p *ngIf="previewData.length" class="importer__message">
+              * This is preview data.
+            </p>
+            <app-list
+              *ngIf="isPreview"
+              columns="one"
+              itemClass="list__item--no-padding"
+              [isAsync]="false"
+              [itemCount]="previewData.length"
+              [items]="previewData"
+            >
+              <ng-template let-item="item" let-i="index">
+                <app-purchase-item
+                  [isFirst]="i === 0"
+                  [item]="item"
+                ></app-purchase-item>
+              </ng-template>
+            </app-list>
+            <app-list
+              columns="one"
+              itemClass="list__item--no-padding"
+              [isAsync]="false"
+              [items]="messages"
+            >
+              <ng-template let-item="item" let-i="index">
+                <div>{{ item }}</div>
+              </ng-template>
+            </app-list>
+          </div>
+        </form>
       </div>
-    </div>
-    <div class="importer__preview">
-      <p
-        *ngIf="previewData.length"
-        class="importer__message"
-      >
-        * This is preview data.
-      </p>
-      <app-list
-        *ngIf="isPreview"
-        columns="one"
-        itemClass="list__item--no-padding"
-        [isAsync]="false"
-        [itemCount]="previewData.length"
-        [items]="previewData"
-      >
-        <ng-template
-          let-item="item"
-          let-i="index"
-        >
-          <app-purchase-item
-            [isFirst]="i === 0"
-            [item]="item"
-          ></app-purchase-item>
-        </ng-template>
-      </app-list>
-      <app-list
-        columns="one"
-        itemClass="list__item--no-padding"
-        [isAsync]="false"
-        [items]="messages"
-      >
-        <ng-template
-          let-item="item"
-          let-i="index"
-        >
-          <div>{{item}}</div>
-        </ng-template>
-      </app-list>
-    </div>
-  </form>
+    </app-tab>
+  </app-tabs>
 </div>

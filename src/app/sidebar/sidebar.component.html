@@ -1,10 +1,10 @@
 <nav class="sidebar themed-background">
-    <app-nav-link
-        *ngFor="let item of links"
-        class="sidebar__link"
-        [to]="item.to"
-        [title]="item.text"
-    >
-        {{item.icon}}
-    </app-nav-link>
+  <app-nav-link
+    *ngFor="let item of links"
+    class="sidebar__link"
+    [to]="item.to"
+    [title]="item.text"
+  >
+    {{ item.icon }}
+  </app-nav-link>
 </nav>

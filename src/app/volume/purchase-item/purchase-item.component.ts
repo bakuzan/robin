@@ -9,6 +9,7 @@ import { pad, displayAs2dp, roundTo2 } from 'src/app/common/utils';
   styleUrls: ['./purchase-item.component.scss']
 })
 export class PurchaseItemComponent implements OnInit {
+  seriesUrl: string;
   @Input()
   isFirst = false;
   @Input()
@@ -20,7 +21,9 @@ export class PurchaseItemComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.seriesUrl = `/series/view/${this.item.series.id}`;
+  }
 
   padNumber(num): string {
     return pad(`${num}`, 3);

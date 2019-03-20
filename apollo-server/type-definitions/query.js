@@ -6,6 +6,7 @@ const Query = gql`
     seriesById(id: Int!): Series
 
     volumes(filters: VolumeFilter!): [Volume]
+    export(filters: VolumeFilter!): ExportResponse
 
     retailers: [Retailer]
 

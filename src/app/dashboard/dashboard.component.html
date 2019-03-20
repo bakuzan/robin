@@ -6,6 +6,7 @@
       label="From"
       id="fromDate"
       name="fromDate"
+      [min]="whenRecordsBegan"
       [max]="filters.toDate"
       [(ngModel)]="filters.fromDate"
       (ngModelChange)="onUserInput()"

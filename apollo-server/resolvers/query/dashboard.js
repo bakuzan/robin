@@ -4,6 +4,7 @@ const { db, Series, Volume } = require('../../connectors');
 const { SeriesTypes } = require('../../constants/enums');
 const { displayAs2dp } = require('../../utils');
 const RBNDate = require('../../utils/date');
+const validateFromDate = require('../../utils/validate-from-date');
 
 function mapStatsToResponse(derviedStats = {}) {
   return {
@@ -59,9 +60,12 @@ function mapGroupCounts(filters, gd) {
 
 module.exports = {
   async dashboard(_, { filters }) {
+    const fromDate = RBNDate.startOfDay(filters.fromDate);
+    validateFromDate(fromDate);
+
     const where = {
       boughtDate: {
-        [Op.gte]: RBNDate.startOfDay(filters.fromDate),
+        [Op.gte]: fromDate,
         [Op.lte]: RBNDate.endOfDay(filters.toDate)
       }
     };

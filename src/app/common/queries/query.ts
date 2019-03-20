@@ -67,10 +67,21 @@ const getDashboard = gql`
   }
 `;
 
+const exportVolumes = gql`
+  query exportVolumes($filters: VolumeFilter!) {
+    export(filters: $filters) {
+      success
+      messages
+      data
+    }
+  }
+`;
+
 export default {
   getSeries,
   getSeriesById,
   getVolumesForFilters,
   getRetailers,
-  getDashboard
+  getDashboard,
+  exportVolumes
 };

@@ -3,8 +3,8 @@
   "version": "1.9.0",
   "scripts": {
     "ng": "ng",
-    "apollo-server": "nodemon apollo-server",
-    "start": "npm-run-all -p serve apollo-server",
+    "server": "nodemon apollo-server",
+    "start": "npm-run-all -p serve server",
     "serve": " ng serve",
     "build": "ng build",
     "build-prod": "ng build --prod",

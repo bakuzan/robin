@@ -23,8 +23,15 @@ export class AppComponent implements OnInit {
 
         if (!coreUrl.match(/\d+/g)) {
           const pageName = capitaliseEachWord(
-            coreUrl.replace(/\//g, ' ').trim()
+            capitaliseEachWord(
+              coreUrl
+                .replace(/\//g, ' ')
+                .replace(/-/g, '/')
+                .trim()
+            ),
+            '/'
           );
+
           const pageTitle = `Robin - ${pageName}`;
           this.titleService.setTitle(pageTitle);
         }

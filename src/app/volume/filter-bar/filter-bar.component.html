@@ -5,7 +5,8 @@
     id="fromDate"
     name="fromDate"
     label="From"
-    [attr.max]="values.toDate"
+    [min]="whenRecordsBegan"
+    [max]="values.toDate"
     [(ngModel)]="values.fromDate"
     (ngModelChange)="onInput()"
   ></app-input-box>
@@ -15,7 +16,7 @@
     id="toDate"
     name="toDate"
     label="To"
-    [attr.min]="values.fromDate"
+    [min]="values.fromDate"
     [(ngModel)]="values.toDate"
     (ngModelChange)="onInput()"
   ></app-input-box>

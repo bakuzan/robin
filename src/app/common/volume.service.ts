@@ -9,6 +9,7 @@ import Volume from './models/volume.model';
 import VolumeGQL from './queries';
 import VolumeFilter from '../volume/shared/volume-filter.model';
 import ImportResponse from './models/import-response.model';
+import ExportResponse from './models/export-response.model';
 import ImportRow from './models/import-row.model';
 import SeriesType from './models/series-types.enum';
 import { AlertService } from './alert.service';
@@ -37,10 +38,18 @@ export class VolumeService {
       .post<VolumeFilter>(this.volumeUrl, payload, httpOptions)
       .pipe(
         catchError(this.handleError<Volume[]>('volumes')),
-        map(
-          (response: any) =>
-            response.data && (response.data.volumes as Volume[])
-        )
+        map((response: any) => {
+          if (response.data && response.data.volumes) {
+            return response.data.volumes as Volume[];
+          }
+
+          const error = response.errors[0] || { message: 'Server error' };
+          this.alertService.sendError({
+            message: `Volumes Query failed`,
+            detail: error.message
+          });
+          return [] as Volume[];
+        })
       );
   }
 
@@ -101,6 +110,26 @@ export class VolumeService {
                 success: false,
                 messages: response.errors.map((x) => x.message)
               }) as ImportResponse
+      )
+    );
+  }
+
+  exportVolumes(filters: VolumeFilter): Observable<ExportResponse> {
+    const payload = createApolloServerPayload(VolumeGQL.Query.exportVolumes, {
+      filters
+    });
+
+    return this.http.post(this.volumeUrl, payload, httpOptions).pipe(
+      catchError(this.handleError<any>('export')),
+      map(
+        (response: any) =>
+          (response.data && response.data.export
+            ? response.data.export
+            : {
+                success: false,
+                messages: response.errors.map((x) => x.message),
+                data: null
+              }) as ExportResponse
       )
     );
   }

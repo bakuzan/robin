@@ -6,19 +6,33 @@ import {
   HostListener
 } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
+import {
+  debounceTime,
+  switchMap,
+  tap,
+  filter,
+  distinctUntilChanged
+} from 'rxjs/operators';
 
 import { DashboardService } from 'src/app/common/dashboard.service';
 import Dashboard from 'src/app/common/models/dashboard.model';
-import DashboardFilters from 'src/app/common/models/dashboard-filter.model';
+import DateRangeFilter from 'src/app/common/models/date-range-filter.model';
 import {
   getISOStringDate,
   getDaysAgo,
   getFirstDateOfMonth,
-  getLastDateOfMonth
+  getLastDateOfMonth,
+  isValidDate
 } from 'src/app/common/utils';
 import DashboardChartEvent from '../common/models/dashboard-chart-event.model';
 import Urls from '../common/constants/urls';
+import whenRecordsBegan from '../common/constants/when-records-began';
 
+const combinedFilterString = (x: DateRangeFilter) => {
+  console.log(x);
+  return `${x.fromDate}${x.toDate}`;
+};
 const today = new Date();
 
 @Component({
@@ -30,15 +44,18 @@ export class DashboardComponent implements OnInit {
   private comicColour = '#339933';
   private mangaColour = '#3366cc';
   private rightHandSideSpacing = 25;
+  private dashboard$ = null;
   @ViewChild('chartsRef')
   chartsRef: ElementRef;
   isLoading = false;
-  filters: DashboardFilters = {
+  filters: DateRangeFilter = {
     fromDate: getISOStringDate(getDaysAgo(today, 365)),
     toDate: getISOStringDate(today)
   };
+  private filterParams = new BehaviorSubject<DateRangeFilter>(this.filters);
   dashboard = new Dashboard();
   view: any[] = [800, 400];
+  whenRecordsBegan = whenRecordsBegan;
 
   // options
   showXAxis = true;
@@ -60,16 +77,29 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getDashboard();
+    this.dashboard$ = this.filterParams
+      .pipe(
+        debounceTime(500),
+        filter(
+          (params: DateRangeFilter) =>
+            params.fromDate && params.toDate && this.datesAreValid(params)
+        ),
+        tap(() => (this.isLoading = true)),
+        switchMap((params: DateRangeFilter) =>
+          this.dashboardService.getDashboard(params)
+        )
+      )
+      .subscribe((dashboard) => {
+        this.isLoading = false;
+        this.dashboard = dashboard;
+      });
+
     this.updateChartViewSize();
   }
 
   getDashboard() {
-    this.isLoading = true;
-    this.dashboardService.getDashboard(this.filters).subscribe((data) => {
-      this.dashboard = data;
-      this.isLoading = false;
-    });
+    const params = this.filters;
+    this.filterParams.next(params);
   }
 
   onUserInput() {
@@ -99,5 +129,12 @@ export class DashboardComponent implements OnInit {
   @HostListener('window:resize')
   onResize() {
     this.updateChartViewSize();
+  }
+
+  datesAreValid(params: DateRangeFilter): boolean {
+    const f = isValidDate(params.fromDate);
+    const t = isValidDate(params.toDate);
+    console.log(f, t);
+    return f && t;
   }
 }

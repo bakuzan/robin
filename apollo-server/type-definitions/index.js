@@ -5,6 +5,7 @@ const volume = require('./volume');
 const retailer = require('./retailer');
 const dashboard = require('./dashboard');
 const importDefs = require('./import');
+const exportDefs = require('./export');
 
 module.exports = [
   ...query,
@@ -13,5 +14,6 @@ module.exports = [
   volume,
   retailer,
   dashboard,
-  importDefs
+  importDefs,
+  exportDefs
 ];

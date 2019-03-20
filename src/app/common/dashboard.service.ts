@@ -7,7 +7,7 @@ import { Urls } from 'src/app/common/constants';
 import { createApolloServerPayload } from 'src/app/common/utils/query-builder';
 import DashboardGQL from './queries';
 import Dashboard from 'src/app/common/models/dashboard.model';
-import DashboardFilters from './models/dashboard-filter.model';
+import DateRangeFilter from './models/date-range-filter.model';
 import { AlertService } from './alert.service';
 
 const httpOptions = {
@@ -22,17 +22,25 @@ export class DashboardService {
 
   constructor(private http: HttpClient, private alertService: AlertService) {}
 
-  getDashboard(filters: DashboardFilters): Observable<Dashboard> {
+  getDashboard(filters: DateRangeFilter): Observable<Dashboard> {
     const payload = createApolloServerPayload(DashboardGQL.Query.getDashboard, {
       filters
     });
 
     return this.http.post(this.dashboardUrl, payload, httpOptions).pipe(
       catchError(this.handleError<Dashboard>('dashboard')),
-      map(
-        (response: any) =>
-          response.data && (response.data.dashboard as Dashboard)
-      )
+      map((response: any) => {
+        if (response.data && response.data.dashboard) {
+          return response.data.dashboard as Dashboard;
+        }
+
+        const error = response.errors[0] || { message: 'Server error' };
+        this.alertService.sendError({
+          message: `Dashboard Query failed`,
+          detail: error.message
+        });
+        return {} as Dashboard;
+      })
     );
   }
 

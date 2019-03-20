@@ -3,6 +3,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import VolumeFilter from '../shared/volume-filter.model';
 import { SeriesTypes } from '../../common/models/series-types.enum';
 import { mapEnumToSelectOption } from 'src/app/common/utils/mappers';
+import whenRecordsBegan from 'src/app/common/constants/when-records-began';
 
 @Component({
   selector: 'app-volume-filter-bar',
@@ -16,6 +17,7 @@ export class FilterBarComponent implements OnInit {
   filters: VolumeFilter;
   @Output()
   update: EventEmitter<any> = new EventEmitter();
+  whenRecordsBegan = whenRecordsBegan;
 
   constructor() {}
 

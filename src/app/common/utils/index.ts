@@ -107,11 +107,11 @@ export function getElementCoordinates(elem): ElementCoordinates {
 export const capitalise = (str = ''): string =>
   str.charAt(0).toUpperCase() + str.slice(1);
 
-export const capitaliseEachWord = (str: string): string =>
+export const capitaliseEachWord = (str: string, spl = ' '): string =>
   str
-    .split(' ')
+    .split(spl)
     .map(capitalise)
-    .join(' ');
+    .join(spl);
 
 export const getFirstDateOfMonth = (date: string | number | Date): Date => {
   const d = new Date(date);

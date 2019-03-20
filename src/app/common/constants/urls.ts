@@ -1,20 +1,4 @@
-class RobinUrls {
-  build: Function;
-  images: ImageUrls;
-  graphqlEndpoint: string;
-  base: string;
-  dashboard: string;
-  seriesList: string;
-  seriesCreate: string;
-  seriesView: string;
-  purchaseHistory: string;
-  importer: string;
-}
-class ImageUrls {
-  deadImage: string;
-}
-
-const Urls: RobinUrls = Object.freeze({
+export default Object.freeze({
   build: (path, params) => {
     for (const k in params) {
       if (params.hasOwnProperty(k)) {
@@ -33,7 +17,5 @@ const Urls: RobinUrls = Object.freeze({
   seriesCreate: 'series/create',
   seriesView: 'series/view/:id',
   purchaseHistory: 'volumes',
-  importer: 'volumes/importer'
+  importer: 'volumes/export-import'
 });
-
-export default Urls;
