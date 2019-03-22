@@ -110,14 +110,14 @@ export class AutocompleteComponent implements OnInit, ControlValueAccessor {
     this.filter = value;
   }
 
-  onKeyDown(event) {
-    const { keyCode } = event;
-    if (keyCode === KeyCodes.enter && this.filter) {
+  onKeyDown(event: KeyboardEvent) {
+    const { key } = event;
+    if (key === KeyCodes.enter && this.filter) {
       event.preventDefault();
       this.selectActiveSuggestion();
-    } else if (keyCode === KeyCodes.down) {
+    } else if (key === KeyCodes.down) {
       this.updateActiveSuggestion(1);
-    } else if (keyCode === KeyCodes.up) {
+    } else if (key === KeyCodes.up) {
       this.updateActiveSuggestion(-1);
     }
   }

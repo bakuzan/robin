@@ -11,23 +11,24 @@
           <app-loading-bouncer *ngIf="isLoading"></app-loading-bouncer>
           <div class="exporter__actions user-actions">
             <div class="user-actions__inputs">
-              <app-input-box
-                type="date"
+              <app-datepicker
                 label="From"
                 id="fromDate"
                 name="fromDate"
-                [min]="whenRecordsBegan"
-                [max]="filters.toDate"
+                required="true"
+                [afterDate]="whenRecordsBegan"
+                [beforeDate]="filters.toDate"
                 [(ngModel)]="filters.fromDate"
-              ></app-input-box>
-              <app-input-box
-                type="date"
+              ></app-datepicker>
+              <app-datepicker
                 label="To"
                 id="toDate"
                 name="toDate"
-                [min]="filters.fromDate"
+                required="true"
+                [afterDate]="filters.fromDate"
                 [(ngModel)]="filters.toDate"
-              ></app-input-box>
+              ></app-datepicker>
+
               <app-radio-button-group
                 id="type"
                 class="exporter__type-options"

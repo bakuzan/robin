@@ -27,6 +27,8 @@ export class RbnButtonComponent implements OnInit {
   class: string;
   @Input()
   name?: string;
+  @Input()
+  waiAriaLabel: string;
 
   constructor() {}
 
@@ -34,6 +36,7 @@ export class RbnButtonComponent implements OnInit {
 
   get classes(): string {
     const size = this.size || (this.icon && 'small');
+
     return classNames(
       {
         button: true,

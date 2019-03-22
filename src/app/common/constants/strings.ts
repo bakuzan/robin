@@ -1,25 +1,4 @@
-class AppStrings {
-  left: string;
-  right: string;
-  center: string;
-  localStorageKey: string;
-  // input types
-  text: string;
-  checkbox: string;
-  date: string;
-  // data types
-  object: string;
-  string: string;
-  number: string;
-  events: AppEvents;
-  monthNames: string[];
-}
-
-class AppEvents {
-  click: string;
-}
-
-const Strings: AppStrings = Object.freeze({
+const Strings = Object.freeze({
   left: 'left',
   right: 'right',
   center: 'center',
@@ -48,6 +27,15 @@ const Strings: AppStrings = Object.freeze({
     'Oct',
     'Nov',
     'Dec'
+  ],
+  dayNames: [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday'
   ]
 });
 

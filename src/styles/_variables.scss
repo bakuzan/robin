@@ -14,7 +14,9 @@ $screen-md-max: ($screen-lg - 1);
 //z-index
 $z-index: (
   wafer: 1,
+  backdrop: 2,
   above-siblings: 10,
+  above-backdrop: 25,
   header: 50,
   sidebar: 50,
   popover: 100,
@@ -41,6 +43,9 @@ $app--warning-background-colour: $orange;
 $accent--colour: $robin--timeskip-shoes;
 $anchor--colour: $mostly-blue;
 $anchor--colour-hover: lighten($mostly-blue, $app--darken-amount * 3);
+$calendar--button-border-colour: $grey94;
+$calendar--view-shift-button-colour: $white;
+$date-selector--error-message-colour: $red;
 $header--height: 50px;
 $nav-link--height: 50px;
 $sidebar--width: 50px;

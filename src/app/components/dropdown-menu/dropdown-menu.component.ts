@@ -27,6 +27,8 @@ export class DropdownMenuComponent implements OnInit {
   className: string;
   @Input()
   align: string;
+  @Input()
+  waiAriaLabel?: string;
 
   constructor() {}
 

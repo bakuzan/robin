@@ -42,17 +42,24 @@ input {
     left: auto;
     font-size: 0.5rem;
   }
-  // TODO
-  // Create calendar control and reapply this styling.
-  // input[type='date'] {
-  //   &::-webkit-calendar-picker-indicator,
-  //   &::-webkit-inner-spin-button {
-  //     appearance: none;
-  //     display: none;
-  //   }
-  // }
 
   &--hidden {
     display: none;
+  }
+
+  @at-root .date-selector__input {
+    display: flex;
+    flex: 1 1 90%;
+    padding-bottom: 0;
+
+    input[type='date'] {
+      min-width: 125px;
+      &::-webkit-calendar-picker-indicator,
+      &::-webkit-inner-spin-button,
+      &::-webkit-clear-button {
+        appearance: none;
+        display: none;
+      }
+    }
   }
 }

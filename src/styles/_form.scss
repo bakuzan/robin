@@ -35,6 +35,15 @@
         left: -3px;
         right: 6px;
       }
+
+      @include respond-to(sm) {
+        margin-top: -1px;
+        margin-bottom: 5px;
+      }
+      @include respond-to(xs) {
+        margin-top: -1px;
+        margin-bottom: 5px;
+      }
     }
   }
   &__array-item-wrapper {

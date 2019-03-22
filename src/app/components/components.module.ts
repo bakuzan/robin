@@ -23,6 +23,8 @@ import { LoadingBouncerComponent } from './loading-bouncer/loading-bouncer.compo
 import { AlertComponent } from './alert/alert.component';
 import { DropdownMenuComponent } from './dropdown-menu/dropdown-menu.component';
 import { AppSettingsComponent } from './app-settings/app-settings.component';
+import { DatepickerComponent } from './datepicker/datepicker.component';
+import { CalendarComponent } from './calendar/calendar.component';
 
 @NgModule({
   imports: [AppRoutingModule, CommonModule, FormsModule],
@@ -46,7 +48,9 @@ import { AppSettingsComponent } from './app-settings/app-settings.component';
     LoadingBouncerComponent,
     AlertComponent,
     DropdownMenuComponent,
-    AppSettingsComponent
+    AppSettingsComponent,
+    DatepickerComponent,
+    CalendarComponent
   ],
   exports: [
     LogoComponent,
@@ -66,7 +70,9 @@ import { AppSettingsComponent } from './app-settings/app-settings.component';
     AggregateWidgetComponent,
     LoadingBouncerComponent,
     AlertComponent,
-    AppSettingsComponent
+    AppSettingsComponent,
+    DatepickerComponent,
+    CalendarComponent
   ]
 })
 export class ComponentsModule {}

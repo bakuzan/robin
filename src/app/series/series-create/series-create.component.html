@@ -56,13 +56,22 @@
         <app-nav-link [to]="cancelUrl" [queryParams]="cancelQueryParams"
           >Cancel</app-nav-link
         >
-        <app-rbn-button type="submit" theme="primary">Save</app-rbn-button>
+        <app-rbn-button
+          type="submit"
+          theme="primary"
+          [waiAriaLabel]="'Save Series Details'"
+          >Save</app-rbn-button
+        >
       </div>
       <app-tabs>
         <app-tab name="volumes">
           <div class="sub-content sub-content--column">
             <div class="sub-content__header">
-              <app-rbn-button theme="secondary" (click)="onAddVolume()">
+              <app-rbn-button
+                theme="secondary"
+                (click)="onAddVolume()"
+                [waiAriaLabel]="'Add New Volume'"
+              >
                 Add
               </app-rbn-button>
             </div>
@@ -91,22 +100,20 @@
                     [required]="true"
                   ></app-input-box>
                   <div class="form__group">
-                    <app-input-box
+                    <app-datepicker
                       class="form__input form__input--date"
-                      type="date"
                       label="Released"
                       id="{{ i }}.releaseDate"
                       name="{{ i }}.releaseDate"
                       formControlName="releaseDate"
-                    ></app-input-box>
-                    <app-input-box
+                    ></app-datepicker>
+                    <app-datepicker
                       class="form__input form__input--date"
-                      type="date"
                       label="Bought"
                       id="{{ i }}.boughtDate"
                       name="{{ i }}.boughtDate"
                       formControlName="boughtDate"
-                    ></app-input-box>
+                    ></app-datepicker>
                   </div>
 
                   <div class="form__group">
@@ -159,7 +166,7 @@
                       *ngIf="!data.isCreate && item.value"
                       title="Save Volume"
                       name="Save Volume"
-                      [attr.aria-label]="'Save Volume'"
+                      [waiAriaLabel]="'Save Volume'"
                       [icon]="saveIcon"
                       (click)="onSaveVolume(i)"
                       [disabled]="item.pristine"
@@ -167,7 +174,7 @@
                     <app-rbn-button
                       title="Remove Volume"
                       name="Remove Volume"
-                      [attr.aria-label]="'Remove Volume'"
+                      [waiAriaLabel]="'Remove Volume'"
                       [icon]="crossIcon"
                       (click)="onRemoveVolume(i)"
                     ></app-rbn-button>

@@ -1,25 +1,25 @@
 <div class="dashboard">
   <app-loading-bouncer *ngIf="isLoading"></app-loading-bouncer>
   <div class="dashboard__filters">
-    <app-input-box
-      type="date"
+    <app-datepicker
       label="From"
       id="fromDate"
       name="fromDate"
-      [min]="whenRecordsBegan"
-      [max]="filters.toDate"
+      required="true"
+      [afterDate]="whenRecordsBegan"
+      [beforeDate]="filters.toDate"
       [(ngModel)]="filters.fromDate"
       (ngModelChange)="onUserInput()"
-    ></app-input-box>
-    <app-input-box
-      type="date"
+    ></app-datepicker>
+    <app-datepicker
       label="To"
       id="toDate"
       name="toDate"
-      [min]="filters.fromDate"
+      required="true"
+      [afterDate]="filters.fromDate"
       [(ngModel)]="filters.toDate"
       (ngModelChange)="onUserInput()"
-    ></app-input-box>
+    ></app-datepicker>
   </div>
   <div class="dashboard__cards">
     <div *ngFor="let agg of dashboard.aggregates" class="dashboard__card">

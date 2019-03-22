@@ -119,5 +119,14 @@
     .suggestion.suggestion--active {
       border-color: $active-colour;
     }
+
+    // Calendar
+    .calendar {
+      background-color: $base-background;
+    }
+    .calendar-view__option-button--selected {
+      background-color: $primary-background;
+      color: $primary-colour;
+    }
   }
 }

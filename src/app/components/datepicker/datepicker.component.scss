@@ -1,0 +1,23 @@
+@import '_variables';
+
+.date-selector {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  &__control {
+    display: flex;
+    // flex-flow: wrap;
+  }
+
+  &__error-message {
+    display: flex;
+    flex-shrink: 1;
+    max-width: 100%;
+    align-self: flex-end;
+    color: $date-selector--error-message-colour;
+    padding-left: 5px;
+    font-size: 0.7em;
+    white-space: nowrap;
+  }
+}

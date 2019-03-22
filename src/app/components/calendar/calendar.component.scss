@@ -1,0 +1,65 @@
+@import '_extensions';
+@import '_variables';
+
+.calendar {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 350px;
+  padding: 5px;
+  z-index: map-get($z-index, above-backdrop);
+  box-sizing: border-box;
+
+  &:not(.calendar--flat) {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    transform: translateY(100%);
+    @extend %standard-shadow;
+  }
+
+  &--read-only button {
+    cursor: default;
+  }
+}
+
+.calendar-view-controls {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.calendar-view {
+  display: flex;
+  flex-flow: wrap;
+  &__header {
+    display: flex;
+    width: 100%;
+  }
+
+  &__option {
+    text-align: center;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    border-color: $calendar--button-border-colour;
+    &--day {
+      width: calc(100% / 7);
+    }
+    &--month {
+      width: calc(100% / 3);
+    }
+    &--header {
+      padding: 5px 0;
+      border-color: transparent;
+    }
+    &--dummy-day {
+      border-color: transparent;
+      z-index: -1;
+
+      .calendar-view__option-button {
+        background-color: inherit !important;
+      }
+    }
+  }
+}

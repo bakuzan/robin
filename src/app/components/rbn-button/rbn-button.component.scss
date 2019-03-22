@@ -68,3 +68,42 @@
 .dropdown__toggler {
   min-width: 25px;
 }
+
+// Calendar buttons
+.calendar-view__option-button {
+  $button-padding: 10px;
+
+  height: 100%;
+  min-width: 100%;
+  padding: {
+    top: $button-padding;
+    bottom: $button-padding;
+  }
+}
+.view-shift-button {
+  padding: 3px 15px;
+
+  &:before {
+    font-size: 1.25em !important;
+  }
+
+  &:hover {
+    background-color: darken($calendar--view-shift-button-colour, 5%);
+  }
+}
+.date-selector__button {
+  min-width: 24px;
+  margin: {
+    top: 15px;
+    bottom: 0px;
+    left: -30px;
+    right: 0;
+  }
+  z-index: map-get($z-index, wafer);
+
+  // This is a fiddle to ensure buttons on
+  // one line in cases of 1 or 2 buttons
+  &--clear {
+    margin-left: 0;
+  }
+}

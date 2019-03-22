@@ -1,0 +1,60 @@
+<div
+  #container
+  [id]="id + '-date-selector'"
+  [class]="class"
+  [ngClass]="{ 'date-selector': true, 'read-only': disabled }"
+>
+  <div class="date-selector__control">
+    <app-input-box
+      *ngIf="!isFlat"
+      type="date"
+      placeholder="__/__/____"
+      pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+      class="date-selector__input"
+      [id]="id + '-ctrl'"
+      [label]="label"
+      [name]="name"
+      [required]="required"
+      [disabled]="disabled"
+      [min]="afterDate"
+      [max]="beforeDate"
+      [(ngModel)]="selected"
+      (ngModelChange)="handleDateChange($event)"
+    ></app-input-box>
+    <app-rbn-button
+      *ngIf="!isFlat"
+      class="date-selector__button"
+      [waiAriaLabel]="'Open calendar'"
+      btn-size="small"
+      [icon]="calendarIcon"
+      [disabled]="disabled"
+      (click)="openCalendar($event)"
+    ></app-rbn-button>
+    <app-rbn-button
+      *ngIf="!isFlat && displayClearButton"
+      class="date-selector__button date-selector__button--clear"
+      [waiAriaLabel]="'Clear date'"
+      btn-size="small"
+      [icon]="clearIcon"
+      [disabled]="disabled"
+      (click)="clearAndFocusInput()"
+    ></app-rbn-button>
+  </div>
+  <div *ngIf="!isFlat && errorMessage" class="date-selector__error-message">
+    {{ errorMessage }}
+  </div>
+  <app-calendar
+    *ngIf="isFlat || displayCalendar"
+    [id]="id"
+    [isFlat]="isFlat"
+    [selected]="selected"
+    [afterDate]="afterDate"
+    [beforeDate]="beforeDate"
+    [disabled]="disabled"
+    (select)="handleDateSelect($event)"
+  ></app-calendar>
+  <app-backdrop
+    *ngIf="!isFlat && displayCalendar"
+    (close)="closeCalendar($event)"
+  ></app-backdrop>
+</div>

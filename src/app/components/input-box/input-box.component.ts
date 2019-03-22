@@ -6,7 +6,8 @@ import {
   EventEmitter,
   ViewChild,
   forwardRef,
-  Renderer2
+  Renderer2,
+  ElementRef
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import classNames from 'classnames';
@@ -35,7 +36,7 @@ export class InputBoxComponent implements OnInit, ControlValueAccessor {
   classes: string;
   clearClasses: string;
   @ViewChild('input')
-  input;
+  input: ElementRef;
   @Input()
   id: string;
   @Input()
@@ -50,6 +51,10 @@ export class InputBoxComponent implements OnInit, ControlValueAccessor {
   value;
   @Input()
   accept: string;
+  @Input()
+  pattern?: string;
+  @Input()
+  placeholder? = ' ';
   @Input()
   min: number;
   @Input()

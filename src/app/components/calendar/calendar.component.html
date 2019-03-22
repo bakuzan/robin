@@ -1,0 +1,53 @@
+<div
+  [id]="id + '-calendar'"
+  [class]="calendarClasses"
+  [ngClass]="{ 'calendar--flat': isFlat, 'calendar--read-only': disabled }"
+>
+  <div class="calendar-view-controls">
+    <app-rbn-button
+      class="view-shift-button ripple"
+      [waiAriaLabel]="prevLabel"
+      [icon]="prevIcon"
+      (click)="handleViewShift(-1)"
+    ></app-rbn-button>
+    <app-rbn-button
+      [waiAriaLabel]="'Toggle between month and year view'"
+      (click)="toggleViewMode()"
+    >
+      {{ viewModeText }}
+    </app-rbn-button>
+    <app-rbn-button
+      class="view-shift-button ripple"
+      [waiAriaLabel]="nextLabel"
+      [icon]="nextIcon"
+      (click)="handleViewShift(1)"
+    ></app-rbn-button>
+  </div>
+  <div class="calendar-view">
+    <div *ngIf="isMonthView" class="calendar-view__header">
+      <div
+        *ngFor="let header of viewHeaders"
+        class="calendar-view__option calendar-view__option--day calendar-view__option--header"
+      >
+        {{ header }}
+      </div>
+    </div>
+    <div
+      *ngFor="let op of viewOptions"
+      class="calendar-view__option {{ op.className }}"
+    >
+      <app-rbn-button
+        class="calendar-view__option-button"
+        [ngClass]="{
+          'calendar-view__option-button--selected': isViewOptionSelected(op)
+        }"
+        [title]="isOutOfRange(op) ? 'Out of range' : ''"
+        [waiAriaLabel]="getAria(op)"
+        [disabled]="op.isDummy || isOutOfRange(op)"
+        (click)="handleViewOptionSelect(op)"
+      >
+        {{ op.text }}
+      </app-rbn-button>
+    </div>
+  </div>
+</div>

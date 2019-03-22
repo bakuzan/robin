@@ -1,25 +1,26 @@
 <div class="filter-bar">
-  <app-input-box
+  <app-datepicker
     class="filter-bar__input"
-    type="date"
     id="fromDate"
     name="fromDate"
     label="From"
-    [min]="whenRecordsBegan"
-    [max]="values.toDate"
+    required="true"
+    [afterDate]="whenRecordsBegan"
+    [beforeDate]="values.toDate"
     [(ngModel)]="values.fromDate"
     (ngModelChange)="onInput()"
-  ></app-input-box>
-  <app-input-box
+  ></app-datepicker>
+  <app-datepicker
     class="filter-bar__input"
-    type="date"
     id="toDate"
     name="toDate"
     label="To"
-    [min]="values.fromDate"
+    required="true"
+    [afterDate]="values.fromDate"
     [(ngModel)]="values.toDate"
     (ngModelChange)="onInput()"
-  ></app-input-box>
+  ></app-datepicker>
+
   <app-radio-button-group
     id="type"
     [column]="true"
