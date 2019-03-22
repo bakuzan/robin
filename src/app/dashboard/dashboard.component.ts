@@ -29,10 +29,6 @@ import DashboardChartEvent from '../common/models/dashboard-chart-event.model';
 import Urls from '../common/constants/urls';
 import whenRecordsBegan from '../common/constants/when-records-began';
 
-const combinedFilterString = (x: DateRangeFilter) => {
-  console.log(x);
-  return `${x.fromDate}${x.toDate}`;
-};
 const today = new Date();
 
 @Component({
@@ -134,7 +130,6 @@ export class DashboardComponent implements OnInit {
   datesAreValid(params: DateRangeFilter): boolean {
     const f = isValidDate(params.fromDate);
     const t = isValidDate(params.toDate);
-    console.log(f, t);
     return f && t;
   }
 }

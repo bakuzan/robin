@@ -13,6 +13,8 @@
   opacity: 0;
   transition: all 1s ease-in-out;
   pointer-events: none;
+  box-sizing: border-box;
+
   &--active {
     position: relative;
     opacity: 1;

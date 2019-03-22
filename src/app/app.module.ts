@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
-import { SeriesModule } from './series/series.module';
+// import { SeriesModule } from './series/series.module';
 import { ComponentsModule } from './components/components.module';
-import { VolumeModule } from './volume/volume.module';
+// import { VolumeModule } from './volume/volume.module';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -16,6 +18,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
+// SeriesModule,
+// VolumeModule,
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,12 +30,12 @@ import { environment } from '../environments/environment';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    SeriesModule,
-    VolumeModule,
     ComponentsModule,
     NgxChartsModule,
+    NoopAnimationsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
     })
