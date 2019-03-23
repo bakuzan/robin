@@ -55,6 +55,7 @@
   ></app-calendar>
   <app-backdrop
     *ngIf="!isFlat && displayCalendar"
+    [controlNode]="container"
     (close)="closeCalendar($event)"
   ></app-backdrop>
 </div>

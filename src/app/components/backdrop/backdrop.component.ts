@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 
 import { generateUniqueId, createListeners } from 'src/app/common/utils';
-import { CLOSE_KEYS } from 'src/app/common/constants/key-codes';
+import keyCodes, { CLOSE_KEYS } from 'src/app/common/constants/key-codes';
 import Listeners from 'src/app/common/utils/listeners.model';
 
 @Component({
@@ -21,6 +21,8 @@ export class BackdropComponent implements OnInit, OnDestroy {
   backdropId: string;
   @Input()
   id: string = generateUniqueId();
+  @Input()
+  controlNode: Node;
   @Output()
   close: EventEmitter<any> = new EventEmitter();
 
@@ -41,7 +43,14 @@ export class BackdropComponent implements OnInit, OnDestroy {
       return this.close.emit(event);
     }
 
-    const { key } = event as KeyboardEvent;
+    const { key, target } = event as KeyboardEvent;
+    const isDescendantOfRoot =
+      this.controlNode && this.controlNode.contains(target as Node);
+
+    if (isDescendantOfRoot && key === keyCodes.enter) {
+      return;
+    }
+
     if (CLOSE_KEYS.includes(key)) {
       return this.close.emit(event);
     }

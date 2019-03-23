@@ -73,8 +73,8 @@
         @include lightenOrDarken('background-color', $primary-colour);
       }
     }
-    .has-float-label input,
-    .has-float-label select,
+    .has-float-label input:focus,
+    .has-float-label select:focus,
     .suggestion--active {
       border-color: $primary-background;
     }
