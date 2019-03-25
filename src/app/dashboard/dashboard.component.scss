@@ -1,6 +1,38 @@
+@import '_variables';
+@import '_mixins';
+
 .dashboard {
   display: flex;
-  flex-direction: column;
+
+  @include respond-to(sm) {
+    flex-direction: column;
+    &__column {
+      flex-basis: 100%;
+      &--left {
+        flex-basis: 100%;
+      }
+    }
+  }
+  @include respond-to(xs) {
+    flex-direction: column;
+    &__column {
+      flex-basis: 100%;
+      &--left {
+        flex-basis: 100%;
+      }
+    }
+  }
+
+  &__column {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 78%;
+    margin: 0 1%;
+
+    &--left {
+      flex-basis: 18%;
+    }
+  }
 
   &__filters {
     display: flex;
@@ -10,12 +42,19 @@
   &__cards {
     display: flex;
     margin: 25px 0;
+    @include respond-to(lg) {
+      flex-direction: column;
+    }
+    @include respond-to(md) {
+      flex-direction: column;
+    }
   }
 
   &__card {
     display: flex;
     flex-direction: column;
     flex: 1;
+    margin: 10px 0;
   }
 
   &__title {
@@ -27,15 +66,36 @@
     }
   }
 
-  &__charts {
-    display: flex;
-    flex: 1 1 100%;
-  }
   &__chart {
     display: flex;
+    flex-wrap: wrap;
     flex: 1;
     justify-content: center;
     align-items: center;
     margin: 25px 0;
+  }
+  &__proportions {
+    display: flex;
+    flex-wrap: wrap;
+    @include respond-to(xs) {
+      flex-direction: column;
+    }
+  }
+}
+
+.charts__title {
+  display: flex;
+  width: 100%;
+
+  font: {
+    weight: bold;
+    size: 1.3em;
+  }
+
+  &--subtitle {
+    font: {
+      weight: normal;
+      size: 1.1em;
+    }
   }
 }

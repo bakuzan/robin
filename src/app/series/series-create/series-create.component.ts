@@ -18,6 +18,7 @@ import Series from '../../common/models/series.model';
 import Retailer from 'src/app/common/models/retailer.model';
 import Volume, { VolumeInitValues } from '../../common/models/volume.model';
 import Aggregate from 'src/app/common/models/aggregate.model';
+import SeriesStatus from 'src/app/common/models/series-statuses.enum';
 import {
   Urls,
   SeriesTypes,
@@ -25,6 +26,7 @@ import {
   Icons,
   Regexes
 } from 'src/app/common/constants';
+
 import {
   roundTo2,
   displayAs2dp,
@@ -32,6 +34,7 @@ import {
   capitaliseEachWord
 } from 'src/app/common/utils';
 import { mapEnumToSelectOption } from 'src/app/common/utils/mappers';
+import SeriesType from 'src/app/common/models/series-types.enum';
 
 @Component({
   selector: 'app-series-create',
@@ -55,11 +58,12 @@ export class SeriesCreateComponent implements OnInit {
   seriesForm = new FormGroup({
     id: new FormControl(null),
     name: new FormControl('', Validators.required),
-    type: new FormControl(null, Validators.required),
-    status: new FormControl(null, Validators.required),
+    type: new FormControl(SeriesType.Manga, Validators.required),
+    status: new FormControl(SeriesStatus.Ongoing, Validators.required),
     volumeCount: new FormControl(null),
     volumes: new FormArray([])
   });
+  displayForm = false;
 
   statisticsChartData: any[];
   view: any[] = [700, 400];
@@ -94,7 +98,10 @@ export class SeriesCreateComponent implements OnInit {
       if (!data.isCreate) {
         this.seriesId = +this.route.snapshot.paramMap.get('id');
         this.getSeries();
+        return;
       }
+
+      this.displayForm = true;
     });
 
     this.seriesForm.controls.volumes.valueChanges.subscribe((volumes) => {
@@ -111,6 +118,7 @@ export class SeriesCreateComponent implements OnInit {
       this.titleService.setTitle(`Robin - ${pageName}`);
       this.cancelQueryParams = { type: series.type };
       this.updateForm(series);
+      this.displayForm = true;
     });
   }
 
@@ -125,22 +133,22 @@ export class SeriesCreateComponent implements OnInit {
   }
 
   craftStatistics(volumes = []): Aggregate[] {
+    const paidValues = volumes.map((x) => Number(x.paid)).filter((x) => x);
+    const expenditure = displayAs2dp(paidValues.reduce((a, b) => a + b, 0.0));
+    const minimum = displayAs2dp(Math.min(...paidValues));
+    const maximum = displayAs2dp(Math.max(...paidValues));
+
     const average = displayAs2dp(
       volumes.reduce((p, c) => {
         const value = parseFloat(c.paid);
         return isNaN(value) ? p : p + value;
       }, 0) / volumes.filter((x) => !isNaN(parseFloat(x.paid))).length
     );
-    const minimum = displayAs2dp(
-      Math.min(...volumes.map((x) => x.paid).filter((x) => x))
-    );
-    const maximum = displayAs2dp(
-      Math.max(...volumes.map((x) => x.paid).filter((x) => x))
-    );
 
     const ratios = volumes
       .map((x) => (x.paid && x.rrp ? x.paid / x.rrp : 0))
       .filter((x) => x);
+
     const bestDeal = displayAs2dp(
       ratios.reduce((p, c) => (p < c ? p : c), 100) * 100
     );
@@ -151,9 +159,10 @@ export class SeriesCreateComponent implements OnInit {
     return [
       { label: 'Average', value: `£ ${average}` },
       { label: 'Cheapest', value: `£ ${minimum}` },
-      { label: 'Best deal', value: `${bestDeal}%` },
       { label: 'Dearest', value: `£ ${maximum}` },
-      { label: 'Worst deal', value: `${worstDeal}%` }
+      { label: 'Best deal', value: `${bestDeal}%` },
+      { label: 'Worst deal', value: `${worstDeal}%` },
+      { label: 'Expenditure', value: `£ ${expenditure}` }
     ];
   }
 
@@ -267,8 +276,8 @@ export class SeriesCreateComponent implements OnInit {
     const retailer = !x.retailer
       ? { retailerId: null }
       : typeof x.retailer.id === 'string'
-        ? ({ retailer: { name: x.retailer.name } } as any)
-        : { retailerId: x.retailer.id };
+      ? ({ retailer: { name: x.retailer.name } } as any)
+      : { retailerId: x.retailer.id };
 
     return {
       id: x.id ? x.id : undefined,
@@ -347,7 +356,9 @@ export class SeriesCreateComponent implements OnInit {
   }
 
   updateChartViewSize() {
-    const width = this.chartRef.nativeElement.offsetWidth;
+    const width =
+      (this.chartRef && this.chartRef.nativeElement.offsetWidth) || 0;
+
     this.view = [width, 400];
   }
 

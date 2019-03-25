@@ -1,41 +1,50 @@
 <div class="dashboard">
   <app-loading-bouncer *ngIf="isLoading"></app-loading-bouncer>
-  <div class="dashboard__filters">
-    <app-datepicker
-      label="From"
-      id="fromDate"
-      name="fromDate"
-      required="true"
-      [afterDate]="whenRecordsBegan"
-      [beforeDate]="filters.toDate"
-      [(ngModel)]="filters.fromDate"
-      (ngModelChange)="onUserInput()"
-    ></app-datepicker>
-    <app-datepicker
-      label="To"
-      id="toDate"
-      name="toDate"
-      required="true"
-      [afterDate]="filters.fromDate"
-      [(ngModel)]="filters.toDate"
-      (ngModelChange)="onUserInput()"
-    ></app-datepicker>
-  </div>
-  <div class="dashboard__cards">
-    <div *ngFor="let agg of dashboard.aggregates" class="dashboard__card">
-      <div class="dashboard__title">{{ agg.label }}</div>
-      <app-aggregate-widget
-        [items]="agg.statistics"
-        [center]="true"
-      ></app-aggregate-widget>
+  <div class="dashboard__column dashboard__column--left">
+    <div class="dashboard__filters">
+      <app-datepicker
+        label="From"
+        id="fromDate"
+        name="fromDate"
+        required="true"
+        [afterDate]="whenRecordsBegan"
+        [beforeDate]="filters.toDate"
+        [(ngModel)]="filters.fromDate"
+        (ngModelChange)="onUserInput()"
+      ></app-datepicker>
+      <app-datepicker
+        label="To"
+        id="toDate"
+        name="toDate"
+        required="true"
+        [afterDate]="filters.fromDate"
+        [(ngModel)]="filters.toDate"
+        (ngModelChange)="onUserInput()"
+      ></app-datepicker>
+    </div>
+    <div class="dashboard__cards">
+      <div *ngFor="let agg of dashboard.aggregates" class="dashboard__card">
+        <div class="dashboard__title" [ngStyle]="aggregateTitleStyle(agg)">
+          {{ agg.label }}
+        </div>
+        <app-aggregate-widget
+          [items]="agg.statistics"
+          [center]="true"
+        ></app-aggregate-widget>
+      </div>
     </div>
   </div>
-  <div class="dashboard__charts" #chartsRef>
+  <div class="dashboard__column dashboard__charts charts" #chartsRef>
     <div class="dashboard__chart">
+      <div class="charts__title">Volumes over time</div>
+      <div *ngIf="!volumesOverTime">
+        No Data
+      </div>
       <ngx-charts-line-chart
-        [view]="view"
-        [scheme]="colorScheme"
-        [results]="dashboard.byMonthCounts"
+        *ngIf="volumesOverTime"
+        [view]="viewLineChart"
+        [scheme]="lineColourScheme"
+        [results]="volumesOverTime"
         [gradient]="gradient"
         [xAxis]="showXAxis"
         [yAxis]="showYAxis"
@@ -43,11 +52,54 @@
         [showXAxisLabel]="showXAxisLabel"
         [showYAxisLabel]="showYAxisLabel"
         [xAxisLabel]="xAxisLabel"
-        [yAxisLabel]="yAxisLabel"
+        yAxisLabel="Count (#)"
         [autoScale]="'autoScale'"
         (select)="onChartClick($event)"
       >
       </ngx-charts-line-chart>
+    </div>
+    <div class="dashboard__chart">
+      <div class="charts__title">Expenditure over time</div>
+      <div *ngIf="!expenditureOverTime">
+        No Data
+      </div>
+      <ngx-charts-line-chart
+        *ngIf="expenditureOverTime"
+        [view]="viewLineChart"
+        [scheme]="lineColourScheme"
+        [results]="expenditureOverTime"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel"
+        yAxisLabel="Expenditure (£)"
+        [autoScale]="'autoScale'"
+        (select)="onChartClick($event)"
+      >
+      </ngx-charts-line-chart>
+    </div>
+    <div
+      *ngFor="let info of dashboard.proportions"
+      class="dashboard__proportions proportion"
+    >
+      <div class="charts__title">{{ info.label }}</div>
+      <div *ngFor="let pie of info.data" class="dashboard__pie pie-chart">
+        <div class="charts__title charts__title--subtitle">
+          {{ pie.name }}
+        </div>
+        <ngx-charts-pie-chart
+          [view]="viewPieChart"
+          [scheme]="pieColourScheme"
+          [results]="pie.series"
+          [labels]="true"
+          [animations]="true"
+          (select)="onPieClick($event)"
+        >
+        </ngx-charts-pie-chart>
+      </div>
     </div>
   </div>
 </div>

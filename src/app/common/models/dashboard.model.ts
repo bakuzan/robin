@@ -1,21 +1,31 @@
 import Aggregate from './aggregate.model';
 
-class DashboardAggregate {
+interface IDashboardAggregate {
   label: string;
-  statistics: Aggregate[] = [];
+  statistics: Aggregate[];
 }
 
-class DashboardCounts {
+interface IDashboardCounts {
   name: string;
-  series: DashboardCountPoint[] = [];
+  series: IDashboardCountPoint[];
 }
 
-class DashboardCountPoint {
+export interface IDashboardMonthCounts extends IDashboardCounts {
+  label: string;
+}
+
+interface IDashboardCountPoint {
   name: string;
   value: number;
 }
 
+interface IDashboardProportions {
+  label: string;
+  data: IDashboardCounts[];
+}
+
 export default class Dashboard {
-  aggregates: DashboardAggregate;
-  byMonthCounts: DashboardCounts[];
+  aggregates: IDashboardAggregate;
+  byMonthCounts: IDashboardMonthCounts[] = [];
+  proportions: IDashboardProportions[] = [];
 }

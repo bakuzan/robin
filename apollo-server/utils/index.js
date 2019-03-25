@@ -70,6 +70,8 @@ const pad = (n = '', width, z = '0') => {
   return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 };
 
+const capitalise = (str = '') => str.charAt(0).toUpperCase() + str.slice(1);
+
 module.exports = {
   enumArrayToObject,
   mapArrToGraphqlString,
@@ -82,5 +84,6 @@ module.exports = {
   roundTo2,
   displayAs2dp,
   prepString,
-  pad
+  pad,
+  capitalise
 };

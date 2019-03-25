@@ -1,4 +1,5 @@
 enum SeriesStatus {
+  Planned = 'Planned',
   Ongoing = 'Ongoing',
   Complete = 'Complete',
   Dropped = 'Dropped'

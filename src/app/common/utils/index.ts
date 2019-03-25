@@ -30,8 +30,8 @@ export const getEventValue = ({ type, checked, value }) =>
   type === Strings.checkbox
     ? checked
     : type === Strings.date || type === Strings.text
-      ? value
-      : parseIfInt(value);
+    ? value
+    : parseIfInt(value);
 
 export const generateUniqueId = (): string =>
   (`${1e7}` + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (s) => {
@@ -47,8 +47,17 @@ export const round = (n, decimals = 0) =>
 
 export const roundTo2 = (n) => round(n, 2);
 
-export const displayAs2dp = (n: number): string =>
-  n !== null && n !== undefined ? n.toFixed(2) : null;
+export const displayAs2dp = (n: number): string => {
+  if (n !== null && n !== undefined) {
+    if (n === 0) {
+      return '0.00';
+    }
+
+    return n.toFixed(2);
+  }
+
+  return null;
+};
 
 export const pad = (n = '', width: number, z = '0'): string =>
   n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;

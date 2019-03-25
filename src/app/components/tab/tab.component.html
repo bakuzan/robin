@@ -1,10 +1,9 @@
 <section
-  *ngIf="isActive"
   [attr.aria-hidden]="!isActive"
   [id]="tabHash"
   class="tab-panel"
   [ngClass]="{ 'tab-panel--active': isActive }"
   role="tabpanel"
 >
-  <ng-content *ngIf="isActive"></ng-content>
+  <ng-content></ng-content>
 </section>

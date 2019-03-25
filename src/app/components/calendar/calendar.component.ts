@@ -25,6 +25,7 @@ import { Icons } from 'src/app/common/constants';
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
+  private timer: number = null;
   prevIcon = Icons.left;
   nextIcon = Icons.right;
   isMonthView = true;
@@ -91,8 +92,8 @@ export class CalendarComponent implements OnInit {
     return op.isDummy
       ? ''
       : this.isOutOfRange(op)
-        ? 'Out of range'
-        : `${op.text} ${this.viewModeText}`;
+      ? 'Out of range'
+      : `${op.text} ${this.viewModeText}`;
   }
 
   // View Helpers END
@@ -147,6 +148,7 @@ export class CalendarComponent implements OnInit {
       this.isMonthView = true;
       this.viewDate = viewDate;
       this.setViewDerivedState(true);
+      this.setFocus(viewDate);
     }
   }
 
@@ -158,5 +160,23 @@ export class CalendarComponent implements OnInit {
 
   private getViewOptions(isMonthView: boolean, viewDate: string) {
     return isMonthView ? getDaysForDate(viewDate) : getMonthsForDate();
+  }
+
+  // Gross, but apparently necessary to prevent focus "falling off" the calendar
+  private setFocus(viewDate: string) {
+    clearTimeout(this.timer);
+    this.timer = window.setTimeout(() => {
+      let target: HTMLButtonElement = document.querySelector(
+        '.calendar-view__option--selected button'
+      );
+
+      if (!target) {
+        target = document.querySelector(
+          `#option-${new Date(viewDate).getDate()} button`
+        ) as HTMLButtonElement;
+      }
+
+      target.focus();
+    }, 100);
   }
 }

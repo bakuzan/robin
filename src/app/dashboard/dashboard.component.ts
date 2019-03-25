@@ -7,16 +7,12 @@ import {
 } from '@angular/core';
 import { Router, NavigationExtras } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import {
-  debounceTime,
-  switchMap,
-  tap,
-  filter,
-  distinctUntilChanged
-} from 'rxjs/operators';
+import { debounceTime, switchMap, tap, filter } from 'rxjs/operators';
 
 import { DashboardService } from 'src/app/common/dashboard.service';
-import Dashboard from 'src/app/common/models/dashboard.model';
+import Dashboard, {
+  IDashboardMonthCounts
+} from 'src/app/common/models/dashboard.model';
 import DateRangeFilter from 'src/app/common/models/date-range-filter.model';
 import {
   getISOStringDate,
@@ -25,7 +21,11 @@ import {
   getLastDateOfMonth,
   isValidDate
 } from 'src/app/common/utils';
-import DashboardChartEvent from '../common/models/dashboard-chart-event.model';
+import {
+  IDashboardChartEvent,
+  IDashboardPieEvent
+} from '../common/models/dashboard-chart-event.model';
+import Aggregate from '../common/models/aggregate.model';
 import Urls from '../common/constants/urls';
 import whenRecordsBegan from '../common/constants/when-records-began';
 
@@ -39,8 +39,8 @@ const today = new Date();
 export class DashboardComponent implements OnInit {
   private comicColour = '#339933';
   private mangaColour = '#3366cc';
-  private rightHandSideSpacing = 25;
-  private dashboard$ = null;
+  private rightHandSideSpacing = 30;
+  private pieSpacing = 15;
   @ViewChild('chartsRef')
   chartsRef: ElementRef;
   isLoading = false;
@@ -50,10 +50,12 @@ export class DashboardComponent implements OnInit {
   };
   private filterParams = new BehaviorSubject<DateRangeFilter>(this.filters);
   dashboard = new Dashboard();
-  view: any[] = [800, 400];
+  volumesOverTime: IDashboardMonthCounts[];
+  expenditureOverTime: IDashboardMonthCounts[];
   whenRecordsBegan = whenRecordsBegan;
 
-  // options
+  // Line Chart options
+  viewLineChart: any[] = [800, 400];
   showXAxis = true;
   showYAxis = true;
   gradient = false;
@@ -61,10 +63,14 @@ export class DashboardComponent implements OnInit {
   showXAxisLabel = true;
   showYAxisLabel = true;
   xAxisLabel = 'Month';
-  yAxisLabel = 'Count';
-
-  colorScheme = {
+  lineColourScheme = {
     domain: [this.comicColour, this.mangaColour]
+  };
+
+  // Pie Chart options
+  viewPieChart: any[] = [400, 400];
+  pieColourScheme = {
+    domain: ['#f00', '#0f0', '#00f', '#ff0', '#f0f', '#0ff']
   };
 
   constructor(
@@ -73,7 +79,7 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.dashboard$ = this.filterParams
+    this.filterParams
       .pipe(
         debounceTime(500),
         filter(
@@ -88,9 +94,10 @@ export class DashboardComponent implements OnInit {
       .subscribe((dashboard) => {
         this.isLoading = false;
         this.dashboard = dashboard;
+        this.volumesOverTime = dashboard.byMonthCounts.slice(0, 2);
+        this.expenditureOverTime = dashboard.byMonthCounts.slice(2);
+        this.updateChartViewSize();
       });
-
-    this.updateChartViewSize();
   }
 
   getDashboard() {
@@ -102,7 +109,7 @@ export class DashboardComponent implements OnInit {
     this.getDashboard();
   }
 
-  onChartClick(point: DashboardChartEvent) {
+  onChartClick(point: IDashboardChartEvent) {
     const targetUrl = Urls.purchaseHistory;
 
     const fullDate = `${point.name}-01`;
@@ -116,10 +123,18 @@ export class DashboardComponent implements OnInit {
     this.router.navigate([targetUrl], navigationExtras);
   }
 
-  updateChartViewSize() {
-    const width =
-      this.chartsRef.nativeElement.offsetWidth - this.rightHandSideSpacing;
-    this.view = [width, 400];
+  onPieClick(slice: IDashboardPieEvent) {
+    console.log(
+      '%c Pie Slice Click not yet implemented',
+      'color: firebrick',
+      slice
+    );
+  }
+
+  aggregateTitleStyle(agg: Aggregate) {
+    return {
+      color: agg.label === 'Comic' ? this.comicColour : this.mangaColour
+    };
   }
 
   @HostListener('window:resize')
@@ -127,7 +142,26 @@ export class DashboardComponent implements OnInit {
     this.updateChartViewSize();
   }
 
-  datesAreValid(params: DateRangeFilter): boolean {
+  private updateChartViewSize() {
+    const containerWidth =
+      (this.chartsRef && this.chartsRef.nativeElement.offsetWidth) || 0;
+
+    const isColumnLayout = containerWidth > 768;
+    const widthWithoutMargin = isColumnLayout
+      ? containerWidth * 0.96
+      : containerWidth;
+    const pieBaseWidth = isColumnLayout
+      ? Math.floor(widthWithoutMargin / 2)
+      : widthWithoutMargin;
+
+    const lineChartWidth = widthWithoutMargin - this.rightHandSideSpacing;
+    const pieChartWidth = pieBaseWidth - this.pieSpacing;
+
+    this.viewLineChart = [lineChartWidth, 400];
+    this.viewPieChart = [pieChartWidth, 400];
+  }
+
+  private datesAreValid(params: DateRangeFilter): boolean {
     const f = isValidDate(params.fromDate);
     const t = isValidDate(params.toDate);
     return f && t;

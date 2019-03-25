@@ -57,10 +57,21 @@ const getDashboard = gql`
         }
       }
       byMonthCounts {
+        label
         name
         series {
           name
           value
+        }
+      }
+      proportions {
+        label
+        data {
+          name
+          series {
+            name
+            value
+          }
         }
       }
     }

@@ -34,7 +34,11 @@
     </div>
     <div
       *ngFor="let op of viewOptions"
+      [id]="'option-' + op.text"
       class="calendar-view__option {{ op.className }}"
+      [ngClass]="{
+        'calendar-view__option--selected': isViewOptionSelected(op)
+      }"
     >
       <app-rbn-button
         class="calendar-view__option-button"

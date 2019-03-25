@@ -28,6 +28,7 @@ export class SelectBoxComponent implements OnInit, ControlValueAccessor {
   selectClasses: string;
   onChange: (_: any) => void;
   onTouched: () => void;
+  selectedValue: string;
   @ViewChild('select')
   select;
   @Input()
@@ -54,8 +55,7 @@ export class SelectBoxComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(value: any): void {
-    const select = this.select.nativeElement;
-    this._renderer.setProperty(select, 'value', value);
+    this.selectedValue = value;
   }
   registerOnChange(fn: (value: any) => void): void {
     this.onChange = fn;
@@ -70,7 +70,7 @@ export class SelectBoxComponent implements OnInit, ControlValueAccessor {
     select[action]('select-box--disabled');
   }
 
-  handleChange(event) {
-    this.onChange(event.target.value);
+  handleChange(value: string) {
+    this.onChange(value);
   }
 }

@@ -1,6 +1,7 @@
 <div class="page">
   <app-loading-bouncer *ngIf="isLoading"></app-loading-bouncer>
   <form
+    *ngIf="displayForm"
     class="form"
     [formGroup]="seriesForm"
     (ngSubmit)="onSubmit()"
@@ -189,7 +190,7 @@
             <div class="sub-content__header"></div>
             <div class="statistics__content">
               <app-aggregate-widget [items]="statistics"></app-aggregate-widget>
-              <div class="statistic-chart" #chartRef>
+              <div class="statistics__chart" #chartRef>
                 <ngx-charts-line-chart
                   [view]="view"
                   [scheme]="colorScheme"

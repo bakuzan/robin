@@ -7,15 +7,16 @@
     [attr.name]="name"
     [attr.disabled]="disabled"
     [attr.required]="required"
-    (change)="handleChange($event)"
+    [(ngModel)]="selectedValue"
+    (ngModelChange)="handleChange($event)"
   >
-    <option *ngIf="!required" [value]="null" class="select-box__option">
+    <option *ngIf="!required" class="select-box__option" [value]="null">
       None
     </option>
     <option
       *ngFor="let item of options"
-      [value]="item.value"
       class="select-box__option"
+      [value]="item.value"
     >
       {{ item.text }}
     </option>

@@ -9,7 +9,7 @@ import { StorageService } from 'src/app/common/storage.service';
   styleUrls: ['./app-settings.component.scss']
 })
 export class AppSettingsComponent implements OnInit {
-  theme = this.store.get('theme');
+  theme = this.store.get('theme', 'none');
   id = 'app-settings';
   alignment = Strings.right;
   title = 'App Settings';

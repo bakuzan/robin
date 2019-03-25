@@ -1,62 +1,13 @@
 const Op = require('sequelize').Op;
-const { db, Series, Volume } = require('../../connectors');
+const { db, Series, Volume, Retailer } = require('../../connectors');
 
-const { SeriesTypes } = require('../../constants/enums');
-const { displayAs2dp } = require('../../utils');
 const RBNDate = require('../../utils/date');
 const validateFromDate = require('../../utils/validate-from-date');
-
-function mapStatsToResponse(derviedStats = {}) {
-  return {
-    label: derviedStats['series.type'],
-    statistics: [
-      {
-        label: 'Average',
-        value: `£ ${displayAs2dp(derviedStats.average)}`
-      },
-      {
-        label: 'Minimum',
-        value: `£ ${displayAs2dp(derviedStats.minimum)}`
-      },
-      {
-        label: 'Maximum',
-        value: `£ ${displayAs2dp(derviedStats.maximum)}`
-      },
-      {
-        label: 'Total',
-        value: derviedStats.total || 0
-      }
-    ]
-  };
-}
-
-function mapSeriesCounts(datesInRange, items = []) {
-  return datesInRange.map((d) => {
-    const name = d.slice(0, 7);
-    const item = items.find((g) => g.group === name);
-    return {
-      name,
-      value: item ? item.count : 0
-    };
-  });
-}
-
-function mapGroupCounts(filters, gd) {
-  const datesInRange = RBNDate.dateRange(filters.fromDate, filters.toDate);
-  const mangaItems = gd.filter((x) => x.type === SeriesTypes.Manga);
-  const comicItems = gd.filter((x) => x.type === SeriesTypes.Comic);
-
-  return [
-    {
-      name: SeriesTypes.Comic,
-      series: mapSeriesCounts(datesInRange, comicItems)
-    },
-    {
-      name: SeriesTypes.Manga,
-      series: mapSeriesCounts(datesInRange, mangaItems)
-    }
-  ];
-}
+const {
+  mapDataToProportion,
+  mapDataToAggregates,
+  mapDataToGroupCounts
+} = require('../../utils/dashboard');
 
 module.exports = {
   async dashboard(_, { filters }) {
@@ -79,7 +30,8 @@ module.exports = {
           [db.fn('AVG', db.col('paid')), 'average'],
           [db.fn('MIN', db.col('paid')), 'minimum'],
           [db.fn('MAX', db.col('paid')), 'maximum'],
-          [db.fn('COUNT', db.col('paid')), 'total']
+          [db.fn('SUM', db.col('paid')), 'total'],
+          [db.fn('COUNT', db.col('paid')), 'count']
         ]
       },
       include: [Series]
@@ -92,17 +44,31 @@ module.exports = {
       attributes: [
         [db.col('series.type'), 'type'],
         [db.fn('strftime', '%Y-%m', db.col('volume.boughtDate')), 'group'],
-        [db.fn('COUNT', db.col('volume.id')), 'count']
+        [db.fn('COUNT', db.col('volume.id')), 'count'],
+        [db.fn('SUM', db.col('volume.paid')), 'expenditure']
       ],
       include: [Series]
     });
 
+    const retailerData = await Volume.findAll({
+      where,
+      raw: true,
+      group: ['series.type', 'retailer.id'],
+      attributes: [
+        [db.col('series.type'), 'type'],
+        [db.col('retailer.name'), 'name'],
+        [db.fn('COUNT', db.col('volume.id')), 'value']
+      ],
+      include: [Series, Retailer]
+    });
+
     return {
       aggregates: [
-        mapStatsToResponse(comicStat),
-        mapStatsToResponse(mangaStat)
+        mapDataToAggregates(comicStat),
+        mapDataToAggregates(mangaStat)
       ],
-      byMonthCounts: mapGroupCounts(filters, graphData)
+      byMonthCounts: mapDataToGroupCounts(filters, graphData),
+      proportions: [mapDataToProportion('Retailers', retailerData)]
     };
   }
 };
