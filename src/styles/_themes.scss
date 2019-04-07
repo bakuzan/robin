@@ -124,6 +124,13 @@
     .calendar {
       background-color: $base-background;
     }
+    .view-shift-button,
+    .view-toggle-button,
+    .calendar-view__option-button {
+      &:hover {
+        @include lightenOrDarken('background-color', $base-background);
+      }
+    }
     .calendar-view__option-button--selected {
       background-color: $primary-background;
       color: $primary-colour;

@@ -17,6 +17,16 @@ $full-size-minus-padding: calc(100% - 5px);
     margin-bottom: -3px; // dont know why it doesnt line up
     box-sizing: content-box;
     cursor: pointer;
+    &::after {
+      -webkit-transform: translateY(-50%);
+      content: '\2335';
+      font-weight: 700;
+      pointer-events: none;
+      position: absolute;
+      right: 5px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
   }
   &__list {
     padding: $app--padding;

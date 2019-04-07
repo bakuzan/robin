@@ -86,10 +86,6 @@
   &:before {
     font-size: 1.25em !important;
   }
-
-  &:hover {
-    background-color: darken($calendar--view-shift-button-colour, 5%);
-  }
 }
 .date-selector__button {
   min-width: 24px;

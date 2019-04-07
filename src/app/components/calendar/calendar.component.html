@@ -1,4 +1,5 @@
 <div
+  (appOutsideClick)="handleOutsideClick($event)"
   [id]="id + '-calendar'"
   [class]="calendarClasses"
   [ngClass]="{ 'calendar--flat': isFlat, 'calendar--read-only': disabled }"
@@ -11,6 +12,7 @@
       (click)="handleViewShift(-1)"
     ></app-rbn-button>
     <app-rbn-button
+      class="view-toggle-button"
       [waiAriaLabel]="'Toggle between month and year view'"
       (click)="toggleViewMode()"
     >

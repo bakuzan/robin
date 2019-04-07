@@ -16,6 +16,8 @@
     <label for="{{ id }}-multiselect">{{ label }}</label>
   </div>
   <div
+    *ngIf="isOpen"
+    (appOutsideClick)="handleToggleClose($event)"
     [class]="dropdownClasses"
     [ngClass]="{ 'multi-select__dropdown-container--is-open': this.isOpen }"
   >
@@ -30,15 +32,14 @@
         </app-tickbox>
       </li>
       <li class="multi-select__separator"></li>
-      <li *ngFor="let op of optionsSelected; let i = index">
+      <li *ngFor="let op of options; let i = index">
         <app-tickbox
           [name]="getName(i)"
-          [(ngModel)]="op.selected"
-          (ngModelChange)="handleOptionChange($event)"
+          [checked]="value.includes(op.value)"
+          (change)="handleOptionChange(op.value)"
           >{{ op.text }}</app-tickbox
         >
       </li>
     </ul>
-    <app-backdrop (close)="handleToggleClose()"></app-backdrop>
   </div>
 </div>

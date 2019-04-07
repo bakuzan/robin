@@ -26,6 +26,7 @@ import { Icons } from 'src/app/common/constants';
 })
 export class CalendarComponent implements OnInit {
   private timer: number = null;
+  private blockOutsideClickHack = false;
   prevIcon = Icons.left;
   nextIcon = Icons.right;
   isMonthView = true;
@@ -54,6 +55,8 @@ export class CalendarComponent implements OnInit {
   isFlat? = false;
   @Output()
   select = new EventEmitter<string>();
+  @Output()
+  close = new EventEmitter<Event>();
 
   constructor() {}
 
@@ -145,11 +148,21 @@ export class CalendarComponent implements OnInit {
         new Date(oldViewDate.getFullYear(), monthIndex, 1)
       );
 
+      this.blockOutsideClickHack = true;
       this.isMonthView = true;
       this.viewDate = viewDate;
       this.setViewDerivedState(true);
       this.setFocus(viewDate);
     }
+  }
+
+  handleOutsideClick(e: Event) {
+    if (this.blockOutsideClickHack) {
+      this.blockOutsideClickHack = false;
+      return;
+    }
+
+    this.close.emit(e);
   }
 
   private setViewDerivedState(isMonthView: boolean) {

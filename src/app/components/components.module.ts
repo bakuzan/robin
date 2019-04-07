@@ -9,7 +9,6 @@ import { InputBoxComponent } from './input-box/input-box.component';
 import { RbnButtonComponent } from './rbn-button/rbn-button.component';
 import { MultiSelectComponent } from './multi-select/multi-select.component';
 import { TickboxComponent } from './tickbox/tickbox.component';
-import { BackdropComponent } from './backdrop/backdrop.component';
 import { SelectBoxComponent } from './select-box/select-box.component';
 import { ListComponent } from './list/list.component';
 import { RadioButtonComponent } from './radio-button/radio-button.component';
@@ -25,6 +24,7 @@ import { DropdownMenuComponent } from './dropdown-menu/dropdown-menu.component';
 import { AppSettingsComponent } from './app-settings/app-settings.component';
 import { DatepickerComponent } from './datepicker/datepicker.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { OutsideClickDirective } from './outside-click.directive';
 
 @NgModule({
   imports: [AppRoutingModule, CommonModule, FormsModule],
@@ -35,7 +35,6 @@ import { CalendarComponent } from './calendar/calendar.component';
     RbnButtonComponent,
     MultiSelectComponent,
     TickboxComponent,
-    BackdropComponent,
     SelectBoxComponent,
     ListComponent,
     RadioButtonComponent,
@@ -50,7 +49,8 @@ import { CalendarComponent } from './calendar/calendar.component';
     DropdownMenuComponent,
     AppSettingsComponent,
     DatepickerComponent,
-    CalendarComponent
+    CalendarComponent,
+    OutsideClickDirective
   ],
   exports: [
     LogoComponent,
@@ -59,7 +59,6 @@ import { CalendarComponent } from './calendar/calendar.component';
     RbnButtonComponent,
     MultiSelectComponent,
     TickboxComponent,
-    BackdropComponent,
     SelectBoxComponent,
     ListComponent,
     RadioButtonComponent,

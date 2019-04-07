@@ -51,8 +51,8 @@ export class DropdownMenuComponent implements OnInit {
     return this.align === Strings.left
       ? { top: `${top}px`, left: `${left}px` }
       : this.align === Strings.right
-        ? { top: `${top}px`, right: `${right}px` }
-        : { top: `${top}px` };
+      ? { top: `${top}px`, right: `${right}px` }
+      : { top: `${top}px` };
   }
 
   get dropdownMenuClasses(): string {
@@ -63,7 +63,7 @@ export class DropdownMenuComponent implements OnInit {
     );
   }
 
-  toggleDropdown(event) {
+  toggleDropdown(event: Event) {
     const position = getElementCoordinates(event.target);
     this.position = position;
     this.isDropdownOpen = !this.isDropdownOpen;

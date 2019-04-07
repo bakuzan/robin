@@ -52,10 +52,6 @@
     [beforeDate]="beforeDate"
     [disabled]="disabled"
     (select)="handleDateSelect($event)"
-  ></app-calendar>
-  <app-backdrop
-    *ngIf="!isFlat && displayCalendar"
-    [controlNode]="container"
     (close)="closeCalendar($event)"
-  ></app-backdrop>
+  ></app-calendar>
 </div>

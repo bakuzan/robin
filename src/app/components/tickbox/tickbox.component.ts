@@ -59,7 +59,9 @@ export class TickboxComponent implements OnInit, ControlValueAccessor {
     checkbox[action]('input-box--disabled');
   }
 
-  handleChange(value) {
-    this.onChange(value);
+  handleChange(value: boolean) {
+    if (this.onChange) {
+      this.onChange(value);
+    }
   }
 }

@@ -30,7 +30,7 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
   hasAllSelected: boolean;
   onChange: Function;
   onTouched: Function;
-  optionsSelected: any[];
+  // optionsSelected: any[];
   @Input()
   id: string;
   @Input()
@@ -40,7 +40,7 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
   @Input()
   placeholder: string;
   @Input()
-  value: SelectOptionValue[];
+  value: SelectOptionValue[] = [];
   @Input()
   options: SelectOption[];
   @Input()
@@ -51,26 +51,11 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
   ngOnInit() {
     this.selectAllName = `${this.id}--selectAll`;
     this.dropdownClasses = this.getDropdownClasses();
-    this.optionsSelected = this.options.map((x) => ({
-      ...x,
-      selected: false
-    }));
   }
 
   writeValue(obj: SelectOptionValue[]): void {
     this.value = obj;
-    const value = this.value;
-
-    /* Set derived values 
-      - display text
-      - check all state
-      - selected options
-    */
-    this.displayValue = this.getDisplayValue(value);
-    this.hasAllSelected = this.checkIfAllSelected(value);
-    this.optionsSelected.forEach(
-      (x) => (x.selected = value && value.includes(x.value))
-    );
+    this.update(obj, true);
   }
   registerOnChange(fn: any): void {
     this.onChange = fn;
@@ -86,11 +71,11 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
     return classNames('multi-select__dropdown-container', this.listClassName);
   }
 
-  getName(i) {
+  getName(i: number) {
     return `${this.id}--${OPTION_PREFIX}${i}`;
   }
 
-  getDisplayValue(values): string {
+  getDisplayValue(values: SelectOptionValue[]): string {
     const length = values && values.length;
     if (!length) {
       return '';
@@ -102,14 +87,18 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
     return `${length} selected`;
   }
 
-  checkIfAllSelected(values): boolean {
+  checkIfAllSelected(values: SelectOptionValue[]): boolean {
     return values && values.length === this.options.length;
   }
 
-  handleToggleOpen(e) {
-    if (e.type !== Strings.events.click && !OPEN_KEYS.includes(e.keyCode)) {
-      return;
+  handleToggleOpen(e: Event) {
+    if (e.type !== Strings.events.click) {
+      const key = (e as KeyboardEvent).key;
+      if (!OPEN_KEYS.includes(key)) {
+        return;
+      }
     }
+
     e.stopPropagation();
     this.isOpen = true;
   }
@@ -118,22 +107,25 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
     this.isOpen = false;
   }
 
-  handleOptionChange() {
-    const value = this.optionsSelected
-      .filter((x) => x.selected)
-      .map((x) => x.value);
+  handleOptionChange(optionValue: SelectOptionValue) {
+    const newValues = this.value.includes(optionValue)
+      ? this.value.filter((x) => x !== optionValue)
+      : [...this.value, optionValue];
 
-    this.onChange(value);
-
-    this.displayValue = this.getDisplayValue(value);
-    this.hasAllSelected = this.checkIfAllSelected(value);
+    this.update(newValues);
   }
 
-  handleSelectAll(value) {
+  handleSelectAll(value: boolean) {
     const newValues = value ? this.options.map((x) => x.value) : [];
-    this.optionsSelected.forEach((x) => (x.selected = value));
 
-    this.onChange(newValues);
+    this.update(newValues);
+  }
+
+  private update(newValues: SelectOptionValue[], blockChange = false) {
+    if (!blockChange) {
+      this.onChange(newValues);
+      this.writeValue(newValues);
+    }
     this.displayValue = this.getDisplayValue(newValues);
     this.hasAllSelected = this.checkIfAllSelected(newValues);
   }
