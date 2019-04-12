@@ -135,5 +135,9 @@
       background-color: $primary-background;
       color: $primary-colour;
     }
+
+    .unbought-volumes.unbought-volumes {
+      border-color: $active-background;
+    }
   }
 }

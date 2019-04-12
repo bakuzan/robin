@@ -11,6 +11,7 @@ const Query = gql`
     retailers: [Retailer]
 
     dashboard(filters: DashboardFilters!): Dashboard
+    unboughtVolumes: [Volume]
   }
 `;
 

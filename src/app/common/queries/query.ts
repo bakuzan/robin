@@ -78,6 +78,19 @@ const getDashboard = gql`
   }
 `;
 
+const getUnboughtVolumes = gql`
+  query UnboughtVolumes {
+    unboughtVolumes {
+      ...VolumeFields
+      series {
+        id
+        name
+      }
+    }
+  }
+  ${Fragments.volumeFields}
+`;
+
 const exportVolumes = gql`
   query exportVolumes($filters: VolumeFilter!) {
     export(filters: $filters) {
@@ -94,5 +107,6 @@ export default {
   getVolumesForFilters,
   getRetailers,
   getDashboard,
+  getUnboughtVolumes,
   exportVolumes
 };

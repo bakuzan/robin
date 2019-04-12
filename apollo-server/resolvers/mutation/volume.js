@@ -26,7 +26,7 @@ module.exports = {
         { ...args, retailerId },
         { where: { id }, transaction }
       );
-      return Volume.findById(id, { transaction });
+      return Volume.findByPk(id, { transaction });
     });
   }
 };

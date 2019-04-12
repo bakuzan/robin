@@ -57,6 +57,7 @@ function checkIfDatePartsMatch(
 
 const daysInMonth = (month: number, year: number) =>
   new Date(year, month, 0).getDate();
+
 function getDaysInMonthForDate(date: string | number | Date) {
   const d = new Date(date);
   return daysInMonth(d.getMonth() + 1, d.getFullYear());
@@ -231,3 +232,8 @@ export const dateIsOutOfRange = (
     );
   }
 };
+
+export function formatDateForDisplay(date: string | number | Date) {
+  const d = new Date(date);
+  return `${pad(`${d.getDate()}`, 2)} ${getMonthName(d)} ${d.getFullYear()}`;
+}

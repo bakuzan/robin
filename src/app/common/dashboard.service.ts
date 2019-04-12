@@ -9,6 +9,7 @@ import DashboardGQL from './queries';
 import Dashboard from 'src/app/common/models/dashboard.model';
 import DateRangeFilter from './models/date-range-filter.model';
 import { AlertService } from './alert.service';
+import Volume from './models/volume.model';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -40,6 +41,29 @@ export class DashboardService {
           detail: error.message
         });
         return {} as Dashboard;
+      })
+    );
+  }
+
+  getUnboughtVolumes(): Observable<Array<Volume>> {
+    const payload = createApolloServerPayload(
+      DashboardGQL.Query.getUnboughtVolumes,
+      {}
+    );
+
+    return this.http.post(this.dashboardUrl, payload, httpOptions).pipe(
+      catchError(this.handleError<Array<Volume>>('unboughtVolumes')),
+      map((response: any) => {
+        if (response.data && response.data.unboughtVolumes) {
+          return response.data.unboughtVolumes as Array<Volume>;
+        }
+
+        const error = response.errors[0] || { message: 'Server error' };
+        this.alertService.sendError({
+          message: `Unbought Volumes Query failed`,
+          detail: error.message
+        });
+        return [] as Array<Volume>;
       })
     );
   }

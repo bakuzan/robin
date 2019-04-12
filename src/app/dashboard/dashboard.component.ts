@@ -19,8 +19,10 @@ import {
   getDaysAgo,
   getFirstDateOfMonth,
   getLastDateOfMonth,
-  isValidDate
+  isValidDate,
+  pad
 } from 'src/app/common/utils';
+import { formatDateForDisplay } from '../common/utils/calendar';
 import {
   IDashboardChartEvent,
   IDashboardPieEvent
@@ -44,10 +46,16 @@ export class DashboardComponent implements OnInit {
   @ViewChild('chartsRef')
   chartsRef: ElementRef;
   isLoading = false;
+  unboughtVolumes: Array<{
+    displayName: string;
+    link: string;
+    dueDate: string;
+  }> = [];
   filters: DateRangeFilter = {
     fromDate: getISOStringDate(getDaysAgo(today, 365)),
     toDate: getISOStringDate(today)
   };
+
   private filterParams = new BehaviorSubject<DateRangeFilter>(this.filters);
   dashboard = new Dashboard();
   volumesOverTime: IDashboardMonthCounts[];
@@ -98,6 +106,16 @@ export class DashboardComponent implements OnInit {
         this.expenditureOverTime = dashboard.byMonthCounts.slice(2);
         this.updateChartViewSize();
       });
+
+    this.dashboardService.getUnboughtVolumes().subscribe((volumes) => {
+      this.unboughtVolumes = volumes.map((x) => ({
+        displayName: `${x.series.name} #${pad(`${x.number}`, 2)}`,
+        dueDate: x.releaseDate
+          ? formatDateForDisplay(x.releaseDate)
+          : 'Unknown release date',
+        link: `/series/view/${x.series.id}`
+      }));
+    });
   }
 
   getDashboard() {

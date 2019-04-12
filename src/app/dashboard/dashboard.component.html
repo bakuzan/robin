@@ -33,6 +33,26 @@
         ></app-aggregate-widget>
       </div>
     </div>
+    <section class="unbought-volumes">
+      <header>
+        <h2 class="unbought-volumes__title">
+          {{ unboughtVolumes.length }} unbought volume(s)
+        </h2>
+      </header>
+      <app-list
+        columns="one"
+        itemClass="unbought-volumes__item"
+        [isAsync]="false"
+        [items]="unboughtVolumes"
+      >
+        <ng-template let-item="item" let-i="index">
+          <app-nav-link class="unbought-volume__link" [to]="item.link">
+            {{ item.displayName }}
+          </app-nav-link>
+          {{ item.dueDate }}
+        </ng-template>
+      </app-list>
+    </section>
   </div>
   <div class="dashboard__column dashboard__charts charts" #chartsRef>
     <div class="dashboard__chart">

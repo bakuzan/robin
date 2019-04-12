@@ -22,6 +22,6 @@ module.exports = {
   },
   seriesById(_, args) {
     const { id } = args;
-    return Series.findById(id);
+    return Series.findByPk(id);
   }
 };

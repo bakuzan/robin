@@ -70,5 +70,14 @@ module.exports = {
       byMonthCounts: mapDataToGroupCounts(filters, graphData),
       proportions: [mapDataToProportion('Retailers', retailerData)]
     };
+  },
+  async unboughtVolumes() {
+    return await Volume.findAll({
+      where: {
+        boughtDate: null
+      },
+      order: [['releaseDate', 'ASC']],
+      include: [Series]
+    });
   }
 };

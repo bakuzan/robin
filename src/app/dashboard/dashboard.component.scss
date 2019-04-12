@@ -99,3 +99,13 @@
     }
   }
 }
+
+.unbought-volumes {
+  padding: 5px;
+  border: 1px dashed transparent;
+
+  &__title {
+    margin: 5px;
+    font-size: 1.2em;
+  }
+}

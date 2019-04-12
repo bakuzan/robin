@@ -81,3 +81,9 @@ $columns: (
     @include gridColumnsForPercentage(20);
   }
 }
+
+// List item overrides
+.unbought-volumes__item {
+  flex-direction: column;
+  align-items: flex-start;
+}

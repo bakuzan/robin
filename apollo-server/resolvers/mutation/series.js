@@ -48,7 +48,7 @@ module.exports = {
 
     return db.transaction(async (transaction) => {
       await Series.update({ ...args }, { where: { id }, transaction });
-      const instance = await Series.findById(id, { transaction });
+      const instance = await Series.findByPk(id, { transaction });
       await instance.setVolumes(existingItemIds, { transaction });
       return instance;
     });
