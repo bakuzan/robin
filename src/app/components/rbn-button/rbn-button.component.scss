@@ -89,10 +89,11 @@
 }
 .date-selector__button {
   min-width: 24px;
+  padding: 0;
   margin: {
     top: 15px;
     bottom: 0px;
-    left: -30px;
+    left: -25px;
     right: 0;
   }
   z-index: map-get($z-index, wafer);
@@ -100,6 +101,6 @@
   // This is a fiddle to ensure buttons on
   // one line in cases of 1 or 2 buttons
   &--clear {
-    margin-left: 0;
+    margin-left: -50px;
   }
 }

@@ -22,15 +22,6 @@
       (ngModelChange)="handleDateChange($event)"
     ></app-input-box>
     <app-rbn-button
-      *ngIf="!isFlat"
-      class="date-selector__button"
-      [waiAriaLabel]="'Open calendar'"
-      btn-size="small"
-      [icon]="calendarIcon"
-      [disabled]="disabled"
-      (click)="openCalendar($event)"
-    ></app-rbn-button>
-    <app-rbn-button
       *ngIf="!isFlat && displayClearButton"
       class="date-selector__button date-selector__button--clear"
       [waiAriaLabel]="'Clear date'"
@@ -38,6 +29,15 @@
       [icon]="clearIcon"
       [disabled]="disabled"
       (click)="clearAndFocusInput()"
+    ></app-rbn-button>
+    <app-rbn-button
+      *ngIf="!isFlat"
+      class="date-selector__button"
+      [waiAriaLabel]="'Open calendar'"
+      btn-size="small"
+      [icon]="calendarIcon"
+      [disabled]="disabled"
+      (click)="openCalendar($event)"
     ></app-rbn-button>
   </div>
   <div *ngIf="!isFlat && errorMessage" class="date-selector__error-message">
