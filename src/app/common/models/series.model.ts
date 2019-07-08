@@ -7,4 +7,5 @@ export default class Series {
   type: SeriesType = null;
   volumeCount: number = null;
   volumes: Volume[] = [];
+  volumeAverage: string;
 }

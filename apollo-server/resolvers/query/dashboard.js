@@ -1,6 +1,8 @@
 const Op = require('sequelize').Op;
 const { db, Series, Volume, Retailer } = require('../../connectors');
 
+const { SeriesStatuses } = require('../../constants/enums');
+const { displayAs2dp } = require('../../utils');
 const RBNDate = require('../../utils/date');
 const validateFromDate = require('../../utils/validate-from-date');
 const {
@@ -72,12 +74,42 @@ module.exports = {
     };
   },
   async unboughtVolumes() {
-    return await Volume.findAll({
+    const unbought = await Volume.findAll({
+      raw: true,
       where: {
-        boughtDate: null
+        boughtDate: null,
+        status: db.where(db.col('series.status'), {
+          [Op.in]: [SeriesStatuses.Planned, SeriesStatuses.Ongoing]
+        })
       },
       order: [['releaseDate', 'ASC']],
       include: [Series]
+    });
+
+    const seriesIds = unbought.map((x) => x[`series.id`]);
+
+    const seriesAverages = await Volume.findAll({
+      raw: true,
+      group: 'series.id',
+      attributes: [
+        [db.col('series.id'), 'seriesId'],
+        [db.fn('AVG', db.col('paid')), 'average']
+      ],
+      where: {
+        seriesId: db.where(db.col('series.id'), { [Op.in]: seriesIds })
+      },
+      include: [Series]
+    });
+
+    return unbought.map((x) => {
+      const seriesId = x[`series.id`];
+      const seriesAvg = seriesAverages.find((sa) => sa.seriesId === seriesId);
+      const volumeAverage = seriesAvg ? displayAs2dp(seriesAvg.average) : null;
+
+      return {
+        ...x,
+        series: { id: seriesId, name: x[`series.name`], volumeAverage }
+      };
     });
   }
 };

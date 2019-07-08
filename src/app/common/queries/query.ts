@@ -81,14 +81,16 @@ const getDashboard = gql`
 const getUnboughtVolumes = gql`
   query UnboughtVolumes {
     unboughtVolumes {
-      ...VolumeFields
+      id
+      number
+      releaseDate
       series {
         id
         name
+        volumeAverage
       }
     }
   }
-  ${Fragments.volumeFields}
 `;
 
 const exportVolumes = gql`

@@ -49,7 +49,10 @@
           <app-nav-link class="unbought-volume__link" [to]="item.link">
             {{ item.displayName }}
           </app-nav-link>
-          {{ item.dueDate }}
+          <div>{{ item.volumeAverage }}</div>
+          <div>
+            {{ item.dueDate }}
+          </div>
         </ng-template>
       </app-list>
     </section>

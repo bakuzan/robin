@@ -8,6 +8,7 @@ module.exports = gql`
     status: SeriesStatus
     volumeCount: Int
     volumes(sort: VolumeSortOrder): [Volume]
+    volumeAverage: String
   }
   input SeriesFilter {
     search: String

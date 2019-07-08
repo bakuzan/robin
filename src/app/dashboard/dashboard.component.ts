@@ -50,6 +50,7 @@ export class DashboardComponent implements OnInit {
     displayName: string;
     link: string;
     dueDate: string;
+    volumeAverage: string;
   }> = [];
   filters: DateRangeFilter = {
     fromDate: getISOStringDate(getDaysAgo(today, 365)),
@@ -108,13 +109,19 @@ export class DashboardComponent implements OnInit {
       });
 
     this.dashboardService.getUnboughtVolumes().subscribe((volumes) => {
-      this.unboughtVolumes = volumes.map((x) => ({
-        displayName: `${x.series.name} #${pad(`${x.number}`, 2)}`,
-        dueDate: x.releaseDate
-          ? formatDateForDisplay(x.releaseDate)
-          : 'Unknown release date',
-        link: `/series/view/${x.series.id}`
-      }));
+      this.unboughtVolumes = volumes.map((x) => {
+        const { series } = x;
+        return {
+          displayName: `${series.name} #${pad(`${x.number}`, 2)}`,
+          dueDate: x.releaseDate
+            ? formatDateForDisplay(x.releaseDate)
+            : 'Unknown release date',
+          volumeAverage: series.volumeAverage
+            ? `£ ${series.volumeAverage} (avg)`
+            : `No average data`,
+          link: `/series/view/${series.id}`
+        };
+      });
     });
   }
 
