@@ -43,7 +43,7 @@ import SeriesType from 'src/app/common/models/series-types.enum';
 })
 export class SeriesCreateComponent implements OnInit {
   private seriesId: number;
-  @ViewChild('chartRef')
+  @ViewChild('chartRef', { static: false })
   chartRef: ElementRef;
   isLoading = false;
   data: RouteData;

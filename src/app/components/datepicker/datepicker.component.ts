@@ -38,7 +38,7 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
   calendarIcon = Icons.calendar;
   clearIcon = Icons.cross;
   selected?: string | Date;
-  @ViewChild('container')
+  @ViewChild('container', { static: false })
   container: ElementRef;
   @Input()
   class?: string;
@@ -82,7 +82,7 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
   }
 
   get dateInput() {
-    const self = this.container.nativeElement;
+    const self = this.container && this.container.nativeElement;
     if (self) {
       return self.querySelector('input');
     }
@@ -117,8 +117,8 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
     this.errorMessage = dateIsOutOfRange
       ? ErrorMessages.dateIsOutOfRange
       : !date && required
-        ? ErrorMessages.isRequired
-        : null;
+      ? ErrorMessages.isRequired
+      : null;
 
     const hasError = !!this.errorMessage;
     this.writeValue(date);

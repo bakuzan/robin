@@ -1,10 +1,10 @@
 import {
   Component,
-  OnInit,
   Input,
   Renderer2,
   ViewChild,
-  forwardRef
+  forwardRef,
+  ElementRef
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
@@ -20,13 +20,13 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
   ]
 })
-export class RadioButtonComponent implements OnInit, ControlValueAccessor {
+export class RadioButtonComponent implements ControlValueAccessor {
   tickboxClasses: string;
   checked: boolean;
   onTouched: () => void;
   onChange: (_: any) => void;
-  @ViewChild('radio')
-  radio;
+  @ViewChild('radio', { read: ElementRef, static: false })
+  radio: ElementRef;
   @Input()
   id: string;
   @Input()
@@ -40,19 +40,24 @@ export class RadioButtonComponent implements OnInit, ControlValueAccessor {
 
   constructor(private _renderer: Renderer2) {}
 
-  ngOnInit() {}
+  writeValue(v: string | number | boolean): void {
+    if (!this.radio) {
+      return;
+    }
 
-  writeValue(v: boolean): void {
     const radio = this.radio.nativeElement;
     const checked = v === radio.value;
     this._renderer.setProperty(radio, 'checked', checked);
   }
+
   registerOnChange(fn: (_: any) => void): void {
     this.onChange = fn;
   }
+
   registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
+
   setDisabledState?(isDisabled: boolean): void {
     const radio = this.radio.nativeElement;
     const action = isDisabled ? 'addClass' : 'removeClass';
@@ -60,8 +65,9 @@ export class RadioButtonComponent implements OnInit, ControlValueAccessor {
     radio[action]('radio__input--disabled');
   }
 
-  handleChange(event) {
+  handleChange(event: Event) {
     event.stopPropagation();
+
     const radio = this.radio.nativeElement;
     this._renderer.setProperty(radio, 'checked', true);
     this.onChange(this.value);

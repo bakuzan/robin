@@ -43,7 +43,7 @@ export class DashboardComponent implements OnInit {
   private mangaColour = '#3366cc';
   private rightHandSideSpacing = 30;
   private pieSpacing = 15;
-  @ViewChild('chartsRef')
+  @ViewChild('chartsRef', { static: false })
   chartsRef: ElementRef;
   isLoading = false;
   unboughtVolumes: Array<{

@@ -4,7 +4,8 @@ import {
   Input,
   Renderer2,
   ViewChild,
-  forwardRef
+  forwardRef,
+  ElementRef
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import classNames from 'classnames';
@@ -25,8 +26,8 @@ export class TickboxComponent implements OnInit, ControlValueAccessor {
   tickboxClasses: string;
   onTouched: () => void;
   onChange: (_: any) => void;
-  @ViewChild('checkbox')
-  checkbox;
+  @ViewChild('checkbox', { static: false })
+  checkbox: ElementRef;
   @Input()
   name: string;
   @Input()
@@ -43,6 +44,10 @@ export class TickboxComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(value: boolean): void {
+    if (!this.checkbox) {
+      return;
+    }
+
     const checkbox = this.checkbox.nativeElement;
     this._renderer.setProperty(checkbox, 'checked', value);
   }

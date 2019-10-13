@@ -16,7 +16,7 @@ import ListColumn from './list-column.enum';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-  @ContentChild(TemplateRef)
+  @ContentChild(TemplateRef, { static: false })
   itemTemplate: TemplateRef<any>;
   listClasses: string;
   listItemClasses: string;

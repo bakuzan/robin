@@ -35,7 +35,7 @@ export class InputBoxComponent implements OnInit, ControlValueAccessor {
   onTouched: Function;
   classes: string;
   clearClasses: string;
-  @ViewChild('input')
+  @ViewChild('input', { static: false })
   input: ElementRef;
   @Input()
   id: string;
@@ -91,6 +91,10 @@ export class InputBoxComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(value: string): void {
+    if (!this.input) {
+      return;
+    }
+
     const input = this.input.nativeElement;
     this.renderer.setProperty(input, 'value', value);
   }

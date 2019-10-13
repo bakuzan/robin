@@ -6,7 +6,8 @@ import {
   EventEmitter,
   Renderer2,
   ViewChild,
-  forwardRef
+  forwardRef,
+  ElementRef
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import classNames from 'classnames';
@@ -29,8 +30,8 @@ export class SelectBoxComponent implements OnInit, ControlValueAccessor {
   onChange: (_: any) => void;
   onTouched: () => void;
   selectedValue: string;
-  @ViewChild('select')
-  select;
+  @ViewChild('select', { static: false })
+  select: ElementRef;
   @Input()
   label: string;
   @Input()
