@@ -30,7 +30,7 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
   hasAllSelected: boolean;
   onChange: Function;
   onTouched: Function;
-  // optionsSelected: any[];
+
   @Input()
   id: string;
   @Input()
@@ -53,8 +53,13 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
     this.dropdownClasses = this.getDropdownClasses();
   }
 
+  get lastCheckBoxId() {
+    const lastIndex = this.options.length - 1;
+    return `${this.getName(lastIndex)}-tickbox`;
+  }
+
   writeValue(obj: SelectOptionValue[]): void {
-    this.value = obj;
+    this.value = obj || [];
     this.update(obj, true);
   }
   registerOnChange(fn: any): void {
@@ -119,6 +124,14 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
     const newValues = value ? this.options.map((x) => x.value) : [];
 
     this.update(newValues);
+  }
+
+  updateFocusOnClose() {
+    const inp = document.getElementById(`${this.id}-multiselect`);
+
+    if (inp) {
+      requestAnimationFrame(() => inp.focus());
+    }
   }
 
   private update(newValues: SelectOptionValue[], blockChange = false) {

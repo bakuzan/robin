@@ -33,8 +33,9 @@
     <app-rbn-button
       *ngIf="!isFlat"
       class="date-selector__button"
-      [waiAriaLabel]="'Open calendar'"
       btn-size="small"
+      [id]="id + '-calendarButton'"
+      [waiAriaLabel]="'Open calendar'"
       [icon]="calendarIcon"
       [disabled]="disabled"
       (click)="openCalendar($event)"

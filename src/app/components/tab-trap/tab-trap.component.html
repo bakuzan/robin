@@ -1,0 +1,15 @@
+<ng-container #container>
+  <input
+    *ngIf="isActive"
+    type="text"
+    class="tab-trap tab-trap--top"
+    (focus)="focusCycler($event)"
+  />
+  <ng-content></ng-content>
+  <input
+    *ngIf="isActive"
+    type="text"
+    class="tab-trap tab-trap--bottom"
+    (focus)="focusCycler($event)"
+  />
+</ng-container>

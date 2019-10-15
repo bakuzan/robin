@@ -1,24 +1,29 @@
 const { displayAs2dp } = require('../index');
 
-module.exports = function mapDataToAggregates(derviedStats = {}) {
+function displayAs2dpWithFallback(v) {
+  const v2 = displayAs2dp(v);
+  return v2 ? `£ ${v2}` : 'N/A';
+}
+
+module.exports = function mapDataToAggregates(label, derviedStats = {}) {
   return {
-    label: derviedStats['series.type'],
+    label,
     statistics: [
       {
         label: 'Average',
-        value: `£ ${displayAs2dp(derviedStats.average)}`
+        value: displayAs2dpWithFallback(derviedStats.average)
       },
       {
         label: 'Minimum',
-        value: `£ ${displayAs2dp(derviedStats.minimum)}`
+        value: displayAs2dpWithFallback(derviedStats.minimum)
       },
       {
         label: 'Maximum',
-        value: `£ ${displayAs2dp(derviedStats.maximum)}`
+        value: displayAs2dpWithFallback(derviedStats.maximum)
       },
       {
         label: 'Total',
-        value: `£ ${displayAs2dp(derviedStats.total)}`
+        value: displayAs2dpWithFallback(derviedStats.total)
       },
       {
         label: 'Count',

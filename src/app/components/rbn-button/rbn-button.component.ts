@@ -26,6 +26,8 @@ export class RbnButtonComponent implements OnInit {
   @Input()
   class: string;
   @Input()
+  id?: string;
+  @Input()
   name?: string;
   @Input()
   waiAriaLabel: string;

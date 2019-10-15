@@ -10,3 +10,16 @@ export interface ICalendarViewOption {
   className?: string;
   isDummy: boolean;
 }
+
+export interface ICalendarDisplayViewOption {
+  key: string;
+  id: string;
+  option: ICalendarViewOption;
+  isSelected: boolean;
+  disableDate: boolean;
+  title: string;
+  ariaLabel: string;
+  isDummyDay: boolean;
+  isOutOfRange: boolean;
+  tabIndex: number;
+}

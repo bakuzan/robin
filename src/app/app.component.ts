@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
             '/'
           );
 
-          const pageTitle = `Robin - ${pageName}`;
+          const pageTitle = `${pageName} | Robin`;
           this.titleService.setTitle(pageTitle);
         }
       });

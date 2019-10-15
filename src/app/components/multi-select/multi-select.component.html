@@ -16,30 +16,39 @@
     <label for="{{ id }}-multiselect">{{ label }}</label>
   </div>
   <div
-    *ngIf="isOpen"
-    (appOutsideClick)="handleToggleClose($event)"
     [class]="dropdownClasses"
     [ngClass]="{ 'multi-select__dropdown-container--is-open': this.isOpen }"
+    [attr.aria-hidden]="!isOpen"
+    (appOutsideClick)="handleToggleClose()"
   >
-    <ul class="multi-select__list">
-      <li>
-        <app-tickbox
-          [name]="selectAllName"
-          [(ngModel)]="hasAllSelected"
-          (ngModelChange)="handleSelectAll($event)"
-        >
-          Select All
-        </app-tickbox>
-      </li>
-      <li class="multi-select__separator"></li>
-      <li *ngFor="let op of options; let i = index">
-        <app-tickbox
-          [name]="getName(i)"
-          [checked]="value.includes(op.value)"
-          (change)="handleOptionChange(op.value)"
-          >{{ op.text }}</app-tickbox
-        >
-      </li>
-    </ul>
+    <app-tab-trap
+      [isActive]="isOpen"
+      [firstId]="selectAllName + '-tickbox'"
+      [lastId]="lastCheckBoxId"
+      (deactivate)="updateFocusOnClose()"
+    >
+      <ul class="multi-select__list">
+        <li>
+          <app-tickbox
+            [id]="selectAllName"
+            [name]="selectAllName"
+            [(ngModel)]="hasAllSelected"
+            (ngModelChange)="handleSelectAll($event)"
+          >
+            Select All
+          </app-tickbox>
+        </li>
+        <li class="multi-select__separator"></li>
+        <li *ngFor="let op of options; let i = index">
+          <app-tickbox
+            [id]="getName(i)"
+            [name]="getName(i)"
+            [checked]="value.includes(op.value)"
+            (change)="handleOptionChange(op.value)"
+            >{{ op.text }}</app-tickbox
+          >
+        </li>
+      </ul>
+    </app-tab-trap>
   </div>
 </div>

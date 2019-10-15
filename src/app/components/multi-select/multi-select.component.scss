@@ -11,12 +11,14 @@ $full-size-minus-padding: calc(100% - 5px);
   min-width: 100px;
   min-height: 25px;
   border: none;
+
   &__display {
     padding: 5px;
     min-height: 35px;
     margin-bottom: -3px; // dont know why it doesnt line up
     box-sizing: content-box;
     cursor: pointer;
+
     &::after {
       -webkit-transform: translateY(-50%);
       content: '\2335';
@@ -28,6 +30,7 @@ $full-size-minus-padding: calc(100% - 5px);
       transform: translateY(-50%);
     }
   }
+
   &__list {
     padding: $app--padding;
     margin: $app--margin 0;
@@ -35,18 +38,20 @@ $full-size-minus-padding: calc(100% - 5px);
     list-style-type: none;
     z-index: map-get($z-index, above-siblings);
   }
+
   &__separator {
     height: 1px;
     border-bottom: 1px solid;
     opacity: 0.2;
   }
+
   &__dropdown-container {
+    @extend %standard-shadow;
+    display: none;
     position: absolute;
     top: $full-size-minus-padding;
     left: 5px;
-    display: none;
     width: $full-size-minus-padding;
-    @extend %standard-shadow;
     z-index: map-get($z-index, above-siblings);
 
     &--is-open {

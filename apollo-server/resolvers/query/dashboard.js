@@ -1,7 +1,7 @@
 const Op = require('sequelize').Op;
 const { db, Series, Volume, Retailer } = require('../../connectors');
 
-const { SeriesStatuses } = require('../../constants/enums');
+const { SeriesStatuses, SeriesTypes } = require('../../constants/enums');
 const { displayAs2dp } = require('../../utils');
 const RBNDate = require('../../utils/date');
 const validateFromDate = require('../../utils/validate-from-date');
@@ -66,8 +66,8 @@ module.exports = {
 
     return {
       aggregates: [
-        mapDataToAggregates(comicStat),
-        mapDataToAggregates(mangaStat)
+        mapDataToAggregates(SeriesTypes.Comic, comicStat),
+        mapDataToAggregates(SeriesTypes.Manga, mangaStat)
       ],
       byMonthCounts: mapDataToGroupCounts(filters, graphData),
       proportions: [mapDataToProportion('Retailers', retailerData)]

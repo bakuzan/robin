@@ -1,44 +1,66 @@
 import classNames from 'classnames';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild,
+  ElementRef,
+  OnDestroy
+} from '@angular/core';
 
+import { Icons } from 'src/app/common/constants';
 import Strings from 'src/app/common/constants/strings';
+import { generateUniqueId, getFirstDateOfMonth } from 'src/app/common/utils';
 import {
   displayMonthAndYear,
   displayYearOnly,
+  adjustDateDay,
   adjustDateMonth,
   adjustDateYear,
   formatDateForInput,
   getDaysForDate,
   getMonthsForDate,
   dateIsOutOfRange,
-  checkIfSelectedForView
+  checkIfSelectedForView,
+  addDateSuffix,
+  startOfDay,
+  checkIfDatePartsMatch
 } from 'src/app/common/utils/calendar';
 import {
   ICalendarViewOption,
+  ICalendarDisplayViewOption,
   ViewOptionEnum
 } from 'src/app/common/models/calendar-view-option.model';
-import { Icons } from 'src/app/common/constants';
+import keyCodes, {
+  OPEN_KEYS,
+  ARROW_KEYS
+} from 'src/app/common/constants/key-codes';
 
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss']
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, OnDestroy {
   private timer: number = null;
   private blockOutsideClickHack = false;
   prevIcon = Icons.left;
   nextIcon = Icons.right;
   isMonthView = true;
   viewDate: string;
+  focusDate: string;
   prevLabel: string;
   nextLabel: string;
-  viewOptions: ICalendarViewOption[] = [];
+  viewOptions: ICalendarDisplayViewOption[] = [];
   viewHeaders = [
     ...Strings.dayNames.slice(1),
     ...Strings.dayNames.slice(0, 1)
   ].map((str) => str.slice(0, 3));
   calendarClasses: string;
+  @ViewChild('container', { static: false })
+  container: ElementRef;
   @Input()
   id: string;
   @Input()
@@ -62,9 +84,21 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit() {
     const date = formatDateForInput(this.selected || new Date());
+
     this.viewDate = date;
+    this.focusDate = date;
     this.setViewDerivedState(this.isMonthView);
     this.calendarClasses = classNames('calendar', this.className);
+  }
+
+  ngOnDestroy() {
+    requestAnimationFrame(() => {
+      const btn = document.getElementById(`${this.id}-calendarButton`);
+
+      if (btn) {
+        btn.focus();
+      }
+    });
   }
 
   get viewModeText() {
@@ -73,33 +107,10 @@ export class CalendarComponent implements OnInit {
       : displayYearOnly(this.viewDate);
   }
 
-  // View Helpers START
-  isDummyDay(op: ICalendarViewOption) {
-    return op.optionType === ViewOptionEnum.DUMMY_DAY;
+  get lastOptionId() {
+    const op = this.viewOptions.find((x) => x.tabIndex === 0);
+    return op ? `option-${op.option.text || op.key}` : `${this.id}-next`;
   }
-
-  isViewOptionSelected(op: ICalendarViewOption) {
-    const { viewDate, selected } = this;
-    return checkIfSelectedForView({ selected, viewDate }, op);
-  }
-
-  isOutOfRange(op: ICalendarViewOption) {
-    const { isMonthView, viewDate, afterDate, beforeDate } = this;
-    return dateIsOutOfRange({ isMonthView, viewDate }, op, {
-      afterDate,
-      beforeDate
-    });
-  }
-
-  getAria(op: ICalendarViewOption) {
-    return op.isDummy
-      ? ''
-      : this.isOutOfRange(op)
-      ? 'Out of range'
-      : `${op.text} ${this.viewModeText}`;
-  }
-
-  // View Helpers END
 
   toggleViewMode() {
     if (this.disabled) {
@@ -107,8 +118,13 @@ export class CalendarComponent implements OnInit {
     }
 
     const mode = !this.isMonthView;
+    const matches = checkIfDatePartsMatch(this.viewDate, this.selected);
+
     this.setViewDerivedState(mode);
     this.isMonthView = mode;
+    this.focusDate = formatDateForInput(
+      new Date(matches.year && matches.month ? this.selected : this.viewDate)
+    );
   }
 
   handleViewShift(direction: number) {
@@ -122,11 +138,24 @@ export class CalendarComponent implements OnInit {
       : adjustDateYear(oldViewDate, direction);
 
     this.viewDate = viewDate;
+    this.focusDate = viewDate;
     this.setViewDerivedState(isMonthView);
   }
 
-  handleViewOptionSelect(option) {
-    if (this.disabled) {
+  handleViewOptionKeydown(
+    event: KeyboardEvent,
+    data: ICalendarDisplayViewOption
+  ) {
+    if (OPEN_KEYS.includes(event.key)) {
+      event.preventDefault();
+      this.handleViewOptionSelect(data);
+    }
+  }
+
+  handleViewOptionSelect(data: ICalendarDisplayViewOption) {
+    const option = data.option;
+
+    if (this.disabled || data.disableDate) {
       return;
     }
 
@@ -135,7 +164,11 @@ export class CalendarComponent implements OnInit {
 
     if (option.optionType === ViewOptionEnum.DAY) {
       const viewDate = formatDateForInput(
-        new Date(oldViewDate.getFullYear(), oldViewDate.getMonth(), option.text)
+        new Date(
+          oldViewDate.getFullYear(),
+          oldViewDate.getMonth(),
+          Number(option.text)
+        )
       );
 
       this.viewDate = viewDate;
@@ -147,12 +180,18 @@ export class CalendarComponent implements OnInit {
       const viewDate = formatDateForInput(
         new Date(oldViewDate.getFullYear(), monthIndex, 1)
       );
+      const matches = checkIfDatePartsMatch(viewDate, this.selected);
 
       this.blockOutsideClickHack = true;
       this.isMonthView = true;
+
       this.viewDate = viewDate;
+      this.focusDate = formatDateForInput(
+        new Date(matches.year && matches.month ? this.selected : viewDate)
+      );
+
       this.setViewDerivedState(true);
-      this.setFocus(viewDate);
+      this.setFocus();
     }
   }
 
@@ -165,31 +204,158 @@ export class CalendarComponent implements OnInit {
     this.close.emit(e);
   }
 
+  handleCalendarNavigation(event: KeyboardEvent) {
+    const { key } = event;
+    const currViewDate = new Date(this.viewDate);
+    const currFocusDate = new Date(this.focusDate);
+    let newDate = null;
+
+    if (ARROW_KEYS.includes(key)) {
+      event.preventDefault();
+    }
+
+    switch (key) {
+      case keyCodes.up:
+        newDate = this.isMonthView
+          ? adjustDateDay(currFocusDate, -7)
+          : adjustDateMonth(currFocusDate, -3);
+        break;
+      case keyCodes.down:
+        newDate = this.isMonthView
+          ? adjustDateDay(currFocusDate, 7)
+          : adjustDateMonth(currFocusDate, 3);
+        break;
+      case keyCodes.left:
+        newDate = this.isMonthView
+          ? adjustDateDay(currFocusDate, -1)
+          : adjustDateMonth(currFocusDate, -1);
+        break;
+      case keyCodes.right:
+        newDate = this.isMonthView
+          ? adjustDateDay(currFocusDate, 1)
+          : adjustDateMonth(currFocusDate, 1);
+        break;
+      default:
+        break;
+    }
+
+    if (!newDate) {
+      return;
+    }
+
+    this.viewDate = formatDateForInput(getFirstDateOfMonth(newDate));
+    this.focusDate = formatDateForInput(new Date(newDate));
+
+    const matches = checkIfDatePartsMatch(currViewDate, this.viewDate);
+    if (!matches.year || !matches.month) {
+      this.setViewDerivedState(this.isMonthView);
+    }
+
+    this.setFocus();
+  }
+
   private setViewDerivedState(isMonthView: boolean) {
-    this.prevLabel = `Move to previous ${isMonthView ? 'year' : 'month'}`;
-    this.nextLabel = `Move to next ${isMonthView ? 'year' : 'month'}`;
+    this.prevLabel = `Move to previous ${isMonthView ? 'month' : 'year'}`;
+    this.nextLabel = `Move to next ${isMonthView ? 'month' : 'year'}`;
     this.viewOptions = this.getViewOptions(isMonthView, this.viewDate);
   }
 
-  private getViewOptions(isMonthView: boolean, viewDate: string) {
-    return isMonthView ? getDaysForDate(viewDate) : getMonthsForDate();
+  private getViewOptions(
+    isMonthView: boolean,
+    viewDate: string
+  ): ICalendarDisplayViewOption[] {
+    const opts = isMonthView ? getDaysForDate(viewDate) : getMonthsForDate();
+
+    return opts.map((option) => {
+      const key = generateUniqueId();
+      const id = `option-${option.text || key}`;
+      const isDummyDay = option.optionType === ViewOptionEnum.DUMMY_DAY;
+      const isOutOfRange = this.isOutOfRange(isMonthView, viewDate, option);
+
+      const isSelected = this.isViewOptionSelected(viewDate, option);
+      const disableDate = isDummyDay || isOutOfRange;
+      const title = isOutOfRange ? 'Out of range' : '';
+      const tabIndex = this.getTabIndexForOption(option);
+      const ariaLabel = isOutOfRange
+        ? title
+        : option.text
+        ? addDateSuffix(isMonthView, viewDate, option.text)
+        : null;
+
+      return {
+        key,
+        id,
+        option,
+        isSelected,
+        isDummyDay,
+        isOutOfRange,
+        disableDate,
+        title,
+        ariaLabel,
+        tabIndex
+      };
+    });
   }
 
-  // Gross, but apparently necessary to prevent focus "falling off" the calendar
-  private setFocus(viewDate: string) {
-    clearTimeout(this.timer);
-    this.timer = window.setTimeout(() => {
-      let target: HTMLButtonElement = document.querySelector(
-        '.calendar-view__option--selected button'
+  private isViewOptionSelected(viewDate: string, op: ICalendarViewOption) {
+    const { selected } = this;
+    return checkIfSelectedForView({ selected, viewDate }, op);
+  }
+
+  private isOutOfRange(
+    isMonthView: boolean,
+    viewDate: string,
+    op: ICalendarViewOption
+  ) {
+    const { afterDate, beforeDate } = this;
+    return dateIsOutOfRange({ isMonthView, viewDate }, op, {
+      afterDate,
+      beforeDate
+    });
+  }
+
+  private getTabIndexForOption(option: ICalendarViewOption) {
+    const viewDate = startOfDay(this.viewDate);
+    const focusDate = startOfDay(this.focusDate);
+    let optionDate = null;
+
+    if (option.optionType === ViewOptionEnum.DAY) {
+      optionDate = new Date(
+        viewDate.getFullYear(),
+        viewDate.getMonth(),
+        Number(option.text)
       );
+    } else if (option.optionType === ViewOptionEnum.MONTH) {
+      const monthIndex = Strings.monthNames.findIndex((x) => x === option.text);
 
-      if (!target) {
-        target = document.querySelector(
-          `#option-${new Date(viewDate).getDate()} button`
-        ) as HTMLButtonElement;
+      optionDate = new Date(viewDate.getFullYear(), monthIndex, 1);
+    }
+
+    if (focusDate === null || optionDate === null) {
+      return -1;
+    }
+
+    if (this.isMonthView) {
+      return focusDate.getTime() === optionDate.getTime() ? 0 : -1;
+    } else {
+      return focusDate.getMonth() === optionDate.getMonth() ? 0 : -1;
+    }
+  }
+
+  private setFocus() {
+    requestAnimationFrame(() => {
+      const container = this.container.nativeElement;
+      const focusDate = new Date(this.focusDate);
+
+      const dx = this.isMonthView
+        ? focusDate.getDate()
+        : Strings.monthNames[focusDate.getMonth()];
+
+      const target = container.querySelector(`[data-date='${dx}']`);
+
+      if (target) {
+        target.focus();
       }
-
-      target.focus();
-    }, 100);
+    });
   }
 }

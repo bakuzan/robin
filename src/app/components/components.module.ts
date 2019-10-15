@@ -25,6 +25,7 @@ import { AppSettingsComponent } from './app-settings/app-settings.component';
 import { DatepickerComponent } from './datepicker/datepicker.component';
 import { CalendarComponent } from './calendar/calendar.component';
 import { OutsideClickDirective } from './outside-click.directive';
+import { TabTrapComponent } from './tab-trap/tab-trap.component';
 
 @NgModule({
   imports: [AppRoutingModule, CommonModule, FormsModule],
@@ -50,7 +51,8 @@ import { OutsideClickDirective } from './outside-click.directive';
     AppSettingsComponent,
     DatepickerComponent,
     CalendarComponent,
-    OutsideClickDirective
+    OutsideClickDirective,
+    TabTrapComponent
   ],
   exports: [
     LogoComponent,

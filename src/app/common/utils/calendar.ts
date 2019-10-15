@@ -14,7 +14,7 @@ function setTime(date: string | number | Date, h, m, s, n) {
   return d;
 }
 
-function startOfDay(d: string | number | Date) {
+export function startOfDay(d: string | number | Date) {
   return setTime(d, 0, 0, 0, 0);
 }
 
@@ -42,7 +42,7 @@ function isBeforeOrEqual(
   return isBefore(d1, d2) || datesAreEqual(d1, d2);
 }
 
-function checkIfDatePartsMatch(
+export function checkIfDatePartsMatch(
   d1: string | number | Date,
   d2: string | number | Date
 ) {
@@ -109,6 +109,16 @@ export const displayYearOnly = (d: string | number | Date) =>
 
 export const displayMonthAndYear = (d: string | number | Date) =>
   `${getMonthName(d)} ${displayYearOnly(d)}`;
+
+export function adjustDateDay(
+  date: string | number | Date,
+  adjustment: number
+) {
+  const d = new Date(date);
+  return formatDateForInput(
+    new Date(d.getFullYear(), d.getMonth(), d.getDate() + adjustment)
+  );
+}
 
 export function adjustDateMonth(
   date: string | number | Date,
@@ -236,4 +246,33 @@ export const dateIsOutOfRange = (
 export function formatDateForDisplay(date: string | number | Date) {
   const d = new Date(date);
   return `${pad(`${d.getDate()}`, 2)} ${getMonthName(d)} ${d.getFullYear()}`;
+}
+
+/*tslint:disable:no-bitwise*/
+function ordinal(num: number) {
+  const d = num % 10;
+  return ~~((num % 100) / 10) === 1
+    ? 'th'
+    : d === 1
+    ? 'st'
+    : d === 2
+    ? 'nd'
+    : d === 3
+    ? 'rd'
+    : 'th';
+}
+/*tslint:enable:no-bitwise*/
+
+export function addDateSuffix(
+  isMonthView: boolean,
+  viewDate: string,
+  date: string | number
+) {
+  const activeDate = new Date(viewDate);
+
+  if (!isMonthView) {
+    return `${date} ${displayYearOnly(activeDate)}`;
+  }
+
+  return `${date}${ordinal(Number(date))} ${displayMonthAndYear(activeDate)}`;
 }

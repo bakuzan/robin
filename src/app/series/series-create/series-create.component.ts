@@ -115,7 +115,7 @@ export class SeriesCreateComponent implements OnInit {
     this.isLoading = true;
     this.seriesService.getSeriesById(this.seriesId).subscribe((series) => {
       const pageName = `View ${capitaliseEachWord(series.name)}`;
-      this.titleService.setTitle(`Robin - ${pageName}`);
+      this.titleService.setTitle(`${pageName} | Robin`);
       this.cancelQueryParams = { type: series.type };
       this.updateForm(series);
       this.displayForm = true;

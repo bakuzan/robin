@@ -33,6 +33,7 @@
 .calendar-view {
   display: flex;
   flex-flow: wrap;
+
   &__header {
     display: flex;
     width: 100%;
@@ -40,26 +41,35 @@
 
   &__option {
     text-align: center;
+    padding: 10px 0;
     border: 1px solid transparent;
     box-sizing: border-box;
     border-color: $calendar--button-border-colour;
+    cursor: pointer;
+
     &--day {
       width: calc(100% / 7);
     }
+
     &--month {
       width: calc(100% / 3);
     }
+
     &--header {
       padding: 5px 0;
       border-color: transparent;
     }
+
+    &--disabled {
+      background-color: $app--disabled-background !important;
+      color: $app--disabled-colour !important;
+      cursor: default;
+    }
+
     &--dummy-day {
+      background-color: inherit !important;
       border-color: transparent;
       z-index: -1;
-
-      .calendar-view__option-button {
-        background-color: inherit !important;
-      }
     }
   }
 }

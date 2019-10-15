@@ -7,7 +7,7 @@ function mapSeriesCounts(names, key, items = []) {
     const item = items.find((g) => g.group === name);
     return {
       name,
-      value: item ? item[key] : 0
+      value: item ? item[key] || 0 : 0
     };
   });
 }

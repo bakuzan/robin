@@ -1,59 +1,70 @@
 <div
+  #container
   (appOutsideClick)="handleOutsideClick($event)"
   [id]="id + '-calendar'"
   [class]="calendarClasses"
   [ngClass]="{ 'calendar--flat': isFlat, 'calendar--read-only': disabled }"
+  role="application"
+  aria-roledescription="datepicker"
+  aria-label="Calendar"
+  (keydown)="handleCalendarNavigation($event)"
 >
-  <div class="calendar-view-controls">
-    <app-rbn-button
-      class="view-shift-button ripple"
-      [waiAriaLabel]="prevLabel"
-      [icon]="prevIcon"
-      (click)="handleViewShift(-1)"
-    ></app-rbn-button>
-    <app-rbn-button
-      class="view-toggle-button"
-      [waiAriaLabel]="'Toggle between month and year view'"
-      (click)="toggleViewMode()"
-    >
-      {{ viewModeText }}
-    </app-rbn-button>
-    <app-rbn-button
-      class="view-shift-button ripple"
-      [waiAriaLabel]="nextLabel"
-      [icon]="nextIcon"
-      (click)="handleViewShift(1)"
-    ></app-rbn-button>
-  </div>
-  <div class="calendar-view">
-    <div *ngIf="isMonthView" class="calendar-view__header">
-      <div
-        *ngFor="let header of viewHeaders"
-        class="calendar-view__option calendar-view__option--day calendar-view__option--header"
+  <app-tab-trap
+    [isActive]="!isFlat"
+    [firstId]="id + '-prev'"
+    [lastId]="lastOptionId"
+  >
+    <div class="calendar-view-controls">
+      <app-rbn-button
+        class="view-shift-button ripple"
+        [id]="id + '-prev'"
+        [waiAriaLabel]="prevLabel"
+        [icon]="prevIcon"
+        (click)="handleViewShift(-1)"
+      ></app-rbn-button>
+      <app-rbn-button
+        class="view-toggle-button"
+        [waiAriaLabel]="'Toggle between month and year view'"
+        (click)="toggleViewMode()"
       >
-        {{ header }}
+        {{ viewModeText }}
+      </app-rbn-button>
+      <app-rbn-button
+        class="view-shift-button ripple"
+        [id]="id + '-next'"
+        [waiAriaLabel]="nextLabel"
+        [icon]="nextIcon"
+        (click)="handleViewShift(1)"
+      ></app-rbn-button>
+    </div>
+    <div class="calendar-view">
+      <div *ngIf="isMonthView" class="calendar-view__header">
+        <div
+          *ngFor="let header of viewHeaders"
+          class="calendar-view__option calendar-view__option--day calendar-view__option--header"
+        >
+          {{ header }}
+        </div>
+      </div>
+      <div
+        *ngFor="let op of viewOptions"
+        class="calendar-view__option {{ op.option.className }}"
+        [ngClass]="{
+          'calendar-view__option--disabled': op.disableDate,
+          'calendar-view__option--selected': op.isSelected
+        }"
+        role="button"
+        [id]="op.id"
+        [title]="op.title"
+        [tabindex]="op.tabIndex"
+        [attr.data-date]="op.option.text"
+        [attr.aria-label]="op.ariaLabel"
+        [attr.aria-disabled]="op.disableDate"
+        (click)="handleViewOptionSelect(op)"
+        (keydown)="handleViewOptionKeydown($event, op)"
+      >
+        {{ op.option.text }}
       </div>
     </div>
-    <div
-      *ngFor="let op of viewOptions"
-      [id]="'option-' + op.text"
-      class="calendar-view__option {{ op.className }}"
-      [ngClass]="{
-        'calendar-view__option--selected': isViewOptionSelected(op)
-      }"
-    >
-      <app-rbn-button
-        class="calendar-view__option-button"
-        [ngClass]="{
-          'calendar-view__option-button--selected': isViewOptionSelected(op)
-        }"
-        [title]="isOutOfRange(op) ? 'Out of range' : ''"
-        [waiAriaLabel]="getAria(op)"
-        [disabled]="op.isDummy || isOutOfRange(op)"
-        (click)="handleViewOptionSelect(op)"
-      >
-        {{ op.text }}
-      </app-rbn-button>
-    </div>
-  </div>
+  </app-tab-trap>
 </div>

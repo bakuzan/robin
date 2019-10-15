@@ -23,6 +23,7 @@
     .nav-link {
       color: $base-colour;
 
+      &:focus,
       &:hover:not(.fake-button):not(.purchase-item__link),
       &--active:not(.fake-button) {
         color: $active-colour;
@@ -65,10 +66,12 @@
     }
     .button.button--themed,
     .fake-button.fake-button--themed {
+      &:focus,
       &:hover {
         @include lightenOrDarken('background-color', $primary-background);
       }
 
+      &_reversed:focus,
       &_reversed:hover {
         @include lightenOrDarken('background-color', $primary-colour);
       }
@@ -88,6 +91,7 @@
     .sidebar__link {
       color: $primary-colour;
 
+      &:focus,
       &:hover,
       &.nav-link--active {
         background-color: $active-background;
@@ -125,13 +129,16 @@
       background-color: $base-background;
     }
     .view-shift-button,
-    .view-toggle-button,
-    .calendar-view__option-button {
+    .view-toggle-button {
+      &:focus,
       &:hover {
         @include lightenOrDarken('background-color', $base-background);
       }
     }
-    .calendar-view__option-button--selected {
+
+    .calendar-view__option:focus,
+    .calendar-view__option:hover,
+    .calendar-view__option--selected {
       background-color: $primary-background;
       color: $primary-colour;
     }
