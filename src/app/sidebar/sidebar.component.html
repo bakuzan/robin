@@ -4,7 +4,9 @@
     class="sidebar__link"
     [to]="item.to"
     [title]="item.text"
+    [attr.aria-describedby]="item.icon"
   >
-    {{ item.icon }}
+    <span [id]="item.icon" class="for-screenreader-only">{{ item.text }}</span>
+    <span aria-hidden="true">{{ item.icon }}</span>
   </app-nav-link>
 </nav>
