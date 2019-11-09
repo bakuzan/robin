@@ -132,18 +132,21 @@ export class SeriesCreateComponent implements OnInit {
     return this.seriesForm.get('volumes') as FormArray;
   }
 
-  craftStatistics(volumes = []): Aggregate[] {
+  craftStatistics(volumes: Volume[] = []): Aggregate[] {
     const paidValues = volumes.map((x) => Number(x.paid)).filter((x) => x);
     const expenditure = displayAs2dp(paidValues.reduce((a, b) => a + b, 0.0));
     const minimum = displayAs2dp(Math.min(...paidValues));
     const maximum = displayAs2dp(Math.max(...paidValues));
 
-    const average = displayAs2dp(
-      volumes.reduce((p, c) => {
-        const value = parseFloat(c.paid);
-        return isNaN(value) ? p : p + value;
-      }, 0) / volumes.filter((x) => !isNaN(parseFloat(x.paid))).length
-    );
+    const boughtVolumeCount = volumes.filter((x) => x.boughtDate !== null)
+      .length;
+
+    const totalPaid = volumes.reduce((p, c) => {
+      const value = parseFloat(`${c.paid}`);
+      return isNaN(value) ? p : p + value;
+    }, 0);
+
+    const average = displayAs2dp(totalPaid / boughtVolumeCount);
 
     const ratios = volumes
       .map((x) => (x.paid && x.rrp ? x.paid / x.rrp : 0))
@@ -166,8 +169,11 @@ export class SeriesCreateComponent implements OnInit {
     ];
   }
 
-  generateChartData(volumes = []): any[] {
-    const chartSrc = volumes.slice(0).reverse();
+  generateChartData(volumes: Volume[] = []): any[] {
+    const chartSrc = volumes
+      .slice(0)
+      .filter((x) => x.boughtDate !== null)
+      .reverse();
 
     const paidSeries = chartSrc.map((x) => ({
       name: `#${pad(`${x.number ? x.number : ''}`, 3, '0')}`,
@@ -221,7 +227,7 @@ export class SeriesCreateComponent implements OnInit {
 
     const retailers: Retailer[] = data.retailer
       ? [data.retailer]
-      : data.volumes.map((x) => x.retailer);
+      : data.volumes.map((x: Volume) => x.retailer);
 
     this.retailers = [
       ...this.retailers,
