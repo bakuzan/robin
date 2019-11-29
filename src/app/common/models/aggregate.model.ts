@@ -1,4 +1,4 @@
-export default class Aggregate {
+export default interface Aggregate {
   label: string;
   value: string;
 }

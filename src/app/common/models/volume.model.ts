@@ -1,7 +1,7 @@
 import Retailer from './retailer.model';
 import Series from './series.model';
 
-export default class Volume {
+export default interface Volume {
   id: number;
   number: number;
   releaseDate: string;

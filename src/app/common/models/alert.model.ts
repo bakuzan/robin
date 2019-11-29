@@ -5,12 +5,12 @@ export enum AlertType {
   WARNING = 'warning'
 }
 
-export class AlertData {
+export interface AlertData {
   message: string;
   detail: string;
 }
 
-export default class Alert {
+export default interface Alert {
   id: string;
   type: AlertType;
   message: string;

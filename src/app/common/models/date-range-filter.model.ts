@@ -1,4 +1,4 @@
-export default class DateRangeFilter {
+export default interface DateRangeFilter {
   fromDate: string;
   toDate: string;
 }

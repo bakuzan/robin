@@ -86,7 +86,7 @@
                 <div class="form__array-item-wrapper" [formGroupName]="i">
                   <app-input-box
                     type="hidden"
-                    id="{{ i }}.id"
+                    id="id_{{ i }}"
                     name="{{ i }}.id"
                     formControlName="id"
                   ></app-input-box>
@@ -94,7 +94,7 @@
                     class="form__input form__input--integer"
                     type="number"
                     label="Number"
-                    id="{{ i }}.number"
+                    id="number_{{ i }}"
                     name="{{ i }}.number"
                     formControlName="number"
                     min="1"
@@ -122,7 +122,7 @@
                       class="form__input form__input--float"
                       type="number"
                       label="RRP"
-                      id="{{ i }}.rrp"
+                      id="rrp_{{ i }}"
                       name="{{ i }}.rrp"
                       formControlName="rrp"
                       min="0"
@@ -132,7 +132,7 @@
                       class="form__input form__input--float"
                       type="number"
                       label="Paid"
-                      id="{{ i }}.paid"
+                      id="paid_{{ i }}"
                       name="{{ i }}.paid"
                       formControlName="paid"
                       min="0"
@@ -143,7 +143,7 @@
                   <div class="form__group">
                     <app-autocomplete
                       label="Retailer"
-                      id="{{ i }}.retailer"
+                      id="retailer_{{ i }}"
                       name="{{ i }}.retailer"
                       formControlName="retailer"
                       [options]="retailers"
@@ -152,7 +152,7 @@
                     <app-tickbox
                       class="form__input"
                       label="Used Discount Code"
-                      id="{{ i }}.usedDiscountCode"
+                      id="usedDiscountCode_{{ i }}"
                       name="{{ i }}.usedDiscountCode"
                       formControlName="usedDiscountCode"
                     >

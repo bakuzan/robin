@@ -35,6 +35,8 @@ import {
 } from 'src/app/common/utils';
 import { mapEnumToSelectOption } from 'src/app/common/utils/mappers';
 import SeriesType from 'src/app/common/models/series-types.enum';
+import { isVolume } from 'src/app/common/guards/volume';
+import { isSeries } from 'src/app/common/guards/series';
 
 @Component({
   selector: 'app-series-create',
@@ -220,12 +222,14 @@ export class SeriesCreateComponent implements OnInit {
     }, 0);
   }
 
-  updateRetailers(data: any) {
-    if (!data.retailer && !data.volumes) {
+  updateRetailers(data: Series | Volume) {
+    const ignoreVolume = isVolume(data) && !data.retailer;
+    const ignoreSeries = isSeries(data) && !data.volumes;
+    if (ignoreVolume && ignoreSeries) {
       return;
     }
 
-    const retailers: Retailer[] = data.retailer
+    const retailers: Retailer[] = isVolume(data)
       ? [data.retailer]
       : data.volumes.map((x: Volume) => x.retailer);
 
@@ -237,19 +241,15 @@ export class SeriesCreateComponent implements OnInit {
 
   initVolume(initValues: VolumeInitValues = new VolumeInitValues()): FormGroup {
     const { number, rrp, retailer } = initValues;
+    const isFloatCheck = Validators.pattern(Regexes.IS_FLOATING_POINT_NUMBER);
+
     return new FormGroup({
       id: new FormControl(),
       number: new FormControl(number, Validators.required),
       releaseDate: new FormControl(null),
       boughtDate: new FormControl(null),
-      rrp: new FormControl(
-        rrp,
-        Validators.pattern(Regexes.IS_FLOATING_POINT_NUMBER)
-      ),
-      paid: new FormControl(
-        null,
-        Validators.pattern(Regexes.IS_FLOATING_POINT_NUMBER)
-      ),
+      rrp: new FormControl(rrp, isFloatCheck),
+      paid: new FormControl(null, isFloatCheck),
       retailer: new FormControl(retailer),
       usedDiscountCode: new FormControl(false)
     });
@@ -274,8 +274,12 @@ export class SeriesCreateComponent implements OnInit {
       rrp,
       retailer
     };
-    console.log('Add volume -> ', initialValues);
-    this.volumes.insert(0, this.initVolume(initialValues));
+
+    const group = this.initVolume();
+    this.volumes.insert(0, group);
+
+    // It doesn't like to display the values if initialised with them...
+    requestAnimationFrame(() => group.patchValue(initialValues));
   }
 
   processVolumePrePost(x: Volume): Volume {

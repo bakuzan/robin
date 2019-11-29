@@ -24,7 +24,13 @@ interface IDashboardProportions {
   data: IDashboardCounts[];
 }
 
-export default class Dashboard {
+export interface IDashboard {
+  aggregates: IDashboardAggregate;
+  byMonthCounts: IDashboardMonthCounts[];
+  proportions: IDashboardProportions[];
+}
+
+export default class Dashboard implements IDashboard {
   aggregates: IDashboardAggregate;
   byMonthCounts: IDashboardMonthCounts[] = [];
   proportions: IDashboardProportions[] = [];

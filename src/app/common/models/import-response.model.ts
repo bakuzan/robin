@@ -1,4 +1,4 @@
-export default class ImportResponse {
+export default interface ImportResponse {
   success: boolean;
   messages: string[];
 }

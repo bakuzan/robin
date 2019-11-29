@@ -9,7 +9,7 @@ class ImportRetailer {
   name: string;
 }
 
-export default class ImportRow {
+export default interface ImportRow {
   series: ImportSeries;
   number: number;
   rrp: number;

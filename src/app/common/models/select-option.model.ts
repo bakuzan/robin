@@ -1,6 +1,6 @@
 export type SelectOptionValue = number | string;
 
-export default class SelectOption {
+export default interface SelectOption {
   value: SelectOptionValue;
   text: string;
 }

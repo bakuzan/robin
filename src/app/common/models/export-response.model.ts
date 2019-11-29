@@ -1,4 +1,4 @@
-export default class ExportResponse {
+export default interface ExportResponse {
   success: boolean;
   messages: string[];
   data: string;
