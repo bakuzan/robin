@@ -263,6 +263,7 @@ export class SeriesCreateComponent implements OnInit {
     if (initialVolumeNumber > 1) {
       const lastVolume = this.volumes.controls[0];
       const prev = lastVolume.value;
+
       initialVolumeNumber = prev.number + 1;
       rrp = prev.rrp;
       retailer = prev.retailer;
@@ -273,11 +274,11 @@ export class SeriesCreateComponent implements OnInit {
       rrp,
       retailer
     };
-
+    console.log('Add volume -> ', initialValues);
     this.volumes.insert(0, this.initVolume(initialValues));
   }
 
-  processVolumePrePost(x): Volume {
+  processVolumePrePost(x: Volume): Volume {
     const { releaseDate, boughtDate, usedDiscountCode, seriesId } = x;
     const retailer = !x.retailer
       ? { retailerId: null }
@@ -299,7 +300,8 @@ export class SeriesCreateComponent implements OnInit {
   }
 
   onSaveVolume(index: number) {
-    let mutation;
+    let mutation: Observable<Volume>;
+
     const value = this.volumes.value[index];
     const volume = this.processVolumePrePost({
       ...value,
@@ -315,11 +317,13 @@ export class SeriesCreateComponent implements OnInit {
 
     mutation.subscribe((response) => {
       const vol = this.volumes.at(index);
+
       vol.patchValue({
         ...response,
         paid: displayAs2dp(response.paid),
         rrp: displayAs2dp(response.rrp)
       });
+
       vol.markAsPristine();
       this.updateRetailers(response);
       this.isLoading = false;

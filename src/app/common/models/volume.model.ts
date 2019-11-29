@@ -9,6 +9,7 @@ export default class Volume {
   rrp: number;
   paid: number;
   percentagePaid: number;
+  seriesId: number;
   series: Series;
   retailer: Retailer;
   retailerId: number;
