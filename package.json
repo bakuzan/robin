@@ -34,7 +34,7 @@
     "@angular/router": "^8.2.14",
     "@angular/service-worker": "^8.2.14",
     "@swimlane/ngx-charts": "^12.1.0",
-    "apollo-server": "^2.9.6",
+    "apollo-server": "^2.9.13",
     "classnames": "^2.2.6",
     "core-js": "^2.5.4",
     "dotenv": "^8.0.0",
@@ -53,10 +53,10 @@
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.803.9",
-    "@angular/cli": "~8.3.9",
-    "@angular/compiler-cli": "^8.2.10",
-    "@angular/language-service": "^8.2.10",
+    "@angular-devkit/build-angular": "~0.803.20",
+    "@angular/cli": "~8.3.20",
+    "@angular/compiler-cli": "^8.2.14",
+    "@angular/language-service": "^8.2.14",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
