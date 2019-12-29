@@ -230,8 +230,10 @@ export class SeriesCreateComponent implements OnInit {
     }
 
     const retailers: Retailer[] = isVolume(data)
-      ? [data.retailer]
-      : data.volumes.map((x: Volume) => x.retailer);
+      ? data.retailer
+        ? [data.retailer]
+        : []
+      : data.volumes.map((x: Volume) => x.retailer).filter((x) => !!x);
 
     this.retailers = [
       ...this.retailers,
