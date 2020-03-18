@@ -7,7 +7,7 @@
     "server": "nodemon apollo-server",
     "start": "npm-run-all -p serve server",
     "serve": " ng serve --aot",
-    "build": "ng build --prod",
+    "build": "ng build --prod --build-optimizer",
     "build:quick": "ng build",
     "test": "ng test",
     "format:fix": "pretty-quick --staged",
@@ -61,7 +61,7 @@
     "@angular/language-service": "^9.0.6",
     "@types/jasmine": "~3.5.9",
     "@types/jasminewd2": "~2.0.8",
-    "@types/node": "^13.9.1",
+    "@types/node": "^12.11.1",
     "codelyzer": "^5.2.1",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
@@ -71,8 +71,8 @@
     "karma-jasmine": "~3.1.1",
     "karma-jasmine-html-reporter": "^1.5.2",
     "protractor": "~5.4.3",
-    "ts-node": "~8.6.2",
-    "tslint": "~6.1.0",
+    "ts-node": "~8.3.0",
+    "tslint": "~5.18.0",
     "typescript": "~3.7.5"
   }
 }

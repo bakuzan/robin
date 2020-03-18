@@ -22,11 +22,11 @@
   <app-rbn-button
     *ngIf="input.value && isTextInput"
     [class]="clearClasses"
-    [size]="small"
+    size="small"
     [icon]="icon"
     name="Clear Input"
     [waiAriaLabel]="'Clear input'"
-    (click)="clearAndFocusInput($event)"
+    (click)="clearAndFocusInput()"
   ></app-rbn-button>
   <span *ngIf="showCount" class="input-box__count">
     {{ countText }}

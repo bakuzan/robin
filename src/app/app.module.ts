@@ -7,6 +7,8 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { ComponentsModule } from './components/components.module';
+import { VolumeModule } from './volume/volume.module';
+import { SeriesModule } from './series/series.module';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -29,12 +31,14 @@ import { environment } from '../environments/environment';
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    ComponentsModule,
     NgxChartsModule,
     NoopAnimationsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
-    })
+    }),
+    ComponentsModule,
+    SeriesModule,
+    VolumeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

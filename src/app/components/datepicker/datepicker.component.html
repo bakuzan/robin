@@ -38,7 +38,7 @@
       [waiAriaLabel]="'Open calendar'"
       [icon]="calendarIcon"
       [disabled]="disabled"
-      (click)="openCalendar($event)"
+      (click)="openCalendar()"
     ></app-rbn-button>
   </div>
   <div *ngIf="!isFlat && errorMessage" class="date-selector__error-message">
@@ -53,6 +53,6 @@
     [beforeDate]="beforeDate"
     [disabled]="disabled"
     (select)="handleDateSelect($event)"
-    (close)="closeCalendar($event)"
+    (close)="closeCalendar()"
   ></app-calendar>
 </div>
