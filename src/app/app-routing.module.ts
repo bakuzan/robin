@@ -10,11 +10,11 @@ const routes: Routes = [
   { path: Urls.dashboard, component: DashboardComponent },
   {
     path: Urls.seriesList,
-    loadChildren: './series/series-routing.module#SeriesRoutingModule'
+    loadChildren: () => import('./series/series-routing.module').then(m => m.SeriesRoutingModule)
   },
   {
     path: Urls.purchaseHistory,
-    loadChildren: './volume/volume-routing.module#VolumeRoutingModule'
+    loadChildren: () => import('./volume/volume-routing.module').then(m => m.VolumeRoutingModule)
   },
   { path: '**', component: PageNotFoundComponent }
 ];
