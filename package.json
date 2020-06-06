@@ -35,7 +35,7 @@
     "@angular/router": "^9.1.0",
     "@angular/service-worker": "^9.1.0",
     "@swimlane/ngx-charts": "^13.0.2",
-    "apollo-server": "^2.11.0",
+    "apollo-server": "^2.14.2",
     "classnames": "^2.2.6",
     "core-js": "^3.6.4",
     "dotenv": "^8.2.0",
