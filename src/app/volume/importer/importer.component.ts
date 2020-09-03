@@ -69,7 +69,7 @@ export class ImporterComponent implements OnInit {
 
   processMangaImport(rows): ImportRow[] {
     return rows.reduce((p, c) => {
-      const [seriesName, number, rrp, _, paid, boughtDate, ...other] = c.split(
+      const [seriesName, num, rrp, _, paid, boughtDate, ...other] = c.split(
         ','
       );
       const retailer = other[4] || '';
@@ -78,7 +78,7 @@ export class ImporterComponent implements OnInit {
         ...p,
         ...this.mapProcessedStringToImportRow({
           seriesName,
-          number,
+          number: num,
           rrp,
           paid,
           retailer,
@@ -90,7 +90,7 @@ export class ImporterComponent implements OnInit {
 
   processComicImport(rows): ImportRow[] {
     return rows.reduce((p, c) => {
-      const [seriesName, number, rrp, paid, _, retailer, boughtDate] = c.split(
+      const [seriesName, num, rrp, paid, _, retailer, boughtDate] = c.split(
         ','
       );
 
@@ -98,7 +98,7 @@ export class ImporterComponent implements OnInit {
         ...p,
         ...this.mapProcessedStringToImportRow({
           seriesName,
-          number,
+          number: num,
           rrp,
           paid,
           retailer,
@@ -110,7 +110,7 @@ export class ImporterComponent implements OnInit {
 
   mapProcessedStringToImportRow({
     seriesName,
-    number,
+    number: num,
     rrp,
     paid,
     retailer,
@@ -128,7 +128,7 @@ export class ImporterComponent implements OnInit {
           name: seriesName.trim(),
           type: SeriesType.Comic
         },
-        number: Number(number),
+        number: Number(num),
         rrp: currencyToPlainNumber(rrp),
         paid: currencyToPlainNumber(paid),
         boughtDate: boughtDateResolved,
@@ -169,9 +169,7 @@ export class ImporterComponent implements OnInit {
         this.messages = response.messages;
 
         if (response.success) {
-          const filename = `robin-volume-export_type=${this.type}&from=${
-            this.filters.fromDate
-          }&to=${this.filters.toDate}`;
+          const filename = `robin-volume-export_type=${this.type}&from=${this.filters.fromDate}&to=${this.filters.toDate}`;
 
           this.downloadService.downloadCSV(filename, response.data);
         }

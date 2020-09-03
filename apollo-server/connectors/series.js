@@ -1,23 +1,25 @@
+const { DataTypes } = require('sequelize');
+
 const {
   SeriesType,
   SeriesStatus,
   SeriesStatuses
 } = require('../constants/enums');
 
-module.exports = (db, Types) => {
+module.exports = (db) => {
   return db.define('series', {
-    name: { type: Types.STRING, allowNull: false, unique: true },
+    name: { type: DataTypes.STRING, allowNull: false, unique: true },
     type: {
-      type: Types.ENUM,
+      type: DataTypes.ENUM,
       values: [...SeriesType]
     },
     volumeCount: {
-      type: Types.INTEGER,
+      type: DataTypes.INTEGER,
       defaultValue: null,
       allowNull: true
     },
     status: {
-      type: Types.ENUM,
+      type: DataTypes.ENUM,
       values: [...SeriesStatus],
       defaultValue: SeriesStatuses.Ongoing
     }

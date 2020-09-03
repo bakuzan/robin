@@ -4,24 +4,26 @@ const Constants = require('../constants/index');
 const Utils = require('../utils');
 const migrate = require('../config');
 const TestData = require('../config/test-data');
+const extraSetup = require('./extraSetup');
 
 const db = new Sequelize(Constants.appName, null, null, {
   dialect: 'sqlite',
-  storage: `${process.env.DB_STORAGE_PATH}${Constants.appName}.${
-    process.env.NODE_ENV
-  }.sqlite`,
-  operatorsAliases: false
+  storage: `${process.env.DB_STORAGE_PATH}${Constants.appName}.${process.env.NODE_ENV}.sqlite`
 });
 
-const SeriesModel = db.import('./series');
-const VolumeModel = db.import('./volume');
-const RetailerModel = db.import('./retailer');
+const modelDefiners = [
+  require('./series'),
+  require('./volume'),
+  require('./retailer')
+];
 
-SeriesModel.Volume = SeriesModel.hasMany(VolumeModel);
-VolumeModel.Series = VolumeModel.belongsTo(SeriesModel);
+// We define all models according to their files.
+for (const modelDefiner of modelDefiners) {
+  modelDefiner(db);
+}
 
-RetailerModel.Volume = RetailerModel.hasMany(VolumeModel);
-VolumeModel.Retailer = VolumeModel.belongsTo(RetailerModel);
+// Other db setup...
+extraSetup(db);
 
 // Sync and Migrate db
 // Only add test data if sync is forced

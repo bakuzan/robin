@@ -33,7 +33,7 @@ export class TabTrapComponent implements OnInit, OnChanges {
   ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
-    const isActive = changes['isActive'];
+    const isActive = changes.isActive;
     const hasChange = !!isActive;
 
     if (hasChange) {

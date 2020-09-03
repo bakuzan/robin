@@ -17,7 +17,7 @@ export class AutocompleteSuggestionComponent implements OnInit {
   @Input()
   textPart: TextPart;
   @Output()
-  select: EventEmitter<any> = new EventEmitter<any>();
+  selectItem: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() {}
 
@@ -28,6 +28,6 @@ export class AutocompleteSuggestionComponent implements OnInit {
   }
 
   onClick() {
-    this.select.emit(this.item.id);
+    this.selectItem.emit(this.item.id);
   }
 }

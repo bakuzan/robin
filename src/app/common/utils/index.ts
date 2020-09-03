@@ -4,24 +4,23 @@ import Listeners from './listeners.model';
 import { Strings } from 'src/app/common/constants';
 import ElementCoordinates from './element-coordinates.model';
 
-export const getWindowScrollPosition: Function = (): number =>
+export const getWindowScrollPosition = (): number =>
   window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
 
-export const createListeners: Function = (
-  t: string,
-  f: EventListener
-): Function => (el: any = document): Listeners => ({
+export const createListeners = (t: string, f: EventListener) => (
+  el: any = document
+): Listeners => ({
   listen: (): void => el.addEventListener(t, f),
   remove: (): void => el.removeEventListener(t, f)
 });
 
-const isTypeOf = (t) => (v) => typeof v === t;
+const isTypeOf = (t: string) => (v: unknown) => typeof v === t;
 export const isObject = isTypeOf(Strings.object);
 export const isString = isTypeOf(Strings.string);
 export const isNumber = isTypeOf(Strings.number);
-export const isArray = (v) => v instanceof Array;
+export const isArray = (v: unknown) => v instanceof Array;
 
-export const parseIfInt = (val) => {
+export const parseIfInt = (val: any) => {
   const maybeInt = parseInt(val, 10);
   return maybeInt === 0 || !!maybeInt ? maybeInt : val;
 };
@@ -69,13 +68,7 @@ export const getDaysAgo = (date, num = 1) => {
 };
 
 export const localDateStringToDate = (ds: string): Date =>
-  new Date(
-    ds
-      .trim()
-      .split('/')
-      .reverse()
-      .join('-')
-  );
+  new Date(ds.trim().split('/').reverse().join('-'));
 
 export const getISOStringDate = (d = new Date()): string =>
   new Date(d).toISOString().split('T')[0];
@@ -117,10 +110,7 @@ export const capitalise = (str = ''): string =>
   str.charAt(0).toUpperCase() + str.slice(1);
 
 export const capitaliseEachWord = (str: string, spl = ' '): string =>
-  str
-    .split(spl)
-    .map(capitalise)
-    .join(spl);
+  str.split(spl).map(capitalise).join(spl);
 
 export const getFirstDateOfMonth = (date: string | number | Date): Date => {
   const d = new Date(date);

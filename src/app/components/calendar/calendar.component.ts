@@ -76,9 +76,9 @@ export class CalendarComponent implements OnInit, OnDestroy {
   @Input()
   isFlat? = false;
   @Output()
-  select = new EventEmitter<string>();
+  selectDate = new EventEmitter<string>();
   @Output()
-  close = new EventEmitter<Event>();
+  closeCalendar = new EventEmitter<Event>();
 
   constructor() {}
 
@@ -172,7 +172,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
       );
 
       this.viewDate = viewDate;
-      this.select.emit(viewDate);
+      this.selectDate.emit(viewDate);
     } else if (option.optionType === ViewOptionEnum.MONTH) {
       const monthIndex = Strings.monthNames.findIndex(
         (x: string) => x === option.text
@@ -201,7 +201,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.close.emit(e);
+    this.closeCalendar.emit(e);
   }
 
   handleCalendarNavigation(event: KeyboardEvent) {

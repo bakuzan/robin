@@ -23,7 +23,7 @@
       [index]="index"
       [item]="item"
       [textPart]="highlightMatchingText(item.name)"
-      (select)="onSelectAutocompleteSuggestion(item.id)"
+      (selectItem)="onSelectAutocompleteSuggestion(item.id)"
     ></app-autocomplete-suggestion>
   </ul>
   <ul *ngIf="showNoSuggestionsText" [ngClass]="menuClasses">

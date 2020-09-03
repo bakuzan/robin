@@ -1,3 +1,4 @@
+/* tslint:disable:no-output-native */
 import {
   Component,
   OnInit,
@@ -31,8 +32,8 @@ export class InputBoxComponent implements OnInit, ControlValueAccessor {
   icon: string = Icons.cross;
   isTextInput: boolean;
   hasMaxNumber: boolean;
-  onChange: Function;
-  onTouched: Function;
+  onChange: (value: string) => void;
+  onTouched: (event: Event) => void;
   classes: string;
   clearClasses: string;
   @ViewChild('input', { static: false })
@@ -109,18 +110,19 @@ export class InputBoxComponent implements OnInit, ControlValueAccessor {
     this.renderer.setProperty(input, 'disabled', isDisabled);
   }
 
-  change(e) {
-    this.onChange(e.target.value);
+  change(e: Event) {
+    const t = e.target as HTMLInputElement;
+    this.onChange(t.value);
   }
 
-  handleFocus(e) {
+  handleFocus(e: Event) {
     this.focus.emit(e);
   }
-  handleBlur(e) {
+  handleBlur(e: Event) {
     this.onTouched(e);
     this.blur.emit(e);
   }
-  handleKeyDown(e) {
+  handleKeyDown(e: Event) {
     this.keyDown.emit(e);
   }
 

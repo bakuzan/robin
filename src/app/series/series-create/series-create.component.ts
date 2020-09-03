@@ -242,12 +242,12 @@ export class SeriesCreateComponent implements OnInit {
   }
 
   initVolume(initValues: VolumeInitValues = new VolumeInitValues()): FormGroup {
-    const { number, rrp, retailer } = initValues;
+    const { number: num, rrp, retailer } = initValues;
     const isFloatCheck = Validators.pattern(Regexes.IS_FLOATING_POINT_NUMBER);
 
     return new FormGroup({
       id: new FormControl(),
-      number: new FormControl(number, Validators.required),
+      number: new FormControl(num, Validators.required),
       releaseDate: new FormControl(null),
       boughtDate: new FormControl(null),
       rrp: new FormControl(rrp, isFloatCheck),
@@ -258,9 +258,9 @@ export class SeriesCreateComponent implements OnInit {
   }
 
   onAddVolume() {
-    let initialVolumeNumber = this.volumes.controls.length + 1,
-      rrp = null,
-      retailer = null;
+    let initialVolumeNumber = this.volumes.controls.length + 1;
+    let rrp = null;
+    let retailer = null;
 
     if (initialVolumeNumber > 1) {
       const lastVolume = this.volumes.controls[0];

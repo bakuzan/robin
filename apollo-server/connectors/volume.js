@@ -1,32 +1,34 @@
-module.exports = (db, Types) => {
+const { DataTypes } = require('sequelize');
+
+module.exports = (db) => {
   return db.define('volume', {
     number: {
-      type: Types.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     releaseDate: {
-      type: Types.DATE,
+      type: DataTypes.DATE,
       allowNull: true
     },
     boughtDate: {
-      type: Types.DATE,
+      type: DataTypes.DATE,
       allowNull: true
     },
     rrp: {
-      type: Types.FLOAT,
+      type: DataTypes.FLOAT,
       validate: {
         isFloat: true
       }
     },
     paid: {
-      type: Types.FLOAT,
+      type: DataTypes.FLOAT,
       allowNull: true,
       validate: {
         isFloat: true
       }
     },
     usedDiscountCode: {
-      type: Types.BOOLEAN,
+      type: DataTypes.BOOLEAN,
       defaultValue: false
     }
   });
