@@ -22,7 +22,7 @@ const OPTION_PREFIX = 'radio';
 })
 export class RadioButtonGroupComponent implements OnInit, ControlValueAccessor {
   radioGroupClasses: string;
-  onChange: () => void;
+  onChange: (value: any) => void;
   onTouched: () => void;
   @Input()
   id: string;
@@ -58,7 +58,7 @@ export class RadioButtonGroupComponent implements OnInit, ControlValueAccessor {
     throw new Error('Method not implemented.');
   }
 
-  onSelect(val) {
+  onSelect(val: any) {
     this.onChange(val);
   }
 }

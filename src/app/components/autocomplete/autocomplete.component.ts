@@ -25,7 +25,7 @@ export class AutocompleteComponent implements OnInit, ControlValueAccessor {
   filter = '';
   activeSuggestion = 0;
   isFocussed: boolean;
-  onChange: () => void;
+  onChange: (value: any) => void;
   onTouched: () => void;
   @Input()
   inputClasses: string;

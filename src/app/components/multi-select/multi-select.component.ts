@@ -28,7 +28,7 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
   isOpen = false;
   displayValue: string;
   hasAllSelected: boolean;
-  onChange: () => void;
+  onChange: (value: any) => void;
   onTouched: () => void;
 
   @Input()
