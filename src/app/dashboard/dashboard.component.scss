@@ -74,6 +74,7 @@
     align-items: center;
     margin: 25px 0;
   }
+
   &__proportions {
     display: flex;
     flex-wrap: wrap;
@@ -107,5 +108,15 @@
   &__title {
     margin: 5px;
     font-size: 1.2em;
+  }
+
+  &__subtitle {
+    margin: 5px 8px;
+    font-size: 0.8em;
+  }
+
+  &__item {
+    border: none;
+    border-top: 1px dashed transparent;
   }
 }

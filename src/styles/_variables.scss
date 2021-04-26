@@ -41,6 +41,7 @@ $app--info-background-colour: $cyan;
 $app--success-background-colour: $green;
 $app--success-colour: $white;
 $app--warning-background-colour: $orange;
+
 // Component Variables
 $accent--colour: $robin--timeskip-shoes;
 $anchor--colour: $mostly-blue;
@@ -48,9 +49,11 @@ $anchor--colour-hover: lighten($mostly-blue, $app--darken-amount * 3);
 $calendar--button-border-colour: $grey94;
 $calendar--view-shift-button-colour: $white;
 $date-selector--error-message-colour: $red;
+
 $header--height: 50px;
 $nav-link--height: 50px;
 $sidebar--width: 50px;
+
 $ui-messaging: (
   success: (
     background: $app--success-background-colour,

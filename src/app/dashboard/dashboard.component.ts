@@ -22,7 +22,10 @@ import {
   isValidDate,
   pad
 } from 'src/app/common/utils';
-import { formatDateForDisplay } from '../common/utils/calendar';
+import {
+  formatDateForDisplay,
+  formatDateForInput
+} from '../common/utils/calendar';
 import {
   IDashboardChartEvent,
   IDashboardPieEvent
@@ -51,6 +54,7 @@ export class DashboardComponent implements OnInit {
     link: string;
     dueDate: string;
     volumeAverage: string;
+    isOut: boolean;
   }> = [];
   filters: DateRangeFilter = {
     fromDate: getISOStringDate(getDaysAgo(today, 365)),
@@ -87,6 +91,10 @@ export class DashboardComponent implements OnInit {
     private router: Router
   ) {}
 
+  get unboughtVolumesOutNow() {
+    return this.unboughtVolumes.filter((x) => x.isOut);
+  }
+
   ngOnInit() {
     this.filterParams
       .pipe(
@@ -109,8 +117,11 @@ export class DashboardComponent implements OnInit {
       });
 
     this.dashboardService.getUnboughtVolumes().subscribe((volumes) => {
+      const todayString = formatDateForInput(new Date());
+
       this.unboughtVolumes = volumes.map((x) => {
         const { series } = x;
+
         return {
           displayName: `${series.name} #${pad(`${x.number}`, 2)}`,
           dueDate: x.releaseDate
@@ -119,7 +130,8 @@ export class DashboardComponent implements OnInit {
           volumeAverage: series.volumeAverage
             ? `£ ${series.volumeAverage} (avg)`
             : `No average data`,
-          link: `/series/view/${series.id}`
+          link: `/series/view/${series.id}`,
+          isOut: x.releaseDate <= todayString
         };
       });
     });

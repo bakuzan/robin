@@ -33,7 +33,7 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
   private clearTimer: any = null;
   errorMessage = '';
   displayCalendar = false;
-  onChange: (value: any) => void;
+  onChange: (value: any, name?: string, isError?: boolean) => void;
   onTouched: () => void;
   calendarIcon = Icons.calendar;
   clearIcon = Icons.cross;

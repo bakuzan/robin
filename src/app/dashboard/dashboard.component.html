@@ -38,6 +38,9 @@
         <h2 class="unbought-volumes__title">
           {{ unboughtVolumes.length }} unbought volume(s)
         </h2>
+        <p class="unbought-volumes__subtitle">
+          {{ unboughtVolumesOutNow.length }} volume(s) out now
+        </p>
       </header>
       <app-list
         columns="one"
@@ -46,12 +49,17 @@
         [items]="unboughtVolumes"
       >
         <ng-template let-item="item" let-i="index">
-          <app-nav-link class="unbought-volume__link" [to]="item.link">
+          <app-nav-link class="unbought-volumes__link" [to]="item.link">
             {{ item.displayName }}
           </app-nav-link>
           <div>{{ item.volumeAverage }}</div>
-          <div>
-            {{ item.dueDate }}
+          <div
+            [ngClass]="{
+              'unbought-volumes__date': true,
+              'unbought-volumes__date--out': item.isOut
+            }"
+          >
+            {{ item.isOut ? 'Out Now' : item.dueDate }}
           </div>
         </ng-template>
       </app-list>
@@ -60,9 +68,7 @@
   <div class="dashboard__column dashboard__charts charts" #chartsRef>
     <div class="dashboard__chart">
       <div class="charts__title">Volumes over time</div>
-      <div *ngIf="!volumesOverTime">
-        No Data
-      </div>
+      <div *ngIf="!volumesOverTime">No Data</div>
       <ngx-charts-line-chart
         *ngIf="volumesOverTime"
         [view]="viewLineChart"
@@ -83,9 +89,7 @@
     </div>
     <div class="dashboard__chart">
       <div class="charts__title">Expenditure over time</div>
-      <div *ngIf="!expenditureOverTime">
-        No Data
-      </div>
+      <div *ngIf="!expenditureOverTime">No Data</div>
       <ngx-charts-line-chart
         *ngIf="expenditureOverTime"
         [view]="viewLineChart"

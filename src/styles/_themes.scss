@@ -146,5 +146,13 @@
     .unbought-volumes.unbought-volumes {
       border-color: $active-background;
     }
+    .unbought-volumes__item.unbought-volumes__item {
+      border-top: 1px dashed $active-background;
+    }
+
+    .unbought-volumes__date--out {
+      color: $active-colour;
+      font-weight: bold;
+    }
   }
 }
