@@ -1,7 +1,7 @@
 const Op = require('sequelize').Op;
 const { db, Series, Volume, Retailer } = require('../../connectors');
 
-const { SeriesStatuses, SeriesTypes } = require('../../constants/enums');
+const { SeriesStatuses } = require('../../constants/enums');
 const { displayAs2dp } = require('../../utils');
 const RBNDate = require('../../utils/date');
 const validateFromDate = require('../../utils/validate-from-date');
@@ -23,12 +23,13 @@ module.exports = {
       }
     };
 
-    const [comicStat, mangaStat] = await Volume.findAll({
+    const aggregateData = await Volume.findAll({
       where,
       raw: true,
       group: 'series.type',
       attributes: {
         include: [
+          [db.col('series.type'), 'type'],
           [db.fn('AVG', db.col('paid')), 'average'],
           [db.fn('MIN', db.col('paid')), 'minimum'],
           [db.fn('MAX', db.col('paid')), 'maximum'],
@@ -65,10 +66,7 @@ module.exports = {
     });
 
     return {
-      aggregates: [
-        mapDataToAggregates(SeriesTypes.Comic, comicStat),
-        mapDataToAggregates(SeriesTypes.Manga, mangaStat)
-      ],
+      aggregates: mapDataToAggregates(aggregateData),
       byMonthCounts: mapDataToGroupCounts(filters, graphData),
       proportions: [mapDataToProportion('Retailers', retailerData)]
     };
