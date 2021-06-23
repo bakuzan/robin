@@ -8,11 +8,11 @@ import LogoLetter from './logo-letter.model';
   styleUrls: ['./logo.component.scss']
 })
 export class LogoComponent implements OnInit {
+  text = 'robin';
+  letters: LogoLetter[] = [];
   private interval: any = null;
   private animateClass = 'hideshow';
   private letterClass = 'letter';
-  text = 'robin';
-  letters: LogoLetter[] = [];
 
   constructor() {}
 

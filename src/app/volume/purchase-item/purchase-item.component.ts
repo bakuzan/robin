@@ -9,11 +9,12 @@ import { pad, displayAs2dp, roundTo2 } from 'src/app/common/utils';
   styleUrls: ['./purchase-item.component.scss']
 })
 export class PurchaseItemComponent implements OnInit {
-  seriesUrl: string;
   @Input()
   isFirst = false;
   @Input()
   item: Volume;
+
+  seriesUrl: string;
 
   get percentagePaid(): string {
     return displayAs2dp((this.item.paid / this.item.rrp) * 100);

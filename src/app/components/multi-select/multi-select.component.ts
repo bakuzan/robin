@@ -23,14 +23,6 @@ const ALL_SELECTED_TEXT = 'All Selected';
   ]
 })
 export class MultiSelectComponent implements OnInit, ControlValueAccessor {
-  selectAllName: string;
-  dropdownClasses: string;
-  isOpen = false;
-  displayValue: string;
-  hasAllSelected: boolean;
-  onChange: (value: any) => void;
-  onTouched: () => void;
-
   @Input()
   id: string;
   @Input()
@@ -45,6 +37,14 @@ export class MultiSelectComponent implements OnInit, ControlValueAccessor {
   options: SelectOption[];
   @Input()
   listClassName: string;
+
+  selectAllName: string;
+  dropdownClasses: string;
+  isOpen = false;
+  displayValue: string;
+  hasAllSelected: boolean;
+  onChange: (value: any) => void;
+  onTouched: () => void;
 
   constructor() {}
 

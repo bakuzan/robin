@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import {
   Component,
   OnInit,
@@ -26,10 +27,6 @@ import SelectOption from 'src/app/common/models/select-option.model';
   ]
 })
 export class SelectBoxComponent implements OnInit, ControlValueAccessor {
-  selectClasses: string;
-  onChange: (_: any) => void;
-  onTouched: () => void;
-  selectedValue: string;
   @ViewChild('select', { static: false })
   select: ElementRef;
   @Input()
@@ -48,6 +45,11 @@ export class SelectBoxComponent implements OnInit, ControlValueAccessor {
   options: SelectOption[];
   @Output()
   update: EventEmitter<any> = new EventEmitter();
+
+  selectClasses: string;
+  onChange: (_: any) => void;
+  onTouched: () => void;
+  selectedValue: string;
 
   constructor(private _renderer: Renderer2) {}
 

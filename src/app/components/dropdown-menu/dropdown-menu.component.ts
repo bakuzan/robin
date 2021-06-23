@@ -11,8 +11,6 @@ import { getElementCoordinates } from 'src/app/common/utils';
   styleUrls: ['./dropdown-menu.component.scss']
 })
 export class DropdownMenuComponent implements OnInit {
-  position: ElementCoordinates;
-  isDropdownOpen = false;
   @Input()
   id: string;
   @Input()
@@ -29,6 +27,9 @@ export class DropdownMenuComponent implements OnInit {
   align: string;
   @Input()
   waiAriaLabel?: string;
+
+  position: ElementCoordinates;
+  isDropdownOpen = false;
 
   constructor() {}
 

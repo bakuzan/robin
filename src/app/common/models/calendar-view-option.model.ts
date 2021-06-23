@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 export enum ViewOptionEnum {
   DUMMY_DAY = 1,
   DAY = 2,

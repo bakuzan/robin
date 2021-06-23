@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/naming-convention */
+
 export enum AlertType {
   INFO = 'info',
   SUCCESS = 'success',

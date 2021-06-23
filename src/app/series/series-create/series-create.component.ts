@@ -44,9 +44,9 @@ import { isSeries } from 'src/app/common/guards/series';
   styleUrls: ['./series-create.component.scss']
 })
 export class SeriesCreateComponent implements OnInit {
-  private seriesId: number;
   @ViewChild('chartRef', { static: false })
   chartRef: ElementRef;
+
   isLoading = false;
   data: RouteData;
   crossIcon = Icons.cross;
@@ -84,6 +84,8 @@ export class SeriesCreateComponent implements OnInit {
     domain: ['#339933', '#993333']
   };
 
+  private seriesId: number;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -92,6 +94,11 @@ export class SeriesCreateComponent implements OnInit {
     private volumeService: VolumeService,
     private retailerService: RetailerService
   ) {}
+
+  @HostListener('window:resize')
+  onResize() {
+    this.updateChartViewSize();
+  }
 
   ngOnInit() {
     this.getRetailers();
@@ -376,10 +383,5 @@ export class SeriesCreateComponent implements OnInit {
       (this.chartRef && this.chartRef.nativeElement.offsetWidth) || 0;
 
     this.view = [width, 400];
-  }
-
-  @HostListener('window:resize')
-  onResize() {
-    this.updateChartViewSize();
   }
 }

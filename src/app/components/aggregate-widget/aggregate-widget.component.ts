@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Component, OnInit, Input } from '@angular/core';
 import classNames from 'classnames';
 
@@ -7,11 +8,12 @@ import classNames from 'classnames';
   styleUrls: ['./aggregate-widget.component.scss']
 })
 export class AggregateWidgetComponent implements OnInit {
-  classes: string;
   @Input()
   items: any[];
   @Input()
   center: boolean;
+
+  classes: string;
 
   constructor() {}
 

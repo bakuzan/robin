@@ -1,4 +1,4 @@
-/* tslint:disable:no-output-native */
+/* eslint-disable @angular-eslint/no-output-native */
 import {
   Component,
   OnInit,
@@ -28,14 +28,6 @@ import { Icons } from 'src/app/common/constants';
   ]
 })
 export class InputBoxComponent implements OnInit, ControlValueAccessor {
-  private clearTimer: any = null;
-  icon: string = Icons.cross;
-  isTextInput: boolean;
-  hasMaxNumber: boolean;
-  onChange: (value: string) => void;
-  onTouched: (event: Event) => void;
-  classes: string;
-  clearClasses: string;
   @ViewChild('input', { static: false })
   input: ElementRef;
   @Input()
@@ -72,6 +64,16 @@ export class InputBoxComponent implements OnInit, ControlValueAccessor {
   focus: EventEmitter<any> = new EventEmitter();
   @Output()
   keyDown: EventEmitter<any> = new EventEmitter();
+
+  icon: string = Icons.cross;
+  isTextInput: boolean;
+  hasMaxNumber: boolean;
+  onChange: (value: string) => void;
+  onTouched: (event: Event) => void;
+  classes: string;
+  clearClasses: string;
+
+  private clearTimer: any = null;
 
   constructor(private renderer: Renderer2) {}
 

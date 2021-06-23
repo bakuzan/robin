@@ -21,9 +21,6 @@ const OPTION_PREFIX = 'radio';
   ]
 })
 export class RadioButtonGroupComponent implements OnInit, ControlValueAccessor {
-  radioGroupClasses: string;
-  onChange: (value: any) => void;
-  onTouched: () => void;
   @Input()
   id: string;
   @Input()
@@ -32,6 +29,10 @@ export class RadioButtonGroupComponent implements OnInit, ControlValueAccessor {
   options: SelectOption[];
   @Input()
   column: boolean;
+
+  radioGroupClasses: string;
+  onChange: (value: any) => void;
+  onTouched: () => void;
 
   constructor() {}
 

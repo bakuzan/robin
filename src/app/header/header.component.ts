@@ -9,8 +9,8 @@ import { createListeners, getWindowScrollPosition } from 'src/app/common/utils';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  private scrollListeners: Listeners;
   windowScrollPosition = 0;
+  private scrollListeners: Listeners;
 
   constructor() {}
 

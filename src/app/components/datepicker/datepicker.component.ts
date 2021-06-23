@@ -12,7 +12,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { checkDatesAgainstRange } from 'src/app/common/utils/calendar';
 import { Icons } from 'src/app/common/constants';
 
-const ErrorMessages = {
+const errorMessages = {
   dateIsOutOfRange: 'Date is out of range',
   isRequired: 'Date is required'
 };
@@ -30,14 +30,6 @@ const ErrorMessages = {
   ]
 })
 export class DatepickerComponent implements OnInit, ControlValueAccessor {
-  private clearTimer: any = null;
-  errorMessage = '';
-  displayCalendar = false;
-  onChange: (value: any, name?: string, isError?: boolean) => void;
-  onTouched: () => void;
-  calendarIcon = Icons.calendar;
-  clearIcon = Icons.cross;
-  selected?: string | Date;
   @ViewChild('container', { static: false })
   container: ElementRef;
   @Input()
@@ -60,6 +52,16 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
   afterDate?: string;
   @Input()
   beforeDate?: string;
+
+  errorMessage = '';
+  displayCalendar = false;
+  onChange: (value: any, name?: string, isError?: boolean) => void;
+  onTouched: () => void;
+  calendarIcon = Icons.calendar;
+  clearIcon = Icons.cross;
+  selected?: string | Date;
+
+  private clearTimer: any = null;
 
   constructor(private renderer: Renderer2) {}
 
@@ -115,9 +117,9 @@ export class DatepickerComponent implements OnInit, ControlValueAccessor {
     );
 
     this.errorMessage = dateIsOutOfRange
-      ? ErrorMessages.dateIsOutOfRange
+      ? errorMessages.dateIsOutOfRange
       : !date && required
-      ? ErrorMessages.isRequired
+      ? errorMessages.isRequired
       : null;
 
     const hasError = !!this.errorMessage;

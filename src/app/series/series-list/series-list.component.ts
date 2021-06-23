@@ -25,9 +25,10 @@ export class SeriesListComponent implements OnInit {
     type: SeriesType.Manga,
     statuses: [SeriesStatus.Ongoing]
   };
-  private filterParams = new BehaviorSubject<SeriesFilter>(this.startingParams);
+
   series$: Observable<Series[]>;
   itemCount: number;
+  private filterParams = new BehaviorSubject<SeriesFilter>(this.startingParams);
 
   constructor(
     private service: SeriesService,

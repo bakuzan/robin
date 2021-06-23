@@ -19,14 +19,6 @@ import { generateUniqueId } from 'src/app/common/utils';
   ]
 })
 export class AutocompleteComponent implements OnInit, ControlValueAccessor {
-  private timer: number;
-  private selectedItem: Suggestion;
-  menuClasses: string;
-  filter = '';
-  activeSuggestion = 0;
-  isFocussed: boolean;
-  onChange: (value: any) => void;
-  onTouched: () => void;
   @Input()
   inputClasses: string;
   @Input()
@@ -39,6 +31,16 @@ export class AutocompleteComponent implements OnInit, ControlValueAccessor {
   name: string;
   @Input()
   options: Suggestion[];
+
+  menuClasses: string;
+  filter = '';
+  activeSuggestion = 0;
+  isFocussed: boolean;
+  onChange: (value: any) => void;
+  onTouched: () => void;
+
+  private timer: number;
+  private selectedItem: Suggestion;
 
   get suggestions(): Suggestion[] {
     const { options, filter } = this;

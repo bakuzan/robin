@@ -42,10 +42,6 @@ const today = new Date();
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  private comicColour = '#339933';
-  private mangaColour = '#3366cc';
-  private rightHandSideSpacing = 30;
-  private pieSpacing = 15;
   @ViewChild('chartsRef', { static: false })
   chartsRef: ElementRef;
   isLoading = false;
@@ -61,7 +57,6 @@ export class DashboardComponent implements OnInit {
     toDate: getISOStringDate(today)
   };
 
-  private filterParams = new BehaviorSubject<DateRangeFilter>(this.filters);
   dashboard = new Dashboard();
   volumesOverTime: IDashboardMonthCounts[];
   expenditureOverTime: IDashboardMonthCounts[];
@@ -76,6 +71,9 @@ export class DashboardComponent implements OnInit {
   showXAxisLabel = true;
   showYAxisLabel = true;
   xAxisLabel = 'Month';
+
+  comicColour = '#339933';
+  mangaColour = '#3366cc';
   lineColourScheme = {
     domain: [this.comicColour, this.mangaColour]
   };
@@ -86,10 +84,19 @@ export class DashboardComponent implements OnInit {
     domain: ['#f00', '#0f0', '#00f', '#ff0', '#f0f', '#0ff']
   };
 
+  private rightHandSideSpacing = 30;
+  private pieSpacing = 15;
+  private filterParams = new BehaviorSubject<DateRangeFilter>(this.filters);
+
   constructor(
     private dashboardService: DashboardService,
     private router: Router
   ) {}
+
+  @HostListener('window:resize')
+  onResize() {
+    this.updateChartViewSize();
+  }
 
   get unboughtVolumesOutNow() {
     return this.unboughtVolumes.filter((x) => x.isOut);
@@ -172,11 +179,6 @@ export class DashboardComponent implements OnInit {
     return {
       color: agg.label === 'Comic' ? this.comicColour : this.mangaColour
     };
-  }
-
-  @HostListener('window:resize')
-  onResize() {
-    this.updateChartViewSize();
   }
 
   private updateChartViewSize() {

@@ -1,4 +1,4 @@
-/*tslint:disable:no-bitwise*/
+/* eslint-disable no-bitwise */
 
 import Listeners from './listeners.model';
 import { Strings } from 'src/app/common/constants';
@@ -34,7 +34,7 @@ export const getEventValue = ({ type, checked, value }) =>
 
 export const generateUniqueId = (): string =>
   (`${1e7}` + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (s) => {
-    const c: number = Number(s);
+    const c = Number(s);
     return (
       c ^
       (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
@@ -83,7 +83,7 @@ export const currencyToPlainNumber = (str = ''): number => {
   return parseFloat(sn) ? Number(sn) : null;
 };
 
-export function getElementCoordinates(elem): ElementCoordinates {
+export const getElementCoordinates = (elem): ElementCoordinates => {
   const box = elem.getBoundingClientRect();
   const body = document.body;
   const docEl = document.documentElement;
@@ -104,7 +104,7 @@ export function getElementCoordinates(elem): ElementCoordinates {
     right: Math.round(clientWidth - (left + box.width)),
     bottom: Math.round(clientHeight - (top + box.height))
   };
-}
+};
 
 export const capitalise = (str = ''): string =>
   str.charAt(0).toUpperCase() + str.slice(1);

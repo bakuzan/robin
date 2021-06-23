@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import classNames from 'classnames';
 import Strings from '../constants/strings';
 import { pad, getFirstDateOfMonth, getLastDateOfMonth } from '.';
@@ -248,7 +249,7 @@ export function formatDateForDisplay(date: string | number | Date) {
   return `${pad(`${d.getDate()}`, 2)} ${getMonthName(d)} ${d.getFullYear()}`;
 }
 
-/*tslint:disable:no-bitwise*/
+/* eslint-disable no-bitwise */
 function ordinal(num: number) {
   const d = num % 10;
   return ~~((num % 100) / 10) === 1
@@ -261,7 +262,7 @@ function ordinal(num: number) {
     ? 'rd'
     : 'th';
 }
-/*tslint:enable:no-bitwise*/
+/* eslint-enable no-bitwise */
 
 export function addDateSuffix(
   isMonthView: boolean,

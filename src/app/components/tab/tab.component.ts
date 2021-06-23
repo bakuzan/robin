@@ -6,11 +6,11 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./tab.component.scss']
 })
 export class TabComponent implements OnInit {
-  isActive = false;
   @Input()
   id: string;
   @Input()
   name: string;
+  isActive = false;
 
   constructor() {}
 

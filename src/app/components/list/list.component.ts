@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import {
   Component,
   ContentChild,
@@ -18,8 +19,7 @@ import ListColumn from './list-column.enum';
 export class ListComponent implements OnInit {
   @ContentChild(TemplateRef, { static: false })
   itemTemplate: TemplateRef<any>;
-  listClasses: string;
-  listItemClasses: string;
+
   @Input()
   class: string;
   @Input()
@@ -38,6 +38,9 @@ export class ListComponent implements OnInit {
   isAsync = true;
   @Input()
   isGrid = false;
+
+  listClasses: string;
+  listItemClasses: string;
 
   ngOnInit() {
     if (!this.isGrid) {

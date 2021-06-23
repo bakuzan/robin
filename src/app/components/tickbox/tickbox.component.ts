@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import {
   Component,
   OnInit,
@@ -23,9 +24,6 @@ import classNames from 'classnames';
   ]
 })
 export class TickboxComponent implements OnInit, ControlValueAccessor {
-  tickboxClasses: string;
-  onTouched: () => void;
-  onChange: (_: any) => void;
   @ViewChild('checkbox', { static: false })
   checkbox: ElementRef;
   @Input()
@@ -36,6 +34,10 @@ export class TickboxComponent implements OnInit, ControlValueAccessor {
   disabled: boolean;
   @Input()
   customTickbox: string;
+
+  tickboxClasses: string;
+  onTouched: () => void;
+  onChange: (_: any) => void;
 
   constructor(private _renderer: Renderer2) {}
 

@@ -11,14 +11,15 @@ import { SeriesStatuses } from 'src/app/common/models/series-statuses.enum';
   styleUrls: ['./filter-bar.component.scss']
 })
 export class FilterBarComponent implements OnInit {
-  addUrl = 'create';
-  seriesTypeOptions = mapEnumToSelectOption(SeriesTypes);
-  seriesStatusOptions = mapEnumToSelectOption(SeriesStatuses);
-  values: SeriesFilter;
   @Input()
   filters: SeriesFilter;
   @Output()
   update: EventEmitter<any> = new EventEmitter();
+
+  addUrl = 'create';
+  seriesTypeOptions = mapEnumToSelectOption(SeriesTypes);
+  seriesStatusOptions = mapEnumToSelectOption(SeriesStatuses);
+  values: SeriesFilter;
 
   constructor() {}
 

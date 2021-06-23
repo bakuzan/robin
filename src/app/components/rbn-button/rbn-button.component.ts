@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+/* eslint-disable @typescript-eslint/naming-convention */
+import { Component, OnInit, Input } from '@angular/core';
 import classNames from 'classnames';
 
 @Component({

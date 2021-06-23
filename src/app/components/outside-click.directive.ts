@@ -12,12 +12,12 @@ import addOutsideClick from '../common/utils/add-outside-click';
   selector: '[appOutsideClick]'
 })
 export class OutsideClickDirective implements OnInit, OnDestroy {
+  @Output()
+  appOutsideClick = new EventEmitter<Event>();
+
   private removeOutsideClick = null;
   private blockCloseUntilLoaded = true;
   private timer: number = null;
-
-  @Output()
-  appOutsideClick = new EventEmitter<Event>();
 
   constructor(private el: ElementRef) {
     this.handleOutside = this.handleOutside.bind(this);

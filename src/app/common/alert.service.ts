@@ -16,12 +16,8 @@ export class AlertService {
     this.alert$.subscribe(fn);
   }
 
-  __pushAlert(alert: Alert) {
-    this.alert$.next(alert);
-  }
-
   send(obj: AlertData, type = AlertType.INFO) {
-    this.__pushAlert({
+    this.pushAlert({
       id: generateUniqueId(),
       type,
       message: '',
@@ -42,5 +38,9 @@ export class AlertService {
   sendError(obj: AlertData) {
     this.send(obj, AlertType.ERROR);
     console.log('%c Alert Service Error Sent >', 'color: brickred', obj);
+  }
+
+  private pushAlert(alert: Alert) {
+    this.alert$.next(alert);
   }
 }

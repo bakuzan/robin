@@ -44,21 +44,6 @@ import keyCodes, {
   styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit, OnDestroy {
-  private timer: number = null;
-  private blockOutsideClickHack = false;
-  prevIcon = Icons.left;
-  nextIcon = Icons.right;
-  isMonthView = true;
-  viewDate: string;
-  focusDate: string;
-  prevLabel: string;
-  nextLabel: string;
-  viewOptions: ICalendarDisplayViewOption[] = [];
-  viewHeaders = [
-    ...Strings.dayNames.slice(1),
-    ...Strings.dayNames.slice(0, 1)
-  ].map((str) => str.slice(0, 3));
-  calendarClasses: string;
   @ViewChild('container', { static: false })
   container: ElementRef;
   @Input()
@@ -79,6 +64,23 @@ export class CalendarComponent implements OnInit, OnDestroy {
   selectDate = new EventEmitter<string>();
   @Output()
   closeCalendar = new EventEmitter<Event>();
+
+  prevIcon = Icons.left;
+  nextIcon = Icons.right;
+  isMonthView = true;
+  viewDate: string;
+  focusDate: string;
+  prevLabel: string;
+  nextLabel: string;
+  viewOptions: ICalendarDisplayViewOption[] = [];
+  viewHeaders = [
+    ...Strings.dayNames.slice(1),
+    ...Strings.dayNames.slice(0, 1)
+  ].map((str) => str.slice(0, 3));
+  calendarClasses: string;
+
+  private timer: number = null;
+  private blockOutsideClickHack = false;
 
   constructor() {}
 

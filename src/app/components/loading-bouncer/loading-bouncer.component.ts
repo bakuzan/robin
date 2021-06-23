@@ -7,13 +7,14 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./loading-bouncer.component.scss']
 })
 export class LoadingBouncerComponent implements OnInit {
-  classes: string;
-  bouncerClasses: string;
-  range = [1, 2, 3];
   @Input()
   local: boolean;
   @Input()
   inline: boolean;
+
+  classes: string;
+  bouncerClasses: string;
+  range = [1, 2, 3];
 
   constructor() {}
 

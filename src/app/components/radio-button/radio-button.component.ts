@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import {
   Component,
   Input,
@@ -21,10 +22,6 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class RadioButtonComponent implements ControlValueAccessor {
-  tickboxClasses: string;
-  checked: boolean;
-  onTouched: () => void;
-  onChange: (_: any) => void;
   @ViewChild('radio', { read: ElementRef, static: false })
   radio: ElementRef;
   @Input()
@@ -37,6 +34,11 @@ export class RadioButtonComponent implements ControlValueAccessor {
   text: string;
   @Input()
   disabled: boolean;
+
+  tickboxClasses: string;
+  checked: boolean;
+  onTouched: () => void;
+  onChange: (_: any) => void;
 
   constructor(private _renderer: Renderer2) {}
 

@@ -8,13 +8,14 @@ import classNames from 'classnames';
   styleUrls: ['./nav-link.component.scss']
 })
 export class NavLinkComponent implements OnInit {
-  linkClasses: string;
   @Input()
   to: string;
   @Input()
   queryParams: any;
   @Input()
   class: string;
+
+  linkClasses: string;
 
   constructor(private router: Router) {}
 

@@ -36,10 +36,11 @@ export class PurchaseHistoryComponent implements OnInit {
     fromDate: getISOStringDate(getDaysAgo(today, 30)),
     toDate: getISOStringDate(today)
   };
-  private filterParams = new BehaviorSubject<VolumeFilter>(this.startingParams);
   isLoading = false;
   volumes$: Observable<Volume[]>;
   itemCount: number;
+
+  private filterParams = new BehaviorSubject<VolumeFilter>(this.startingParams);
 
   constructor(
     private volumeService: VolumeService,

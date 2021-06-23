@@ -1,9 +1,8 @@
 import SelectOption from '../models/select-option.model';
 import { capitalise } from '.';
 
-export function mapEnumsToObject<T>(arr: ReadonlyArray<string>): T {
-  return arr.reduce((p, k) => Object.assign(p, { [k]: k }), {} as T);
-}
+export const mapEnumsToObject = <T>(arr: ReadonlyArray<string>): T =>
+  arr.reduce((p, k) => Object.assign(p, { [k]: k }), {} as T);
 
 export const mapEnumToSelectOption = (
   arr: ReadonlyArray<string>

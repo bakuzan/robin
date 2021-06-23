@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 const Strings = Object.freeze({
   left: 'left',
   right: 'right',

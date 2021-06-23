@@ -11,12 +11,13 @@ import whenRecordsBegan from 'src/app/common/constants/when-records-began';
   styleUrls: ['./filter-bar.component.scss']
 })
 export class FilterBarComponent implements OnInit {
-  seriesTypeOptions = mapEnumToSelectOption(SeriesTypes);
-  values: VolumeFilter;
   @Input()
   filters: VolumeFilter;
   @Output()
   update: EventEmitter<any> = new EventEmitter();
+
+  seriesTypeOptions = mapEnumToSelectOption(SeriesTypes);
+  values: VolumeFilter;
   whenRecordsBegan = whenRecordsBegan;
 
   constructor() {}
