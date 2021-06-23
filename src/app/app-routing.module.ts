@@ -10,17 +10,23 @@ const routes: Routes = [
   { path: Urls.dashboard, component: DashboardComponent },
   {
     path: Urls.seriesList,
-    loadChildren: () => import('./series/series-routing.module').then(m => m.SeriesRoutingModule)
+    loadChildren: () =>
+      import('./series/series-routing.module').then(
+        (m) => m.SeriesRoutingModule
+      )
   },
   {
     path: Urls.purchaseHistory,
-    loadChildren: () => import('./volume/volume-routing.module').then(m => m.VolumeRoutingModule)
+    loadChildren: () =>
+      import('./volume/volume-routing.module').then(
+        (m) => m.VolumeRoutingModule
+      )
   },
   { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
