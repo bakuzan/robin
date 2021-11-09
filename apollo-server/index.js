@@ -3,6 +3,9 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const express = require('express');
+const {
+  ApolloServerPluginLandingPageGraphQLPlayground
+} = require('apollo-server-core');
 const { ApolloServer } = require('apollo-server-express');
 
 const Constants = require('./constants/index');
@@ -18,14 +21,17 @@ const server = new ApolloServer({
     ...context
   }),
   introspection: true,
-  playground: {
-    settings: {
-      'editor.cursorShape': 'block',
-      'editor.fontSize': 16,
-      'editor.fontFamily': '"Lucida Console", Consolas, monospace',
-      'editor.theme': 'light'
-    }
-  },
+  plugins: [
+    ApolloServerPluginLandingPageGraphQLPlayground({
+      settings: {
+        'editor.cursorShape': 'block',
+        'editor.fontSize': 16,
+        'editor.fontFamily': '"Lucida Console", Consolas, monospace',
+        'editor.theme': 'light'
+      }
+    })
+  ],
+
   formatError: (error) => {
     console.log(error);
     return error;
@@ -33,7 +39,7 @@ const server = new ApolloServer({
 });
 
 // Overide origin if it doesn't exist
-app.use(function(req, _, next) {
+app.use(function (req, _, next) {
   req.headers.origin = req.headers.origin || req.headers.host;
   next();
 });
@@ -58,7 +64,7 @@ const PORT =
 server.applyMiddleware({
   app,
   cors: {
-    origin: function(origin, callback) {
+    origin: function (origin, callback) {
       if (Constants.whitelist.test(origin)) {
         callback(null, true);
       } else {
