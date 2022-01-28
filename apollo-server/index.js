@@ -61,22 +61,24 @@ const PORT =
     ? process.env.PORT
     : process.env.SERVER_PORT) || 9007;
 
-server.applyMiddleware({
-  app,
-  cors: {
-    origin: function (origin, callback) {
-      if (Constants.whitelist.test(origin)) {
-        callback(null, true);
-      } else {
-        console.log(`Origin: ${origin}, not allowed by CORS`);
-        callback(new Error('Not allowed by CORS'));
+server.start().then(() => {
+  server.applyMiddleware({
+    app,
+    cors: {
+      origin: function (origin, callback) {
+        if (Constants.whitelist.test(origin)) {
+          callback(null, true);
+        } else {
+          console.log(`Origin: ${origin}, not allowed by CORS`);
+          callback(new Error('Not allowed by CORS'));
+        }
       }
     }
-  }
-});
+  });
 
-app.listen(PORT, () => {
-  console.log(
-    `Go to http://localhost:${PORT}${server.graphqlPath} to run queries!`
-  );
+  app.listen(PORT, () => {
+    console.log(
+      `Go to http://localhost:${PORT}${server.graphqlPath} to run queries!`
+    );
+  });
 });
