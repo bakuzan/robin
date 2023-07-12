@@ -33,7 +33,7 @@
     "@angular/platform-browser-dynamic": "^13.0.0",
     "@angular/router": "^13.0.0",
     "@angular/service-worker": "^13.0.0",
-    "@swimlane/ngx-charts": "^19.1.0",
+    "@swimlane/ngx-charts": "^20.4.1",
     "apollo-server": "^3.5.0",
     "classnames": "^2.3.1",
     "core-js": "^3.19.1",
